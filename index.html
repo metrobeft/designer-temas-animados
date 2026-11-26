@@ -69,9 +69,10 @@ header p b{color:#fff;font-weight:400}
 .chip:hover em{color:#000}
 .direct.an{border-color:rgba(255,126,182,.22);background:linear-gradient(180deg,rgba(40,10,30,.35),rgba(0,0,0,.4));margin-top:18px}
 .direct.an h3{color:var(--an)}
-.direct.an .chip{border-color:rgba(255,126,182,.25);color:#ffd9ea;border-style:dashed;cursor:default}
+.direct.an .chip{border-color:rgba(255,126,182,.3);color:#ffd9ea}
 .direct.an .chip em{color:var(--an)}
-.direct.an .chip:hover{background:rgba(255,126,182,.08);color:#ffd9ea}
+.direct.an .chip:hover{background:var(--an);color:#1a0b2e;border-color:var(--an)}
+.direct.an .chip:hover em{color:#1a0b2e}
 
 footer{margin-top:44px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;letter-spacing:.15em;color:#8a86a0;border-top:1px solid rgba(255,255,255,.08);padding-top:18px}
 footer a{color:#cfc9e6}
@@ -100,12 +101,12 @@ footer a{color:#cfc9e6}
     </a>
     <a class="theme anime" href="tema-anime/index.html">
       <canvas id="pvAnime"></canvas><div class="shade"></div>
-      <div class="count"><b>🌸</b>EM BREVE</div>
+      <div class="count"><b>09</b>PÁGINAS</div>
       <div class="info">
-        <span class="tag"><i></i>TEMA 02 · EM CONSTRUÇÃO</span>
+        <span class="tag"><i></i>TEMA 02 · ONLINE</span>
         <h2>TEMA ANIME<small>アニメ · テーマ</small></h2>
-        <p>Pétalas de sakura, linhas de velocidade, efeitos de mangá e cel-shading. A pasta já está pronta para receber os próximos módulos.</p>
-        <span class="go">VER PRÉVIA</span>
+        <p>Abertura de anime com a mascote Hana, tempestade de sakura, power-up, página de mangá, Tóquio neon, círculo mágico, quarto lofi, estrelas cadentes e lago de carpas.</p>
+        <span class="go">ENTRAR NO TEMA</span>
       </div>
     </a>
   </section>
@@ -115,19 +116,19 @@ footer a{color:#cfc9e6}
     <div class="chips" id="chips"></div>
   </section>
   <section class="direct an">
-    <h3>TEMA ANIME <span>tema-anime/ · planejado</span></h3>
-    <div class="chips">
-      <span class="chip"><em>01</em>SAKURA STORM</span><span class="chip"><em>02</em>SPEED LINES</span><span class="chip"><em>03</em>MANGA PANELS</span><span class="chip"><em>04</em>NEON TOKYO</span>
-    </div>
+    <h3>ACESSO DIRETO · TEMA ANIME <span>tema-anime/</span></h3>
+    <div class="chips" id="chipsA"></div>
   </section>
 
-  <footer><span>HTML · CSS · JS — sem frameworks, sem build</span><span>código aberto · licença MIT</span></footer>
+  <footer><span>HTML · CSS · JS — sem frameworks, sem build</span><span>🔊 sons sintetizados ao vivo · tecla M deixa mudo</span><span>código aberto · licença MIT</span></footer>
 </main>
 
 <script>
 const R=Math.random,DPR=Math.min(devicePixelRatio||1,2);
 const PAGES=[['00','INTRO + HUB','index.html'],['01','MATRIX RAIN','01-matrix-rain.html'],['02','GLOBAL DATA GRID','02-global-network.html'],['03','SYSTEM BREACH','03-breach.html'],['04','GLITCH FIELD','04-glitch-field.html'],['05','TACTICAL HUD','05-hud-radar.html'],['06','NEURAL CORE','06-neural-ai.html'],['07','BINARY SKULL','07-binary-skull.html'],['08','DIGITAL TWIN','08-digital-twin.html']];
 document.getElementById('chips').innerHTML=PAGES.map(([n,t,f])=>`<a class="chip" href="tema-hacker/${f}"><em>${n}</em>${t}</a>`).join('');
+const PAGES_A=[['00','ABERTURA + HUB','index.html'],['01','SAKURA STORM · 桜吹雪','01-sakura-storm.html'],['02','POWER UP · 覚醒','02-speed-lines.html'],['03','MANGA PANELS · 漫画','03-manga-panels.html'],['04','NEON TOKYO · 東京','04-neon-tokyo.html'],['05','MAGIC CIRCLE · 魔法陣','05-magic-circle.html'],['06','LOFI ROOM · ローファイ','06-lofi-room.html'],['07','STARFALL · 流れ星','07-starfall.html'],['08','KOI POND · 鯉の池','08-koi-pond.html']];
+document.getElementById('chipsA').innerHTML=PAGES_A.map(([n,t,f])=>`<a class="chip" href="tema-anime/${f}"><em>${n}</em>${t}</a>`).join('');
 
 function fit(cv){const r=cv.getBoundingClientRect();cv.width=Math.max(1,r.width*DPR);cv.height=Math.max(1,r.height*DPR);const c=cv.getContext('2d');c.setTransform(DPR,0,0,DPR,0,0);return {c,w:r.width,h:r.height}}
 

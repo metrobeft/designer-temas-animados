@@ -15,7 +15,7 @@ Coleção aberta de páginas web animadas, feitas só com **HTML + CSS + JavaScr
 | Pasta | Tema | Status | Conteúdo |
 |---|---|---|---|
 | [`tema-hacker/`](tema-hacker/) | Hacker · glitch · matrix · HUD | ✅ pronto | Intro estilo vídeo + 8 módulos animados |
-| [`tema-anime/`](tema-anime/) | Anime · sakura · mangá | 🚧 em construção | Página de prévia; módulos em breve |
+| [`tema-anime/`](tema-anime/) | Anime · sakura · mangá · neon | ✅ pronto | Abertura de anime + 8 episódios + mascote original Hana |
 
 ## Como abrir
 
@@ -48,9 +48,18 @@ python -m http.server 8000
 │   ├── 08-digital-twin.html
 │   └── README.md
 └── tema-anime/
-    ├── index.html      ← prévia "em breve"
+    ├── index.html      ← abertura de anime + hub
+    ├── 01-sakura-storm.html
+    ├── ...
+    ├── 08-koi-pond.html
     └── README.md
 ```
+
+## Som
+
+Os dois temas têm efeitos sonoros **100% sintetizados com Web Audio** — nenhum arquivo de áudio. No hacker: teclado mecânico, glitch com estática e TV de tubo desligando. No anime: sininhos, impactos, vento, chuva, trem, pad mágico e até uma rádio lofi gerada ao vivo.
+
+O som vem **ligado por padrão** (desliga no botão **🔊 SOM** ou na tecla **M**). Como os navegadores bloqueiam áudio antes do primeiro clique, as aberturas mostram uma tela **▶ INICIAR** quando necessário, para o vídeo de entrada já começar com som.
 
 ## Como criar um novo tema
 

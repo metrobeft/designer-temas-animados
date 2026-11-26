@@ -2,7 +2,7 @@
 
 Visual de invasão de sistema: glitch, chuva de código, HUDs táticos e textos que se corrompem em leetspeak (`ACESSO CONCEDIDO` → `4C3550 C0NC3D1D0`) sem perder a legibilidade.
 
-Comece pelo [`index.html`](index.html): ele abre com uma **intro em estilo vídeo** (faixas de cinema, REC, timecode, terminal de boot, crânio com progresso de ataque) e depois mostra o hub com os 8 módulos. A intro pode ser pulada com o botão **PULAR** ou com `Esc`/`Espaço`/`Enter`, e tem som sintetizado opcional (botão **SOM**).
+Comece pelo [`index.html`](index.html): ele abre com uma **intro em estilo vídeo** (faixas de cinema, REC, timecode, terminal de boot, crânio com progresso de ataque) e depois mostra o hub com os 8 módulos. A intro pode ser pulada com o botão **PULAR** ou com `Esc`/`Espaço`/`Enter`, e já começa com som (botão **SOM** ou tecla `M` para deixar mudo).
 
 ## Páginas
 
@@ -17,6 +17,10 @@ Comece pelo [`index.html`](index.html): ele abre com uma **intro em estilo víde
 | 06 | [`06-neural-ai.html`](06-neural-ai.html) | Núcleo "AI" com rede neural 3D e pulsos de dados | arrastar = girar · duplo clique = disparo |
 | 07 | [`07-binary-skull.html`](07-binary-skull.html) | Crânio de 0 e 1 que se monta, fala e se desintegra | mouse = repelir · clique = explodir · `R` vermelho |
 | 08 | [`08-digital-twin.html`](08-digital-twin.html) | Gêmeo digital isométrico, cadeado no triângulo, medidor de energia | passar o mouse nos racks |
+
+## Som
+
+Todas as páginas têm efeitos sonoros **100% sintetizados via Web Audio** (nenhum arquivo de áudio): cliques de teclado mecânico enquanto o texto é digitado, glitch digital misturado com estática de TV, TV de tubo desligando/ligando, alarmes, ping de sonar e voz robótica. O som vem **ligado por padrão** — desligue no botão **🔊 SOM** (barra inferior ou cabeçalho do hub) ou com a tecla **M**; a escolha fica salva para as outras páginas. Como os navegadores bloqueiam áudio antes do primeiro clique, a intro mostra **▶ INICIAR TRANSMISSÃO** quando necessário e as páginas mostram um aviso para clicar.
 
 ## Navegação
 

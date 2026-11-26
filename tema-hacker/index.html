@@ -186,6 +186,7 @@ body.hub .ticker{opacity:1}
       <span class="pill">AMEAÇA <span class="threat" id="threat"></span></span>
       <span class="pill"><b id="clock">00:00:00</b></span>
       <a class="pill" href="../index.html" style="color:var(--a);text-decoration:none" title="Voltar ao portal de temas">⌂ INÍCIO</a>
+      <button class="pill hx-snd" type="button" style="color:var(--a)" title="Som (tecla M)">🔇 SOM</button>
       <button class="pill" id="replay" style="color:var(--a)">⟲ REPLAY INTRO</button>
     </div>
   </header>
@@ -217,7 +218,7 @@ const GK=(()=>{
     const alts=(el.dataset.alt||'').split('|').filter(Boolean);let base=orig;
     const burst=()=>{
       if(!el.isConnected)return;
-      el.classList.add('is-glitching');let n=0;const fr=4+(Math.random()*8|0);
+      el.classList.add('is-glitching');if(typeof HX!=='undefined')HX.autoGlitch();let n=0;const fr=4+(Math.random()*8|0);
       const iv=setInterval(()=>{set(el,leet(base,.55,.07));if(++n>=fr){clearInterval(iv);const r=Math.random();
         base=r<.28?leet(orig,.75):(r<.45&&alts.length?rnd(alts):orig);set(el,base);el.classList.remove('is-glitching');setTimeout(burst,1400+Math.random()*3600)}},55)};
     setTimeout(burst,600+Math.random()*2400);
@@ -225,17 +226,121 @@ const GK=(()=>{
   return {MAP,SYM,rnd,leet,set,sleep,scramble,auto};
 })();
 
+/* ================= HX · SONS SINTETIZADOS (Web Audio, sem arquivos) =================
+   teclado mecânico · glitch digital · estática de TV · TV de tubo desligando/ligando
+   alarme · ping de sonar · bipes de dados · voz robótica · zumbido ambiente
+   Ligado por padrão (desliga no botão 🔊 SOM ou tecla M. Preferência salva em localStorage('hacker-sfx'). */
+const HX=(()=>{
+  const KEY='hacker-sfx',R=Math.random,T={};let on=true;try{on=localStorage.getItem(KEY)!=='0'}catch(e){}
+  let ctx=null,master=null,nbuf=null,crush=null,hum=null,bedG=null,lastBed=0;
+  function ensure(){
+    if(!ctx){try{ctx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return Promise.resolve()}
+      const comp=ctx.createDynamicsCompressor();comp.threshold.value=-16;comp.knee.value=14;comp.ratio.value=4;comp.attack.value=.003;comp.release.value=.25;
+      master=ctx.createGain();master.gain.value=.85;master.connect(comp);comp.connect(ctx.destination);
+      nbuf=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate);const d=nbuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=R()*2-1;
+      crush=new Float32Array(256);for(let i=0;i<256;i++){const x=i/127.5-1;crush[i]=Math.round(x*3)/3}}
+    const p=ctx.state==='suspended'?ctx.resume():Promise.resolve();
+    return p.then(()=>{if(on)startHum()}).catch(()=>{});
+  }
+  const ok=()=>on&&ctx&&ctx.state==='running';
+  const t0=()=>ctx.currentTime;
+  const noise=()=>{const s=ctx.createBufferSource();s.buffer=nbuf;s.loop=true;return s};
+  const filt=(type,f,q=1)=>{const b=ctx.createBiquadFilter();b.type=type;b.frequency.value=f;b.Q.value=q;return b};
+  const gain=(v=0)=>{const g=ctx.createGain();g.gain.value=v;return g};
+  const osc=(type,f,t)=>{const o=ctx.createOscillator();o.type=type;o.frequency.setValueAtTime(f,t??ctx.currentTime);return o};
+  const chain=(...n)=>{for(let i=0;i<n.length-1;i++)n[i].connect(n[i+1]);n[n.length-1].connect(master);return n[0]};
+  function limited(k,s){const n=performance.now();if(T[k]&&n-T[k]<s*1000)return false;T[k]=n;return true}
+
+  /* teclado mecânico: clique (ruído em banda) + baque grave + estalo de soltura */
+  function keyAt(t,heavy,vol){
+    const s=noise(),g=gain();g.gain.setValueAtTime((heavy?.3:.2)*vol*(.7+R()*.5),t);g.gain.exponentialRampToValueAtTime(.0001,t+(heavy?.045:.026));
+    chain(s,filt('bandpass',(heavy?1300:1800)+R()*2700,heavy?1.1:2.4),g);s.start(t,R()*1.5);s.stop(t+.06);
+    const o=osc('sine',(heavy?110:150)+R()*40,t),og=gain();o.frequency.exponentialRampToValueAtTime(55,t+.03);og.gain.setValueAtTime((heavy?.22:.1)*vol,t);og.gain.exponentialRampToValueAtTime(.0001,t+.035);chain(o,og);o.start(t);o.stop(t+.04);
+    const r=t+.045+R()*.035,s2=noise(),g2=gain();g2.gain.setValueAtTime(.06*vol,r);g2.gain.exponentialRampToValueAtTime(.0001,r+.015);chain(s2,filt('bandpass',3500+R()*2000,3),g2);s2.start(r,R());s2.stop(r+.02);
+  }
+  function key(heavy=false,vol=1){if(!ok()||!limited('key',.022))return;keyAt(t0(),heavy,vol)}
+  function typeBurst(n=6,span=.18,vol=.7){if(!ok())return;const t=t0();for(let i=0;i<n;i++)keyAt(t+i*span/n+R()*.01,R()<.12,vol)}
+
+  /* glitch digital: oscilador com saltos de frequência + bitcrush + ruído picotado */
+  function glitch(d=.22,v=1){if(!ok())return;const t=t0();
+    const o=osc(R()<.5?'square':'sawtooth',300,t),sh=ctx.createWaveShaper(),g=gain();sh.curve=crush;g.gain.setValueAtTime(0,t);
+    for(let x=t;x<t+d;x+=.03+R()*.05){o.frequency.setValueAtTime(60+R()*2600,x);g.gain.setValueAtTime(R()<.22?0:.075*v,x)}
+    g.gain.setValueAtTime(0,t+d);chain(o,sh,g);o.start(t);o.stop(t+d+.02);
+    const s=noise(),ng=gain();ng.gain.setValueAtTime(0,t);for(let x=t;x<t+d;x+=.008+R()*.028)ng.gain.setValueAtTime(R()<.5?.11*v:0,x);ng.gain.setValueAtTime(0,t+d);
+    chain(s,filt('highpass',1100),ng);s.start(t,R());s.stop(t+d+.02)}
+  const glitchSoft=()=>{if(limited('gs',.7))glitch(.1,.35)};
+  const autoGlitch=()=>{if(limited('auto',1.2))glitch(.07,.25)};
+
+  /* estática de TV com tremulação */
+  function stat(d=.4,v=.5){if(!ok())return;const t=t0(),s=noise(),g=gain();g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.15*v,t+.01);
+    for(let k=.02;k<d-.03;k+=.022)g.gain.setValueAtTime(.15*v*(.45+R()*.65),t+k);g.gain.setValueAtTime(.09*v,t+Math.max(.02,d-.03));g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    chain(s,filt('highpass',900),g);s.start(t,R());s.stop(t+d+.02)}
+
+  /* TV de tubo desligando: baque, estalo, apito agudo sumindo, varredura descendo, cauda de estática */
+  function tvOff(v=1){if(!ok())return;const t=t0();
+    const o=osc('sine',95,t),g=gain();o.frequency.exponentialRampToValueAtTime(32,t+.2);g.gain.setValueAtTime(.4*v,t);g.gain.exponentialRampToValueAtTime(.0001,t+.24);chain(o,g);o.start(t);o.stop(t+.26);
+    const s=noise(),sg=gain();sg.gain.setValueAtTime(.3*v,t);sg.gain.exponentialRampToValueAtTime(.0001,t+.06);chain(s,filt('lowpass',2600),sg);s.start(t,R());s.stop(t+.08);
+    const w=osc('sine',10500+R()*1500,t),wg=gain();w.frequency.linearRampToValueAtTime(9000,t+.7);wg.gain.setValueAtTime(.03*v,t);wg.gain.exponentialRampToValueAtTime(.0001,t+.75);chain(w,wg);w.start(t);w.stop(t+.78);
+    const d=osc('sawtooth',1500,t+.02),dg=gain();d.frequency.exponentialRampToValueAtTime(50,t+.36);dg.gain.setValueAtTime(.0001,t);dg.gain.linearRampToValueAtTime(.07*v,t+.03);dg.gain.exponentialRampToValueAtTime(.0001,t+.38);chain(d,filt('lowpass',3000),dg);d.start(t+.02);d.stop(t+.4);
+    const s2=noise(),g2=gain();g2.gain.setValueAtTime(.0001,t);g2.gain.linearRampToValueAtTime(.08*v,t+.05);g2.gain.exponentialRampToValueAtTime(.0001,t+.55);chain(s2,filt('highpass',1500),g2);s2.start(t,R());s2.stop(t+.57)}
+  /* TV ligando: chiado picotado + apito subindo + zumbido */
+  function tvOn(v=1){if(!ok())return;const t=t0();
+    const s=noise(),g=gain();g.gain.setValueAtTime(0,t);for(let k=0;k<.28;k+=.012)g.gain.setValueAtTime(R()<.45?.14*v*(1-k/.3):0,t+k);g.gain.setValueAtTime(0,t+.3);chain(s,filt('highpass',1600),g);s.start(t,R());s.stop(t+.32);
+    const w=osc('sine',6500,t),wg=gain();w.frequency.exponentialRampToValueAtTime(11500,t+.45);wg.gain.setValueAtTime(.0001,t);wg.gain.linearRampToValueAtTime(.025*v,t+.15);wg.gain.exponentialRampToValueAtTime(.0001,t+.6);chain(w,wg);w.start(t);w.stop(t+.62);
+    const h=osc('sawtooth',50,t),hg=gain();hg.gain.setValueAtTime(.0001,t);hg.gain.linearRampToValueAtTime(.05*v,t+.2);hg.gain.exponentialRampToValueAtTime(.0001,t+.55);chain(h,filt('lowpass',300),hg);h.start(t);h.stop(t+.58)}
+  const channel=()=>{tvOff(.55);setTimeout(()=>stat(.28,.6),140);setTimeout(()=>tvOn(.6),420)};
+
+  /* interface */
+  function beep(f=880,d=.06,v=.06,type='square',when=0){if(!ok())return;const t=t0()+when,o=osc(type,f,t),g=gain();g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v,t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+d);chain(o,filt('lowpass',5000),g);o.start(t);o.stop(t+d+.02)}
+  const tick=(v=.3)=>beep(3800+R()*800,.012,.03*v,'sine');
+  const blip=()=>beep(1400+R()*2200,.022,.035,'square');
+  function blips(n=6){if(!ok())return;for(let i=0;i<n;i++)beep(1200+R()*2400,.022,.03,'square',i*.034)}
+  function ping(f=1100,v=.3){if(!ok())return;const t=t0();for(const [dl,a] of [[0,1],[.22,.35],[.44,.12]]){const o=osc('sine',f,t+dl),g=gain();g.gain.setValueAtTime(.0001,t+dl);g.gain.linearRampToValueAtTime(.16*v*a,t+dl+.006);g.gain.exponentialRampToValueAtTime(.0001,t+dl+1);chain(o,g);o.start(t+dl);o.stop(t+dl+1.02)}}
+  function alarm(v=.6){if(!ok())return;const t=t0();for(let i=0;i<4;i++){const s=t+i*.14,o=osc('sawtooth',i%2?660:880,s),g=gain();g.gain.setValueAtTime(.0001,s);g.gain.linearRampToValueAtTime(.06*v,s+.01);g.gain.setValueAtTime(.06*v,s+.11);g.gain.exponentialRampToValueAtTime(.0001,s+.13);chain(o,filt('lowpass',2400),g);o.start(s);o.stop(s+.14)}}
+  function buzzer(v=1){if(!ok())return;const t=t0();for(const f of [110,116.5]){const o=osc('square',f,t),g=gain(),lfo=osc('square',14,t),lg=gain(.035*v);g.gain.setValueAtTime(.06*v,t);g.gain.setValueAtTime(.06*v,t+.5);g.gain.exponentialRampToValueAtTime(.0001,t+.62);lfo.connect(lg);lg.connect(g.gain);chain(o,filt('lowpass',1400),g);o.start(t);lfo.start(t);o.stop(t+.64);lfo.stop(t+.64)}}
+  function sweep(f1=200,f2=1600,d=.5,v=.05){if(!ok())return;const t=t0(),o=osc('sawtooth',f1,t),g=gain();o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);chain(o,filt('lowpass',3200),g);o.start(t);o.stop(t+d+.02)}
+  function bloop(v=1){if(!ok())return;const t=t0(),o=osc('sine',320,t),g=gain();o.frequency.exponentialRampToValueAtTime(70,t+.25);g.gain.setValueAtTime(.22*v,t);g.gain.exponentialRampToValueAtTime(.0001,t+.3);chain(o,g);o.start(t);o.stop(t+.32)}
+  function synth(f=440,d=.14){if(!ok())return;const t=t0(),o=osc('triangle',f,t),g=gain();g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.06,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);chain(o,filt('lowpass',2200),g);o.start(t);o.stop(t+d+.02)}
+  /* voz robótica embaralhada (onda quadrada com saltos de tom e formante) */
+  function garble(d=.24){if(!ok())return;const t=t0(),o=osc('square',120,t),bp=filt('bandpass',900,6),g=gain();g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.09,t+.01);
+    for(let x=t;x<t+d;x+=.035+R()*.03){o.frequency.setValueAtTime(70+R()*160,x);bp.frequency.setValueAtTime(400+R()*2200,x)}g.gain.setValueAtTime(.08,t+Math.max(.02,d-.02));g.gain.exponentialRampToValueAtTime(.0001,t+d);chain(o,bp,g);o.start(t);o.stop(t+d+.02);glitch(d*.5,.25)}
+  /* trava mecânica */
+  function clunk(v=1){if(!ok())return;const t=t0(),s=noise(),g=gain();g.gain.setValueAtTime(.35*v,t);g.gain.exponentialRampToValueAtTime(.0001,t+.09);chain(s,filt('lowpass',700),g);s.start(t,R());s.stop(t+.1);
+    const o=osc('sine',75,t),og=gain();og.gain.setValueAtTime(.3*v,t);og.gain.exponentialRampToValueAtTime(.0001,t+.18);chain(o,og);o.start(t);o.stop(t+.2);
+    const c=noise(),cg=gain();cg.gain.setValueAtTime(.0001,t);cg.gain.setValueAtTime(.12*v,t+.05);cg.gain.exponentialRampToValueAtTime(.0001,t+.08);chain(c,filt('bandpass',3200,4),cg);c.start(t,R());c.stop(t+.09)}
+  /* zumbido ambiente (50 Hz + harmônicos), bem baixo */
+  function startHum(){if(hum||!ok())return;hum=gain(0);hum.connect(master);hum.gain.setTargetAtTime(.014,t0(),.5);hum._o=[50,100,150].map((f,i)=>{const o=osc('sine',f),g=gain([1,.5,.25][i]);o.connect(g);g.connect(hum);o.start();return o})}
+  function stopHum(){if(!hum)return;const h=hum;hum=null;h.gain.setTargetAtTime(0,t0(),.1);setTimeout(()=>h._o.forEach(o=>{try{o.stop()}catch(e){}}),600)}
+  /* cama contínua de estática (volume ajustável em tempo real) */
+  function bed(v){if(!ctx)return;const n=performance.now();if(n-lastBed<100)return;lastBed=n;
+    if(!ok()){if(bedG)bedG.gain.setTargetAtTime(0,t0(),.05);return}
+    if(!bedG){const s=noise(),hp=filt('highpass',1000);bedG=gain(0);s.connect(hp);hp.connect(bedG);bedG.connect(master);s.start()}
+    bedG.gain.setTargetAtTime(Math.max(0,v)*.1,t0(),.12)}
+
+  function labels(){document.querySelectorAll('.hx-snd,#snd').forEach(b=>b.textContent=on?'🔊 SOM':'🔇 SOM')}
+  function toggle(){on=!on;try{localStorage.setItem(KEY,on?'1':'0')}catch(e){}labels();
+    if(on)ensure().then(()=>{beep(660,.08,.06);beep(990,.1,.05,'square',.09)});else{stopHum();if(bedG&&ctx)bedG.gain.setTargetAtTime(0,t0(),.05)}}
+  addEventListener('pointerdown',()=>{if(on)ensure()},true);
+  addEventListener('keydown',e=>{if(on)ensure();if((e.key==='m'||e.key==='M')&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||''))toggle()},true);
+  document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.hx-snd,#snd');if(b){e.preventDefault();e.stopPropagation();toggle()}},true);
+  if(on)ensure();
+  labels();document.addEventListener('DOMContentLoaded',labels);
+  return {toggle,limited,key,typeBurst,glitch,glitchSoft,autoGlitch,static:stat,tvOff,tvOn,channel,beep,tick,blip,blips,ping,alarm,buzzer,sweep,bloop,synth,garble,clunk,bed,isOn:()=>on,ready:()=>!!ctx&&ctx.state==='running',ensure};
+})();
+
+/* aviso: navegadores bloqueiam áudio até o 1º clique/tecla — some quando o som começa */
+(()=>{const st=document.createElement('style');st.textContent='#hx-unlock{position:fixed;left:50%;bottom:62px;transform:translateX(-50%);z-index:400;background:#000;color:#00ff9c;border:1px solid #00ff9c;box-shadow:0 0 18px rgba(0,255,156,.45);padding:9px 16px;font:12px "Share Tech Mono",Consolas,monospace;letter-spacing:.18em;cursor:pointer;animation:hxU 1.2s steps(2) infinite}@keyframes hxU{50%{opacity:.55}}';document.head.appendChild(st);
+  const pill=document.createElement('div');pill.id='hx-unlock';pill.textContent='🔊 CLIQUE OU TECLE PARA ATIVAR O SOM · [M] MUDO';
+  const check=()=>{if(HX.isOn()&&!HX.ready()){if(!pill.isConnected&&document.body)document.body.appendChild(pill)}else pill.remove()};
+  setTimeout(check,900);setInterval(check,1200);addEventListener('pointerdown',()=>setTimeout(check,250),true);addEventListener('keydown',()=>setTimeout(check,250),true)})();
+
+
+
 const $=s=>document.querySelector(s);
 const pad=n=>String(n).padStart(2,'0');
 
-/* ================= SOM (WebAudio sintetizado) ================= */
-const SFX={ctx:null,on:false,
-  toggle(){if(!this.ctx){try{this.ctx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return}}this.on=!this.on;if(this.ctx.state==='suspended')this.ctx.resume();$('#snd').textContent=this.on?'🔊 SOM':'🔇 SOM';if(this.on)this.beep(660,.08,.05)},
-  beep(f=880,d=.04,v=.04,type='square'){if(!this.on)return;const c=this.ctx,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+d);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+d+.02)},
-  noise(d=.3,v=.06){if(!this.on)return;const c=this.ctx,b=c.createBuffer(1,Math.max(1,c.sampleRate*d|0),c.sampleRate),a=b.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=(Math.random()*2-1)*(1-i/a.length);const s=c.createBufferSource(),g=c.createGain(),f=c.createBiquadFilter();f.type='highpass';f.frequency.value=900;s.buffer=b;g.gain.value=v;s.connect(f).connect(g).connect(c.destination);s.start()},
-  sweep(f1=80,f2=1600,d=1.2,v=.05){if(!this.on)return;const c=this.ctx,o=c.createOscillator(),g=c.createGain();o.type='sawtooth';o.frequency.setValueAtTime(f1,c.currentTime);o.frequency.exponentialRampToValueAtTime(f2,c.currentTime+d);g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+d);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+d)}
-};
-$('#snd').onclick=e=>{e.stopPropagation();SFX.toggle()};
+/* ================= SOM → motor HX (sons sintetizados) ================= */
+const SFX={beep:(f,d,v,type)=>HX.beep(f,d,Math.min(.09,v*1.5),type),noise:(d,v)=>HX.static(d,Math.min(1,v*9)),sweep:(a,b,d,v)=>HX.sweep(a,b,d,v)};
 
 /* ================= MATRIX RAIN ================= */
 const rain=$('#rain'),rc=rain.getContext('2d');
@@ -256,7 +361,7 @@ const fx=$('#fx'),fc=fx.getContext('2d');
 const nz=document.createElement('canvas');nz.width=200;nz.height=112;const nc=nz.getContext('2d');const nimg=nc.createImageData(200,112);
 let noiseUntil=0,noiseA=.6,introRunning=true;
 function fxR(){fx.width=innerWidth;fx.height=innerHeight}
-function noise(ms,a=.6){noiseUntil=performance.now()+ms;noiseA=a;SFX.noise(ms/1000,.07*a)}
+function noise(ms,a=.6,mute){noiseUntil=performance.now()+ms;noiseA=a;if(!mute){HX.static(ms/1000,a);HX.glitch(Math.min(.3,ms/1000),a)}}
 function drawFx(now){
   fc.clearRect(0,0,fx.width,fx.height);
   if(now<noiseUntil){
@@ -268,10 +373,10 @@ function drawFx(now){
     fc.fillStyle=GK.rnd(['rgba(0,255,156,.22)','rgba(255,42,85,.2)','rgba(255,255,255,.15)']);fc.fillRect(0,Math.random()*fx.height,fx.width,1+Math.random()*3);
   }
 }
-function jolt(){const i=$('#intro');i.classList.remove('jolt');void i.offsetWidth;i.classList.add('jolt')}
+function jolt(){HX.glitch(.18,.6);const i=$('#intro');i.classList.remove('jolt');void i.offsetWidth;i.classList.add('jolt')}
 
 /* ================= TIMECODE ================= */
-const T0=performance.now(),INTRO_LEN=15.5;
+let T0=performance.now();const INTRO_LEN=15.5;
 function timecode(now){const t=(now-T0)/1000,f=Math.floor((t%1)*24),s=Math.floor(t)%60,m=Math.floor(t/60);$('#tc').textContent=`00:${pad(m)}:${pad(s)}:${pad(f)}`;$('#scrub i').style.width=Math.min(100,t/INTRO_LEN*100)+'%'}
 
 /* ================= LOOP ================= */
@@ -305,10 +410,10 @@ async function typeLine(txt,status,cls){
   for(let i=0;i<txt.length;i++){
     if(SKIP){s.textContent=txt;break}
     s.textContent=txt.slice(0,i+1)+(Math.random()<.35?GK.rnd(GK.SYM):'');
-    if(i%3===0)SFX.beep(1400+Math.random()*900,.012,.018);
+    HX.key(txt[i]===' ',.85);
     await wait(txt[i]==='.'?2:13);
   }
-  s.textContent=txt;
+  s.textContent=txt;HX.key(true,1);
   if(status){const st=document.createElement('span');st.className=cls;st.textContent=status;d.appendChild(st);SFX.beep(cls==='fail'?180:cls==='warn'?420:980,.07,.04)}
   if(cls==='fail'){noise(180,.35);jolt();
     const lines=[...term.querySelectorAll('div span:first-child')];const keep=lines.map(l=>l.textContent);
@@ -349,14 +454,14 @@ async function intro(){
   await wait(900);
   await runProgress(2600);
   await wait(500);
-  noise(650,.75);jolt();SFX.sweep(1800,60,.8,.06);
+  noise(650,.75,true);jolt();HX.tvOff(1);
   $('#core').classList.replace('on','off');const al=$('#alert');al.dataset.stop=1;al.style.opacity=0;
   await wait(380);
   const tw=$('#titleWrap'),ti=$('#title'),su=$('#sub');tw.style.opacity=1;
   if(!SKIP){GK.scramble(su,'// ACESSO TOTAL CONCEDIDO //',1500);await GK.scramble(ti,'SYSTEM BREACH',1300)}
   GK.auto(ti);
   await wait(800);
-  ti.classList.add('is-glitching');GK.set(ti,'5Y57€M 8R34(#');SFX.noise(.2,.05);await wait(260);ti.classList.remove('is-glitching');GK.set(ti,'SYSTEM BREACH');
+  ti.classList.add('is-glitching');GK.set(ti,'5Y57€M 8R34(#');HX.glitch(.22,.8);await wait(260);ti.classList.remove('is-glitching');GK.set(ti,'SYSTEM BREACH');
   await wait(1400);
   noise(350,.5);
   revealHub();
@@ -394,8 +499,8 @@ function buildGrid(){
     <span class="go">ACESSAR ▸</span></a>`).join('');
   document.querySelectorAll('.card').forEach(c=>{
     const h=c.querySelector('h3 span'),orig=h.textContent;let busy=false;
-    c.addEventListener('mouseenter',async()=>{if(busy)return;busy=true;SFX.beep(1200,.03,.03);h.classList.add('is-glitching');for(let k=0;k<5;k++){GK.set(h,GK.leet(orig,.7,.15));await GK.sleep(50)}await GK.scramble(h,orig,350);h.classList.remove('is-glitching');busy=false});
-    c.addEventListener('click',e=>{e.preventDefault();noise(300,.7);SFX.sweep(200,2400,.35,.05);document.body.style.transition='filter .3s';document.body.style.filter='brightness(2) hue-rotate(60deg)';setTimeout(()=>location.href=c.getAttribute('href'),300)});
+    c.addEventListener('mouseenter',async()=>{if(busy)return;busy=true;HX.glitch(.1,.45);h.classList.add('is-glitching');for(let k=0;k<5;k++){GK.set(h,GK.leet(orig,.7,.15));await GK.sleep(50)}await GK.scramble(h,orig,350);h.classList.remove('is-glitching');busy=false});
+    c.addEventListener('click',e=>{e.preventDefault();noise(300,.7,true);HX.tvOff(1);document.body.style.transition='filter .3s';document.body.style.filter='brightness(2) hue-rotate(60deg)';setTimeout(()=>location.href=c.getAttribute('href'),480)});
   });
 }
 function hubLive(){
@@ -412,7 +517,7 @@ async function typeHero(){
 }
 let revealed=false;
 function revealHub(){
-  if(revealed)return;revealed=true;SKIP=true;introRunning=false;
+  if(revealed)return;revealed=true;SKIP=true;introRunning=false;HX.tvOn(.9);
   document.body.classList.add('hub');rain.classList.add('on','dim');
   setTimeout(()=>{$('#intro').style.display='none'},900);
   document.querySelectorAll('#hub [data-glitch]').forEach(GK.auto);
@@ -421,8 +526,22 @@ function revealHub(){
 buildGrid();hubLive();
 $('#skip').onclick=e=>{e.stopPropagation();SKIP=true;noise(250,.6);revealHub()};
 $('#replay').onclick=()=>location.reload();
-addEventListener('keydown',e=>{if(!revealed&&(e.key==='Escape'||e.key===' '||e.key==='Enter')){SKIP=true;noise(250,.6);revealHub()}});
-intro();
+addEventListener('keydown',e=>{if(!revealed&&!window.gateOpen&&(e.key==='Escape'||e.key===' '||e.key==='Enter')){SKIP=true;noise(250,.6);revealHub()}});
+
+/* tela de início: só aparece se o navegador bloquear o áudio, para a intro já começar com som */
+window.gateOpen=false;
+async function startWithGate(){
+  await new Promise(r=>setTimeout(r,300));
+  if(HX.isOn()&&!HX.ready()){
+    window.gateOpen=true;
+    const st=document.createElement('style');st.textContent='#hx-gate{position:fixed;inset:0;z-index:500;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;color:#00ff9c;font-family:"Share Tech Mono",Consolas,monospace;letter-spacing:.2em;cursor:pointer}#hx-gate button{font:700 clamp(18px,2.4vw,30px) Orbitron,sans-serif;letter-spacing:.18em;color:#000;background:#00ff9c;border:0;padding:18px 34px;cursor:pointer;box-shadow:0 0 40px rgba(0,255,156,.6);animation:hxG 1.1s steps(2) infinite}@keyframes hxG{50%{box-shadow:0 0 10px rgba(0,255,156,.3);filter:brightness(.8)}}#hx-gate p{font-size:12px;opacity:.75;line-height:2}#hx-gate::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}';document.head.appendChild(st);
+    const g=document.createElement('div');g.id='hx-gate';g.innerHTML='<div style="font-size:11px;opacity:.6">BREACH//OS · TRANSMISSÃO PRONTA</div><button type="button">▶ INICIAR TRANSMISSÃO</button><p>🔊 som ativado · clique ou pressione qualquer tecla<br>[M] deixa mudo</p>';document.body.appendChild(g);
+    await new Promise(res=>{const go=e=>{if(e.type==='keydown'&&(e.key==='m'||e.key==='M'))return;g.removeEventListener('click',go);removeEventListener('keydown',go);res()};g.addEventListener('click',go);addEventListener('keydown',go)});
+    HX.ensure();g.remove();window.gateOpen=false;
+  }
+  T0=performance.now();intro();
+}
+startWithGate();
 </script>
 </body>
 </html>
