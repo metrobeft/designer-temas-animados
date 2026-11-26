@@ -4,21 +4,17 @@ Visual de anime e mangá: abertura de série, pétalas de sakura, linhas de velo
 
 Comece pelo [`index.html`](index.html): uma **abertura em estilo anime** (pétala caindo, amanhecer com 春 e créditos, cortes 夢 · 光 · 心 com ドーン！, logo ANIME montando letra por letra) e depois o hub com os 8 episódios.
 
-## A mascote: Hana (花)
+## Mascote
 
-A **Hana** é uma personagem **original deste projeto**: uma idol virtual com coques rosa-lilás, fone com orelhas de gato, microfone e jaqueta com estrela. Ela é desenhada inteira em SVG (dá para editar no próprio `index.html`), pisca, acena e balança. Aparece no fim da abertura e no hub.
+O tema exibe a mascote configurada em [`mascote/mascote.png`](mascote/mascote.png) no fim da abertura e no hub, com animação de flutuação e balões de fala.
 
-> Por que não usar uma personagem famosa? Personagens como as de Vocaloid pertencem às suas empresas e têm licenças próprias (normalmente só uso não comercial, com regras), o que não combina com este repositório público em licença MIT. A Hana pode ser usada livremente junto com o projeto.
-
-## Mascote personalizada
-
-Dá para trocar a Hana por uma imagem sua: salve o arquivo em [`mascote/`](mascote/) e preencha o bloco `MASCOTE PERSONALIZADA` no `index.html` (arquivo, nome e crédito). Instruções e cuidados com direitos em [`mascote/LEIA-ME.md`](mascote/LEIA-ME.md).
+Para trocar a imagem, salve o novo arquivo em [`mascote/`](mascote/) e atualize o bloco `MASCOTE PERSONALIZADA` no `index.html` (arquivo, nome, fala e crédito). Se o campo `arquivo` ficar vazio ou o arquivo não for encontrado, o tema exibe a personagem reserva **Hana** em SVG. Veja mais detalhes e cuidados de direitos em [`mascote/LEIA-ME.md`](mascote/LEIA-ME.md).
 
 ## Episódios
 
 | # | Página | O que tem | Controles |
 |---|---|---|---|
-| 00 | [`index.html`](index.html) | Abertura de anime + hub de episódios + Hana | PULAR, SOM, REVER ABERTURA |
+| 00 | [`index.html`](index.html) | Abertura de anime + hub de episódios + mascote | PULAR, SOM, REVER ABERTURA |
 | 01 | [`01-sakura-storm.html`](01-sakura-storm.html) | Cerejeira procedural, tempestade de pétalas, haicais originais na vertical, lanternas à noite | mouse = vento · clique = rajada · `N` noite/dia |
 | 02 | [`02-speed-lines.html`](02-speed-lines.html) | Carregar a aura: linhas de concentração, rachaduras, pedras flutuando, quadro de impacto invertido | segurar clique ou `Espaço` · soltar = liberar |
 | 03 | [`03-manga-panels.html`](03-manga-panels.html) | Página de mangá que se desenha (leitura da direita para a esquerda), retícula, olhos, balões, virada de página | clique = próximo quadro · `A` auto · `Espaço` virar |

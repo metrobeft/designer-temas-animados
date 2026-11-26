@@ -172,20 +172,20 @@ body.hub .ticker{opacity:1}
 .idol .note{animation:note 3s linear infinite;font-family:'Dela Gothic One',sans-serif}
 @keyframes note{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(26px,-90px);opacity:0}}
 .idol .cup{animation:flk 1.4s steps(2) infinite}
-#idolIntro{position:absolute;right:4vw;bottom:10vh;width:min(24vw,290px);aspect-ratio:220/300;transform:translateY(130%) rotate(12deg);transition:transform .9s cubic-bezier(.3,1.6,.5,1)}
+#idolIntro{position:absolute;right:2.5vw;bottom:10vh;width:min(24vw,300px);max-height:68vh;aspect-ratio:698/1080;transform:translateY(130%) rotate(12deg);transition:transform .9s cubic-bezier(.3,1.6,.5,1)}
 #idolIntro.on{transform:none}
-.bubble{position:absolute;left:-46%;top:6%;background:#fff;color:var(--ink);font-weight:800;font-size:clamp(12px,1.2vw,16px);padding:10px 16px;border:3px solid var(--ink);border-radius:22px;box-shadow:5px 5px 0 var(--p);white-space:nowrap;transform:scale(0) rotate(-6deg);transform-origin:right bottom;transition:transform .45s cubic-bezier(.3,1.9,.5,1) .5s}
+.bubble{position:absolute;right:72%;top:2%;background:#fff;color:var(--ink);font-weight:800;font-size:clamp(12px,1.2vw,16px);padding:10px 16px;border:3px solid var(--ink);border-radius:22px;box-shadow:5px 5px 0 var(--p);white-space:nowrap;transform:scale(0) rotate(-6deg);transform-origin:right bottom;transition:transform .45s cubic-bezier(.3,1.9,.5,1) .5s}
 .bubble::after{content:'';position:absolute;right:-14px;bottom:10px;border:9px solid transparent;border-left:16px solid var(--ink)}
 .on>.bubble,.hero .bubble{transform:scale(1) rotate(-6deg)}
 .hero{display:flex;align-items:center;gap:30px}
 .hero .txt{flex:1;min-width:0}
-.idolBox{position:relative;width:min(210px,26vw);aspect-ratio:220/300;flex-shrink:0;margin-right:2vw}
-.idolBox .bubble{left:-70%;top:2%}
-.idol-name{position:absolute;bottom:-6px;right:0;font-family:Bangers,cursive;font-size:15px;letter-spacing:.15em;color:var(--y);text-shadow:2px 2px 0 var(--ink)}
+.idolBox{position:relative;width:min(210px,26vw);aspect-ratio:698/1080;flex-shrink:0;margin-right:2vw}
+.idolBox .bubble{right:74%;top:3%}
+.idol-name{position:absolute;bottom:-8px;right:0;font-family:Bangers,cursive;font-size:15px;letter-spacing:.15em;color:var(--y);text-shadow:2px 2px 0 var(--ink);white-space:nowrap}
 @media (max-width:760px){#idolIntro,.idolBox{display:none}}
 /* ===== MASCOTE PERSONALIZADA (imagem do usuário) ===== */
-.idol-img{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(5px 5px 0 rgba(20,10,34,.45)) drop-shadow(0 0 24px rgba(255,126,182,.25));animation:bob 2.4s ease-in-out infinite}
-.idol-credit{position:absolute;left:-40%;right:-6%;bottom:-34px;text-align:right;font-size:9.5px;font-weight:500;letter-spacing:.03em;line-height:1.35;color:rgba(255,255,255,.65)}
+.idol-img{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(5px 5px 0 rgba(20,10,34,.45)) drop-shadow(0 0 24px rgba(127,231,255,.3));animation:bob 2.4s ease-in-out infinite}
+.idol-credit{position:absolute;left:-70%;right:0;top:calc(100% + 10px);text-align:right;font-size:9.5px;font-weight:500;letter-spacing:.03em;line-height:1.35;color:rgba(255,255,255,.65)}
 
 @media (max-width:700px){.title-jp-v{display:none}.lb{font-size:9px;letter-spacing:.08em}.cut .k{font-size:15vw}}
 </style>
@@ -216,7 +216,7 @@ body.hub .ticker{opacity:1}
     <div class="lg-main" id="lgMain"><span style="--rot:-4deg">A</span><span style="--rot:3deg">N</span><span style="--rot:-2deg">I</span><span style="--rot:4deg">M</span><span style="--rot:-3deg">E</span></div>
     <div class="lg-jp" id="lgJp">アニメ・テーマ</div>
     <div class="lg-sub" id="lgSub"></div>
-    <div id="idolIntro"><div class="bubble">よろしくね！ ✿ Oi, eu sou a HANA!</div></div>
+    <div id="idolIntro"><div class="bubble">よろしくね！ ♪ Oi, eu sou a Miku!</div></div>
   </div>
 </div>
 <div id="flash"></div><div id="wipe"></div>
@@ -241,7 +241,7 @@ body.hub .ticker{opacity:1}
       <h2><span class="ak-jp" data-jp="エピソードを選んでね！">ESCOLHA UM EPISÓDIO</span></h2>
       <p id="heroTxt"></p>
     </div>
-    <div class="idolBox" id="idolHub"><div class="bubble">ようこそ！ Bem-vindo(a)!</div><span class="idol-name">HANA · 花</span></div>
+    <div class="idolBox" id="idolHub"><div class="bubble">ようこそ！ Bem-vindo(a)!</div><span class="idol-name">HATSUNE MIKU · 初音ミク</span></div>
   </section>
   <section class="grid" id="grid"></section>
 </main>
@@ -428,26 +428,42 @@ function IDOL(k){return `<svg class="idol" viewBox="0 0 220 300" aria-label="Han
  <rect x="38" y="86" width="24" height="42" rx="11" fill="#2b1d4f" stroke="#140a22" stroke-width="2.5"/><rect x="158" y="86" width="24" height="42" rx="11" fill="#2b1d4f" stroke="#140a22" stroke-width="2.5"/>
  <circle class="cup" cx="50" cy="107" r="6" fill="#7fe7ff"/><circle class="cup" cx="170" cy="107" r="6" fill="#7fe7ff" style="animation-delay:-.7s"/>
 </g></svg>`}
-$('#idolIntro').insertAdjacentHTML('afterbegin',IDOL('A'));
-$('#idolHub').insertAdjacentHTML('afterbegin',IDOL('B'));
-
 /* ================= MASCOTE PERSONALIZADA =================
-   Para trocar a Hana por uma imagem sua (PNG/WebP/GIF com fundo transparente fica melhor):
+   Para trocar a mascote por outra imagem (PNG/WebP/GIF com fundo transparente fica melhor):
    1) salve o arquivo na pasta  tema-anime/mascote/
    2) preencha os campos abaixo  (veja tema-anime/mascote/LEIA-ME.md)
    Use só imagens que você tem o direito de usar e escreva o crédito/licença que o dono exige.
-   Com "arquivo" vazio, a página mostra a Hana. */
+   Com "arquivo" vazio (ou se a imagem não carregar), a página mostra a Hana como reserva. */
 const MASCOTE={
-  arquivo:'',   // ex.: 'mascote/mascote.png'
-  nome:'',      // ex.: nome da personagem (aparece no hub e no balão da abertura)
-  credito:''    // ex.: autor / empresa / licença exigidos pelo dono da imagem
+  arquivo:'mascote/mascote.png',
+  nome:'HATSUNE MIKU · 初音ミク',
+  fala:'よろしくね！ ♪ Oi, eu sou a Miku!',
+  credito:'Hatsune Miku © Crypton Future Media, INC. (uso não comercial)'
 };
-if(MASCOTE.arquivo){const img=new Image();img.onload=()=>{
-  for(const id of ['#idolIntro','#idolHub']){const svg=$(id).querySelector('svg.idol');if(svg){const el=document.createElement('img');el.className='idol idol-img';el.src=MASCOTE.arquivo;el.alt=MASCOTE.nome||'mascote';svg.replaceWith(el)}}
+function showHana(){
+  for(const [id,k] of [['#idolIntro','A'],['#idolHub','B']]){
+    const cur=$(id).querySelector('.idol');
+    if(cur)cur.remove();
+    $(id).insertAdjacentHTML('afterbegin',IDOL(k));
+  }
+  const nm=document.querySelector('#idolHub .idol-name');if(nm)nm.textContent='HANA · 花';
+  const b=document.querySelector('#idolIntro .bubble');if(b)b.textContent='よろしくね！ ✿ Oi, eu sou a HANA!';
+  document.querySelector('#idolHub .idol-credit')?.remove();
+}
+if(MASCOTE.arquivo){
+  for(const id of ['#idolIntro','#idolHub']){
+    const el=document.createElement('img');
+    el.className='idol idol-img';
+    el.src=MASCOTE.arquivo;
+    el.alt=MASCOTE.nome||'mascote';
+    $(id).prepend(el);
+  }
   const nm=document.querySelector('#idolHub .idol-name');if(nm)nm.textContent=MASCOTE.nome||'MASCOTE';
-  const b=document.querySelector('#idolIntro .bubble');if(b&&MASCOTE.nome)b.textContent=`♪ Oi! Eu sou ${MASCOTE.nome}!`;
+  const b=document.querySelector('#idolIntro .bubble');if(b)b.textContent=MASCOTE.fala||(MASCOTE.nome?`♪ Oi! Eu sou ${MASCOTE.nome}!`:'よろしくね！ ♪ Bem-vindo(a)!');
   if(MASCOTE.credito){const cr=document.createElement('div');cr.className='idol-credit';cr.textContent=MASCOTE.credito;$('#idolHub').appendChild(cr)}
-};img.onerror=()=>console.warn('Mascote personalizada não encontrada em',MASCOTE.arquivo,'— mostrando a Hana.');img.src=MASCOTE.arquivo}
+  const probe=$('#idolHub img.idol-img');
+  if(probe)probe.onerror=()=>{console.warn('Mascote personalizada não encontrada em',MASCOTE.arquivo,'— mostrando a Hana.');showHana()};
+}else{showHana()}
 /* ================= HUB ================= */
 const EPS=[
  {f:'01-sakura-storm.html',n:'第一話',t:'SAKURA STORM',jp:'桜吹雪',d:'Cerejeira ao entardecer, tempestade de pétalas guiada pelo vento do mouse e haicais escritos na vertical.',tags:['PÉTALAS','VENTO','HAIKU'],c:'#ff7eb6',ic:'sakura'},

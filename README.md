@@ -15,7 +15,7 @@ Coleção aberta de páginas web animadas, feitas só com **HTML + CSS + JavaScr
 | Pasta | Tema | Status | Conteúdo |
 |---|---|---|---|
 | [`tema-hacker/`](tema-hacker/) | Hacker · glitch · matrix · HUD | ✅ pronto | Intro estilo vídeo + 8 módulos animados |
-| [`tema-anime/`](tema-anime/) | Anime · sakura · mangá · neon | ✅ pronto | Abertura de anime + 8 episódios + mascote original Hana |
+| [`tema-anime/`](tema-anime/) | Anime · sakura · mangá · neon | ✅ pronto | Abertura de anime + 8 episódios + mascote personalizada |
 
 ## Como abrir
 
@@ -49,6 +49,7 @@ python -m http.server 8000
 │   └── README.md
 └── tema-anime/
     ├── index.html      ← abertura de anime + hub
+    ├── mascote/        ← imagem da mascote personalizada
     ├── 01-sakura-storm.html
     ├── ...
     ├── 08-koi-pond.html
@@ -73,4 +74,6 @@ Cada página é um arquivo único e independente (HTML, CSS e JS juntos), então
 
 ## Licença
 
-[MIT](LICENSE) — use, modifique e compartilhe à vontade.
+Código-fonte sob licença [MIT](LICENSE) — use, modifique e compartilhe à vontade.
+
+> **Aviso de imagem:** o arquivo [`tema-anime/mascote/mascote.png`](tema-anime/mascote/mascote.png) retrata a personagem **Hatsune Miku** (© Crypton Future Media, INC.) e **não** é coberto pela licença MIT — uso apenas não comercial, conforme a licença da personagem.
