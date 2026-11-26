@@ -20,6 +20,8 @@ No hub: o **Mapa dos Reinos** é clicável (cada lugar abre o capítulo), os her
 
 Ilustrações originais em SVG animado (respiram, piscam, capas e cabelos balançam, armas brilham), na pasta [`personagens/`](personagens/). Dá para abrir cada arquivo direto no navegador ou usar como `<img>` em outro projeto.
 
+Nos capítulos II e III, Lyria e Durgan ficam **embutidos na página com braços articulados**: a Lyria mira na direção do clique, encaixa a flecha, puxa a corda e solta; o Durgan ergue o martelo e golpeia a bigorna (as faíscas e o som saem no momento do impacto).
+
 | Arquivo | Personagem | Povo · classe | Lar |
 |---|---|---|---|
 | [`humano-aldric.svg`](personagens/humano-aldric.svg) | Sir Aldric | Humano · cavaleiro | Valmor (cap. I) |
@@ -33,12 +35,12 @@ Ilustrações originais em SVG animado (respiram, piscam, capas e cabelos balan�
 |---|---|---|---|
 | 00 | [`index.html`](index.html) | Prólogo + Mapa dos Reinos clicável + heróis que falam + cartões dos capítulos | PULAR, SOM, REVER ABERTURA |
 | I | [`01-reino-humano.html`](01-reino-humano.html) | **A cidade de Valmor**: castelo com estandartes do sol, muralhas, casas com chaminés, moinho, guardas com lanternas à noite e Sir Aldric no caminho | clique no sino = badalar · clique no céu = fogos (noite) ou pombas (dia) · clique numa casa = acender a janela · `N` dia/noite · `F` festival |
-| II | [`02-floresta-elfica.html`](02-floresta-elfica.html) | **O bosque de Sylvaren**: floresta em 4 camadas com paralaxe, árvores com runas, casas nas copas, pontes, cachoeira, coruja, vaga-lumes e espíritos de luz | clique = Lyria dispara uma flecha de luz (flores brotam onde cai) · segurar = espíritos seguem · `L` lanternas/luar · `S` canção élfica |
-| III | [`03-montanhas-anas.html`](03-montanhas-anas.html) | **A forja de Durnhelm**: salão com pilares rúnicos, janela para os picos nevados, canal de lava, vagonetes, braseiros e Durgan na bigorna | clique na bigorna ou `Espaço` = martelar (12 golpes forjam uma arma com nome) · `B` ou clique no fole = atiçar o fogo · clique no Durgan = conversar |
+| II | [`02-floresta-elfica.html`](02-floresta-elfica.html) | **O bosque de Sylvaren**: floresta em 4 camadas com paralaxe, árvores com runas, casas nas copas, pontes, cachoeira, coruja, vaga-lumes e espíritos de luz | clique = Lyria mira, puxa a corda e dispara uma flecha de luz (flores brotam onde cai) · segurar = espíritos seguem · `L` lanternas/luar · `S` canção élfica |
+| III | [`03-montanhas-anas.html`](03-montanhas-anas.html) | **A forja de Durnhelm**: salão com pilares rúnicos, janela para os picos nevados, canal de lava, vagonetes, braseiros e Durgan na bigorna | clique na bigorna ou `Espaço` = Durgan ergue o martelo e golpeia (12 golpes forjam uma arma com nome) · `B` ou clique no fole = atiçar o fogo · clique no Durgan = conversar |
 | IV | [`04-planaltos.html`](04-planaltos.html) | **Onde as pedras cantam**: mesas ao pôr do sol, torre em ruínas, ilhas flutuantes com cachoeiras, grifo, revoadas e centenas de folhas de grama ao vento | clique nas 7 pedras = cada uma toca uma nota (todas acesas = feixe de luz + aurora) · mouse = rajadas de vento · `W` tempestade · `D` dia/noite |
 | V | [`05-masmorra.html`](05-masmorra.html) | **Os salões sem luz**: corredor em perspectiva no escuro, só a tocha ilumina — baús, esqueletos, olhos que fogem da luz, goteiras e 5 tipos de andar gerados ao acaso | mouse = tocha · clique = abrir baú / chacoalhar esqueleto / descer a escada · `T` tocha forte |
 | VI | [`06-torre-do-mago.html`](06-torre-do-mago.html) | **O caldeirão de Orvyn**: janela redonda com a lua, estantes de poções, velas flutuantes, mapa celeste, coruja, bola de cristal e grimório | `1`–`6` ou clique = ingredientes (3 criam uma poção com nome e efeito na sala) · `P` virar página do grimório · `R` esvaziar o caldeirão |
-| VII | [`07-covil-do-dragao.html`](07-covil-do-dragao.html) | **O tesouro de Ignaroth**: caverna com lava e montanhas de ouro e o dragão dormindo, que ronca, solta fumaça e às vezes abre um olho | clique no ouro = pegar moedas · mouse rápido = barulho (100% acorda o dragão: rugido e fogo) · `S` andar furtivo |
+| VII | [`07-covil-do-dragao.html`](07-covil-do-dragao.html) | **O tesouro de Ignaroth**: caverna com lava e montanhas de ouro e o dragão dormindo, que ronca, solta fumaça e às vezes abre um olho; ao acordar, abre a boca e cospe fogo | clique no ouro = pegar moedas · mouse rápido = barulho (100% acorda o dragão: rugido e fogo) · `S` andar furtivo |
 | VIII | [`08-salao-dos-herois.html`](08-salao-dos-herois.html) | **Escolha seu campeão**: salão do trono com vitral, estandartes dos 4 povos, heróis em pedestais, atributos, habilidades e barra do grupo | `←`/`→`, `A`/`D`, `1`–`4` ou clique = trocar herói · `Enter`/`Espaço`/ESCOLHER = chamar para o grupo |
 
 Os controles também aparecem no canto inferior direito de cada página.

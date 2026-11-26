@@ -64,8 +64,7 @@ body{background:#0c0807}
 #stage.shake{animation:shk .28s}
 @keyframes shk{0%,100%{transform:none}20%{transform:translate(-6px,4px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,2px)}80%{transform:translate(2px,-1px)}}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
-#durgan{position:absolute;z-index:5;transform-origin:50% 100%;transition:transform .12s cubic-bezier(.3,1.5,.5,1);cursor:pointer;filter:drop-shadow(0 0 24px rgba(255,120,40,.22));user-select:none;-webkit-user-drag:none}
-#durgan.lean{transform:rotate(-6deg) translateX(-10px) scaleY(.97)}
+#durgan{position:absolute;z-index:5;transform:scaleX(-1);overflow:visible;cursor:pointer;filter:drop-shadow(0 0 24px rgba(255,120,40,.22));user-select:none;-webkit-user-select:none}
 .forge{position:fixed;top:20px;right:20px;z-index:20;width:280px;padding:14px 16px 12px}
 .forge h3{font-family:Cinzel,serif;font-weight:900;font-size:12px;letter-spacing:.32em;color:var(--fi);text-align:center}
 .forge .lbl{font-family:Cinzel,serif;font-weight:700;font-size:11px;letter-spacing:.2em;color:var(--pa);display:flex;justify-content:space-between;margin-top:9px}
@@ -91,7 +90,111 @@ body{background:#0c0807}
 </style>
 </head>
 <body>
-<div id="stage"><canvas id="cv"></canvas><img id="durgan" src="personagens/anao-durgan.svg" alt="Durgan Barba-de-Brasa, guerreiro anão de Durnhelm" draggable="false"></div>
+<div id="stage"><canvas id="cv"></canvas><svg id="durgan" viewBox="0 0 320 480" role="img" aria-label="Durgan Barba-de-Brasa, guerreiro anão de Durnhelm">
+<defs>
+ <linearGradient id="dwst" x1="0" x2="1"><stop offset="0" stop-color="#5d6478"/><stop offset=".42" stop-color="#e8ecf4"/><stop offset=".58" stop-color="#aeb6c8"/><stop offset="1" stop-color="#4f566a"/></linearGradient>
+ <linearGradient id="dwsth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d6478"/><stop offset=".42" stop-color="#e8ecf4"/><stop offset=".58" stop-color="#aeb6c8"/><stop offset="1" stop-color="#4f566a"/></linearGradient>
+ <linearGradient id="dwsv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2f4f9"/><stop offset="1" stop-color="#78809a"/></linearGradient>
+ <linearGradient id="dwgold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2c0"/><stop offset=".5" stop-color="#e8b84a"/><stop offset="1" stop-color="#8f5f17"/></linearGradient>
+ <linearGradient id="dwlea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a32"/><stop offset="1" stop-color="#4a2c16"/></linearGradient>
+ <linearGradient id="dwbeard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f08a3a"/><stop offset=".6" stop-color="#c9551f"/><stop offset="1" stop-color="#8e3412"/></linearGradient>
+ <linearGradient id="dwshade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient>
+ <radialGradient id="dwskin" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#f6c9a4"/><stop offset="1" stop-color="#d9946f"/></radialGradient>
+ <radialGradient id="dwember"><stop offset="0" stop-color="#fff0b0"/><stop offset=".4" stop-color="#ff9a3d" stop-opacity=".8"/><stop offset="1" stop-color="#ff5a1a" stop-opacity="0"/></radialGradient>
+ <pattern id="dwmail" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#868da0"/><path d="M0 6 Q4 0 8 6" stroke="#454b5c" stroke-width="1.4" fill="none"/><path d="M-4 3 Q0 -3 4 3 M4 3 Q8 -3 12 3" stroke="#c9cfdb" stroke-width=".8" fill="none"/></pattern>
+</defs>
+<style>
+ #durgan .ln{stroke:#1b1209;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+ #durgan .dwb{animation:dwBreath 3s ease-in-out infinite}
+ @keyframes dwBreath{50%{transform:translateY(-3px) scaleX(1.004)}}
+ #durgan .dwbeard{transform-origin:160px 228px;animation:dwBd 3.4s ease-in-out infinite}
+ @keyframes dwBd{50%{transform:rotate(1.6deg)}}
+ #durgan .dweye{transform-box:fill-box;transform-origin:center;animation:dwBl 4.4s infinite}
+ @keyframes dwBl{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+ #durgan .dwrune{animation:dwRune 1.8s ease-in-out infinite}
+ @keyframes dwRune{50%{opacity:.4}}
+</style>
+<ellipse cx="160" cy="463" rx="112" ry="13" fill="#000" opacity=".38"/>
+<g id="dwLean"><g class="dwb">
+ <!-- pernas e botas -->
+ <path class="ln" d="M118 366 L114 436 L154 436 L156 366Z" fill="#5a3a22"/>
+ <path class="ln" d="M164 366 L166 436 L206 436 L202 366Z" fill="#5a3a22"/>
+ <path class="ln" d="M102 462 Q100 432 124 426 L156 426 L158 462Z" fill="#3a2414"/>
+ <path class="ln" d="M162 462 L164 426 L196 426 Q220 432 218 462Z" fill="#3a2414"/>
+ <path class="ln" d="M102 462 Q102 444 116 440 L128 440 L128 462Z" fill="url(#dwsv)" stroke-width="2.4"/>
+ <path class="ln" d="M218 462 Q218 444 204 440 L192 440 L192 462Z" fill="url(#dwsv)" stroke-width="2.4"/>
+ <path d="M112 426 H158 M162 426 H208" stroke="#8f5f17" stroke-width="4"/>
+ <!-- cota de malha, peitoral e cinto -->
+ <path class="ln" d="M88 262 Q160 236 232 262 L240 378 Q160 396 80 378Z" fill="url(#dwmail)"/>
+ <path d="M88 262 Q160 236 232 262 L240 378 Q160 396 80 378Z" fill="url(#dwshade)"/>
+ <path class="ln" d="M80 372 Q160 392 240 372 L242 386 Q160 404 78 386Z" fill="url(#dwlea)"/>
+ <path class="ln" d="M110 262 Q160 246 210 262 L206 330 Q160 344 114 330Z" fill="url(#dwst)"/>
+ <path class="ln" d="M82 342 Q160 358 238 342 L238 368 Q160 384 82 368Z" fill="url(#dwlea)"/>
+ <rect class="ln" x="138" y="346" width="44" height="32" rx="4" fill="url(#dwgold)"/>
+ <path class="dwrune" d="M160 351 V373 M160 356 L169 362 L160 368" stroke="#ff7a1a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+ <!-- braço esquerdo, punho no cinto -->
+ <path d="M98 270 Q64 300 72 330 Q78 350 104 352" stroke="#1b1209" stroke-width="36" fill="none" stroke-linecap="round"/>
+ <path d="M98 270 Q64 300 72 330 Q78 350 104 352" stroke="url(#dwmail)" stroke-width="30" fill="none" stroke-linecap="round"/>
+ <path d="M72 322 Q78 344 98 350" stroke="#1b1209" stroke-width="30" fill="none" stroke-linecap="round"/>
+ <path d="M72 322 Q78 344 98 350" stroke="url(#dwlea)" stroke-width="24" fill="none" stroke-linecap="round"/>
+ <circle class="ln" cx="108" cy="352" r="13" fill="url(#dwskin)"/>
+ <!-- BRAÇO DO MARTELO: desenhado apontando para a direita (0°) e girado pelo script em volta do ombro (222,262) -->
+ <g id="dwArm" transform="rotate(-68 222 262)">
+  <path d="M222 262 L264 262" stroke="#1b1209" stroke-width="36" stroke-linecap="round"/>
+  <path d="M222 262 L264 262" stroke="url(#dwmail)" stroke-width="30" stroke-linecap="round"/>
+  <path d="M256 262 L280 262" stroke="#1b1209" stroke-width="30" stroke-linecap="round"/>
+  <path d="M256 262 L280 262" stroke="url(#dwlea)" stroke-width="24" stroke-linecap="round"/>
+  <path d="M276 262 L360 262" stroke="#1b1209" stroke-width="14" stroke-linecap="round"/>
+  <path d="M276 262 L360 262" stroke="#6b4220" stroke-width="8" stroke-linecap="round"/>
+  <path d="M300 262 L318 262" stroke="#2a1a0c" stroke-width="10"/>
+  <g>
+   <rect class="ln" x="345" y="224" width="34" height="76" rx="5" fill="url(#dwst)"/>
+   <rect x="350" y="225.5" width="6" height="73" fill="url(#dwgold)"/>
+   <rect x="368" y="225.5" width="6" height="73" fill="url(#dwgold)"/>
+   <rect class="ln" x="341" y="216" width="42" height="11" rx="3" fill="url(#dwsv)" stroke-width="2.4"/>
+   <rect class="ln" x="341" y="297" width="42" height="11" rx="3" fill="url(#dwsv)" stroke-width="2.4"/>
+   <circle class="dwrune" cx="362" cy="262" r="17" fill="url(#dwember)"/>
+   <path d="M357 252 V272 M357 256 L366 262 L357 268" stroke="#ff8a2a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle class="ln" cx="290" cy="262" r="13" fill="url(#dwskin)"/>
+  <path d="M284 252 V272 M291 251 V273" stroke="#a8603e" stroke-width="1.6"/>
+ </g>
+ <!-- ombreiras -->
+ <path class="ln" d="M60 286 Q56 244 98 240 Q128 242 132 268 Q100 292 60 286Z" fill="url(#dwsv)"/>
+ <path d="M64 276 Q96 274 122 258" stroke="url(#dwgold)" stroke-width="4" fill="none"/>
+ <path class="ln" d="M260 286 Q264 244 222 240 Q192 242 188 268 Q220 292 260 286Z" fill="url(#dwsv)"/>
+ <path d="M256 276 Q224 274 198 258" stroke="url(#dwgold)" stroke-width="4" fill="none"/>
+ <!-- cabeça -->
+ <ellipse class="ln" cx="113" cy="206" rx="7" ry="10" fill="url(#dwskin)"/>
+ <ellipse class="ln" cx="207" cy="206" rx="7" ry="10" fill="url(#dwskin)"/>
+ <path class="ln" d="M116 190 C116 172 136 166 160 166 C184 166 204 172 204 190 L204 226 C204 240 184 248 160 248 C136 248 116 240 116 226Z" fill="url(#dwskin)"/>
+ <ellipse cx="128" cy="222" rx="9" ry="5" fill="#e8705a" opacity=".45"/><ellipse cx="192" cy="222" rx="9" ry="5" fill="#e8705a" opacity=".45"/>
+ <g class="dwbeard">
+  <path class="ln" d="M112 210 C104 262 118 304 138 334 L148 362 L160 396 L172 362 L182 334 C202 304 216 262 208 210 C198 234 184 246 160 248 C136 246 122 234 112 210Z" fill="url(#dwbeard)"/>
+  <path d="M130 258 Q136 296 150 330 M190 258 Q184 296 170 330 M160 262 L160 360 M118 236 Q122 270 136 300 M202 236 Q198 270 184 300" stroke="#8e3412" stroke-width="2" fill="none" opacity=".7"/>
+  <path class="ln" d="M134 326 Q128 356 136 384" stroke="#b44a1a" stroke-width="12" fill="none"/>
+  <path class="ln" d="M186 326 Q192 356 184 384" stroke="#b44a1a" stroke-width="12" fill="none"/>
+  <rect class="ln" x="127" y="358" width="16" height="10" rx="3" fill="url(#dwgold)" stroke-width="2"/>
+  <rect class="ln" x="179" y="358" width="16" height="10" rx="3" fill="url(#dwgold)" stroke-width="2"/>
+  <rect class="ln" x="152" y="370" width="16" height="10" rx="3" fill="url(#dwgold)" stroke-width="2"/>
+ </g>
+ <path class="ln" d="M160 226 C150 220 130 224 118 246 C134 238 148 240 160 236 C172 240 186 238 202 246 C190 224 170 220 160 226Z" fill="#b8481a"/>
+ <path id="dwMouth" d="M153 243 Q160 247 167 243" stroke="#5a1a0a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+ <path class="ln" d="M151 198 Q146 220 152 229 Q160 236 168 229 Q174 220 169 198Z" fill="#eba381"/>
+ <ellipse cx="156" cy="220" rx="3" ry="2.2" fill="#fff" opacity=".45"/>
+ <g class="dweye"><ellipse cx="139" cy="203" rx="5.5" ry="6.5" fill="#fff"/><circle cx="140" cy="204" r="3.8" fill="#5a3416"/><circle cx="139" cy="202.5" r="1.3" fill="#fff"/></g>
+ <g class="dweye"><ellipse cx="181" cy="203" rx="5.5" ry="6.5" fill="#fff"/><circle cx="180" cy="204" r="3.8" fill="#5a3416"/><circle cx="179" cy="202.5" r="1.3" fill="#fff"/></g>
+ <path class="ln" d="M122 196 Q138 182 156 192 Q140 190 124 202Z" fill="url(#dwbeard)" stroke-width="2.2"/>
+ <path class="ln" d="M198 196 Q182 182 164 192 Q180 190 196 202Z" fill="url(#dwbeard)" stroke-width="2.2"/>
+ <path class="ln" d="M110 182 C110 124 210 124 210 182Z" fill="url(#dwst)"/>
+ <path d="M160 128 L160 176" stroke="#1b1209" stroke-width="7" stroke-linecap="round"/>
+ <path d="M160 128 L160 176" stroke="url(#dwgold)" stroke-width="3.5" stroke-linecap="round"/>
+ <path d="M126 150 Q136 138 152 134" stroke="#fff" stroke-width="4" fill="none" opacity=".55" stroke-linecap="round"/>
+ <path class="ln" d="M104 172 Q160 158 216 172 L216 188 Q160 174 104 188Z" fill="url(#dwgold)"/>
+ <circle cx="120" cy="178" r="2.4" fill="#5a3a10"/><circle cx="200" cy="178" r="2.4" fill="#5a3a10"/><circle cx="140" cy="173" r="2.4" fill="#5a3a10"/><circle cx="180" cy="173" r="2.4" fill="#5a3a10"/>
+ <path class="ln" d="M154 178 L166 178 L164 206 L156 206Z" fill="url(#dwsv)" stroke-width="2.4"/>
+</g></g>
+</svg></div>
 <div class="fk-head"><h1 class="fk-title"><span data-rune>MONTANHAS DOS ANÕES</span></h1><small>CAPÍTULO III · A FORJA DE DURNHELM</small></div>
 <div class="lore fk-panel"><b>DURNHELM</b><br>Sob as neves eternas, os anões martelam o aço no ritmo do coração da montanha. Doze golpes certeiros — e a arma desperta com sua runa.</div>
 <div class="forge fk-panel">
@@ -222,6 +325,29 @@ const $=s=>document.querySelector(s),cv=$('#cv'),c=cv.getContext('2d'),R=Math.ra
 const stage=$('#stage'),dur=$('#durgan');
 let W,H,dpr,k,GY,bgB,bgF,vig,AR,ANV,FOR,BEL,LAVA,RAIL,FLOOR,PIL=[],BR=[],snow=[],embers=[],sparks=[],carts=[];
 let heat=.8,flare=0,bel=0,hits=0,made=0,strikeT=0,impact=0,finishT=0,last=performance.now(),started=false,lastCold=0,lastUi=0;
+/* ===== braço do Durgan (SVG embutido) =====
+   O braço+martelo é desenhado apontando para a direita e gira em volta do ombro (222,262).
+   No desenho sem espelho a bigorna fica à direita; na tela o SVG é espelhado (scaleX(-1)). */
+const DW={px:222,py:262,cx:140,cy:44,rest:-68,wind:-100,strike:10,s:1,left:0,top:0},dwArm=document.getElementById('dwArm'),dwLean=document.getElementById('dwLean'),dwMouth=document.getElementById('dwMouth');
+const DW_R=Math.hypot(DW.cx,DW.cy),DW_OFF=Math.atan2(DW.cy,DW.cx);
+let swingT0=-1e9,hop=0;
+const SW={wind:.15,slam:.24,hold:.34,back:.72};
+function placeDurgan(dh,top){const s=dh/480;DW.s=s;dur.style.height=dh+'px';dur.style.width=(320*s)+'px';
+  const tX=ANV.x+8*k,tY=ANV.y-15*k,pyPage=top+DW.py*s;let ty=(tY-pyPage)/s;ty=Math.max(-DW_R*.85,Math.min(DW_R*.85,ty));const tx=Math.sqrt(DW_R*DW_R-ty*ty);
+  DW.strike=(Math.atan2(ty,tx)-DW_OFF)*180/Math.PI;DW.left=tX+(tx-(320-DW.px))*s;DW.top=top;dur.style.left=DW.left+'px';dur.style.top=top+'px'}
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,eOut=t=>1-Math.pow(1-t,3),eIn=t=>t*t*t;
+function armAngle(now){const t=(now-swingT0)/1000,idle=DW.rest+Math.sin(now*.0016)*2.5;
+  if(t<0||t>SW.back)return idle;
+  if(t<SW.wind)return DW.rest+(DW.wind-DW.rest)*eOut(t/SW.wind);
+  if(t<SW.slam)return DW.wind+(DW.strike-DW.wind)*eIn((t-SW.wind)/(SW.slam-SW.wind));
+  if(t<SW.hold){const u=(t-SW.slam)/(SW.hold-SW.slam);return DW.strike-Math.sin(u*Math.PI)*7}
+  return DW.strike+(idle-DW.strike)*ease((t-SW.hold)/(SW.back-SW.hold))}
+function bodyLean(now){const t=(now-swingT0)/1000;if(t<0||t>SW.back)return 0;if(t<SW.wind)return -3*eOut(t/SW.wind);if(t<SW.slam)return -3+9*eIn((t-SW.wind)/(SW.slam-SW.wind));if(t<SW.hold)return 6;return 6*(1-ease((t-SW.hold)/(SW.back-SW.hold)))}
+function updDurgan(now,dt){const a=armAngle(now);dwArm.setAttribute('transform',`rotate(${a.toFixed(2)} ${DW.px} ${DW.py})`);hop=Math.max(0,hop-dt*4);
+  dwLean.setAttribute('transform',`translate(0 ${(-Math.sin(hop*Math.PI)*10).toFixed(2)}) rotate(${bodyLean(now).toFixed(2)} 160 470)`);
+  const t=(now-swingT0)/1000,open=t>SW.wind*.6&&t<SW.hold+.1;dwMouth.setAttribute('d',open?'M152 242 Q160 252 168 242 Q160 246 152 242Z':'M153 243 Q160 247 167 243')}
+/* ombro e ponto de contato do martelo na tela (o SVG está espelhado) */
+function dwPage(){return {x:DW.left+(320-DW.px)*DW.s,y:DW.top+DW.py*DW.s,r:DW_R*DW.s}}
 const NEED=12;
 const WEAPONS=[['Machado de Brasa Eterna','axe'],['Martelo do Trovão Profundo','hammer'],['Espada da Raiz da Montanha','sword'],['Lâmina do Juramento de Pedra','sword'],['Machado Partidor de Geleiras','axe'],['Martelo da Primeira Forja','hammer'],['Espada do Fogo Silencioso','sword'],['Machado do Rei Sob a Neve','axe'],['Martelo dos Mil Ecos','hammer'],['Espada da Estrela Caída','sword']];
 const INGOTS=['lingote de ferro rúnico','barra de aço-estelar','lingote de bronze de brasa','barra de prata profunda','lingote do coração da montanha'];
@@ -241,7 +367,7 @@ function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight
   const pw=Math.max(50,140*k);PIL=[{x:W*.02,w:pw},{x:W*.98-pw,w:pw}];
   const rn=[...FK.RUNES];PIL.forEach((P,j)=>{P.runes=[];const y0=H*.15,y1=LAVA.y1-70*k,n=Math.max(4,Math.floor((y1-y0)/(46*k)));for(let i=0;i<n;i++)P.runes.push({ch:rn[(i*5+j*7)%rn.length],y:y0+(y1-y0)*i/(n-1)})});
   BR=[{x:AR.x-aw/2-70*k,y:H*.3},{x:AR.x+aw/2+70*k,y:H*.3}];
-  const dh=Math.min(H*.5,380*k);dur.style.height=dh+'px';dur.style.left=(ANV.x+70*k)+'px';dur.style.top=(H*(pt?.83:.955)-dh)+'px';
+  const dh=Math.min(H*.5,380*k);placeDurgan(dh,H*(pt?.83:.955)-dh);
   buildBack();buildFront();
   snow=Array.from({length:Math.round(aw*.35)},()=>newFlake(true));
   if(!carts.length)carts=[0,1,2].map(i=>({x:-200-i*W*.45,v:.5+R()*.3,seed:R()}));
@@ -371,21 +497,24 @@ function drawLights(now){c.globalCompositeOperation='lighter';const M=FOR.m,fl=.
   glow(M.x,M.y-M.h*.3,(240+heat*120+flare*160)*k,'255,110,30',(.12+heat*.18+flare*.25)*fl);
   for(const b of BR){flame(b.x,b.y-2*k,58*k,(50+8*Math.sin(now*.005+b.x))*k,now+b.x*10,.9);glow(b.x,b.y-20*k,170*k,'255,130,40',.2*fl)}
   c.globalCompositeOperation='source-over'}
-function drawStrike(){if(strikeT>0){const px=ANV.x+130*k,py=ANV.y-60*k,r=Math.hypot(130*k,54*k),end=Math.atan2(ANV.y-6*k-py,ANV.x-px)-TAU;
-    c.globalCompositeOperation='lighter';c.lineCap='round';c.strokeStyle=`rgba(255,210,150,${strikeT*.45})`;c.lineWidth=26*k;c.beginPath();c.arc(px,py,r,end+1.3,end,true);c.stroke();c.strokeStyle=`rgba(255,255,240,${strikeT*.7})`;c.lineWidth=6*k;c.beginPath();c.arc(px,py,r,end+.7,end,true);c.stroke();c.globalCompositeOperation='source-over'}
+function drawStrike(now){const t=(now-swingT0)/1000;if(t>SW.wind&&t<SW.hold+.12){const P=dwPage(),cur=Math.PI-(armAngle(now)*Math.PI/180+DW_OFF),u=t<SW.slam?(t-SW.wind)/(SW.slam-SW.wind):1-(t-SW.slam)/(SW.hold+.12-SW.slam),span=1.5*Math.max(0,Math.min(1,u));
+    if(span>.02){c.globalCompositeOperation='lighter';c.lineCap='round';c.strokeStyle=`rgba(255,200,140,${.32*span})`;c.lineWidth=30*DW.s;c.beginPath();c.arc(P.x,P.y,P.r,cur+span,cur,true);c.stroke();c.strokeStyle=`rgba(255,250,230,${.55*span})`;c.lineWidth=6*DW.s;c.beginPath();c.arc(P.x,P.y,P.r,cur+span*.6,cur,true);c.stroke();c.globalCompositeOperation='source-over'}}
   if(impact>0){c.globalCompositeOperation='lighter';glow(ANV.x,ANV.y-8*k,(40+(1-impact)*110)*k,'255,230,180',impact*.9);c.strokeStyle=`rgba(255,220,160,${impact})`;c.lineWidth=3*k;c.beginPath();c.ellipse(ANV.x,ANV.y-4*k,(20+(1-impact)*120)*k,(6+(1-impact)*30)*k,0,0,TAU);c.stroke();c.globalCompositeOperation='source-over'}}
 function ui(){$('#heatBar').style.width=(heat*100).toFixed(0)+'%';$('#heatTxt').textContent=Math.round(heat*100)+'%';$('#hits').textContent=hits;$('#progBar').style.width=(hits/NEED*100)+'%'}
 function frame(now){const dt=Math.min(.05,(now-last)/1000),f=dt*60;last=now;
   heat=Math.max(0,heat-dt*.016);flare=Math.max(0,flare-dt*1.3);bel=Math.max(0,bel-dt*3);strikeT=Math.max(0,strikeT-dt*5);impact=Math.max(0,impact-dt*3.2);
   if(finishT>0){finishT-=dt;if(finishT<=0){finishT=0;newBlade()}}
-  c.drawImage(bgB,0,0,W,H);drawSnow(f);drawRunes(now);drawCarts(f);drawLava(now);c.drawImage(bgF,0,0,W,H);drawForgeFire(now);drawBellows();drawItem(now);drawStrike();drawSparks(f);drawLights(now);c.drawImage(vig,0,0,W,H);
+  updDurgan(now,dt);c.drawImage(bgB,0,0,W,H);drawSnow(f);drawRunes(now);drawCarts(f);drawLava(now);c.drawImage(bgF,0,0,W,H);drawForgeFire(now);drawBellows();drawItem(now);drawStrike(now);drawSparks(f);drawLights(now);c.drawImage(vig,0,0,W,H);
   if(now-lastUi>120){lastUi=now;ui();if(amb&&amb.fire)amb.fire.gain.gain.setTargetAtTime(.04+heat*.05+flare*.12,FS.ctx().currentTime,.15)}
   requestAnimationFrame(frame)}
 
 /* ================= FORJA ================= */
 function newBlade(){let w;do{w=FK.rnd(WEAPONS)}while(weapon&&w[0]===weapon.n);weapon={n:w[0],t:w[1],r:FK.rnd([...FK.RUNES])};hits=0;FK.morph($('#wName'),FK.rnd(INGOTS),600);ui()}
 function strike(){if(finishT>0){FS.shimmer(.012);return}
-  strikeT=1;impact=1;dur.classList.add('lean');setTimeout(()=>dur.classList.remove('lean'),140);stage.classList.remove('shake');void stage.offsetWidth;stage.classList.add('shake');
+  const now=performance.now(),t=(now-swingT0)/1000;if(t>=0&&t<SW.hold)return;
+  swingT0=now;FS.whoosh(.22,.035);setTimeout(hitAnvil,SW.slam*1000)}
+function hitAnvil(){
+  strikeT=1;impact=1;stage.classList.remove('shake');void stage.offsetWidth;stage.classList.add('shake');
   const hot=heat>.3,hx=ANV.x+(R()-.5)*30*k,hy=ANV.y-10*k;spawnSparks(hx,hy,hot?24+heat*36|0:8,hot?1:.5);
   FS.clang(hot?.13:.08,hot?560+R()*160:360+R()*60);FS.tone(85,.3,.16,'sine',0,45,.3);heat=Math.max(0,heat-.02);
   if(hot){hits++;if(hits%4===0&&hits<NEED)FK.float(FK.rnd(['CLANG!','TANG!','DONG!']),hx+(R()-.5)*90*k,hy-90*k,{size:26+10*k,glow:'#ff9a3d'});if(hits>=NEED)finish()}
@@ -403,7 +532,7 @@ const inAnvil=(x,y)=>x>ANV.x-150*k&&x<ANV.x+110*k&&y>ANV.y-110*k&&y<ANV.y+140*k;
 const inBel=(x,y)=>x>BEL.x-90*k&&x<BEL.x+72*k&&y>BEL.y-55*k&&y<BEL.y+40*k;
 cv.addEventListener('pointerdown',e=>{if(!started)return;if(inAnvil(e.clientX,e.clientY))strike();else if(inBel(e.clientX,e.clientY))bellows()});
 cv.addEventListener('pointermove',e=>{cv.style.cursor=inAnvil(e.clientX,e.clientY)||inBel(e.clientX,e.clientY)?'pointer':'default'});
-dur.addEventListener('pointerdown',e=>{e.stopPropagation();if(!started)return;dur.classList.add('lean');setTimeout(()=>dur.classList.remove('lean'),160);say(FK.rnd(QUOTES))});
+dur.addEventListener('pointerdown',e=>{e.stopPropagation();if(!started)return;hop=1;say(FK.rnd(QUOTES))});
 addEventListener('keydown',e=>{if(!started)return;if(e.code==='Space'){e.preventDefault();if(!e.repeat)strike()}else if((e.key==='b'||e.key==='B')&&!e.repeat)bellows()});
 FK.ready.then(()=>{started=true;setTimeout(()=>say('Bem-vindo a Durnhelm! Pegue o martelo, a bigorna espera.'),700)});
 

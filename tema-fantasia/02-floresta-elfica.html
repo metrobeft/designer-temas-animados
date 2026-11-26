@@ -62,10 +62,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 body{background:#06120e}
 #cv{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:crosshair;touch-action:none}
 #ly{position:fixed;left:4vw;bottom:64px;height:min(44vh,400px);aspect-ratio:2/3;z-index:12;pointer-events:none}
-#ly img{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 14px rgba(0,0,0,.6)) drop-shadow(0 0 22px rgba(120,255,190,.18));transform-origin:50% 90%}
-#ly img.shoot{animation:recoil .45s cubic-bezier(.3,1.6,.5,1)}
-@keyframes recoil{30%{transform:translateX(-7px) rotate(-2deg) scale(1.02)}}
-body.moon #ly img{filter:drop-shadow(0 10px 14px rgba(0,0,0,.6)) brightness(.78) saturate(.85) drop-shadow(0 0 26px rgba(170,210,255,.35))}
+#ly svg{width:100%;height:100%;display:block;overflow:visible;transform:scaleX(-1);filter:drop-shadow(0 10px 14px rgba(0,0,0,.6)) drop-shadow(0 0 22px rgba(120,255,190,.18))}
+body.moon #ly svg{filter:drop-shadow(0 10px 14px rgba(0,0,0,.6)) brightness(.78) saturate(.85) drop-shadow(0 0 26px rgba(170,210,255,.35))}
 .ly-name{position:fixed;left:4vw;bottom:60px;z-index:13;font-family:Cinzel,serif;font-weight:700;font-size:10.5px;letter-spacing:.28em;color:#c8ffe0;text-shadow:0 2px 6px #000;pointer-events:none}
 .bless{position:fixed;top:20px;right:22px;z-index:20;width:min(340px,38vw);padding:14px 18px 15px;border-color:rgba(70,211,154,.6)}
 .bless h2{font-family:Cinzel,serif;font-weight:700;font-size:12px;letter-spacing:.36em;color:#8fffc4}
@@ -79,7 +77,117 @@ body.moon #ly img{filter:drop-shadow(0 10px 14px rgba(0,0,0,.6)) brightness(.78)
 </head>
 <body>
 <canvas id="cv"></canvas>
-<div id="ly"><img src="personagens/elfa-lyria.svg" alt="Lyria, arqueira élfica de Sylvaren"></div>
+<div id="ly"><svg id="lysvg" viewBox="0 0 320 480" role="img" aria-label="Lyria, arqueira élfica de Sylvaren">
+<defs>
+ <linearGradient id="lyhair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff7df"/><stop offset=".55" stop-color="#ecdcaa"/><stop offset="1" stop-color="#bba56a"/></linearGradient>
+ <linearGradient id="lycloak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f8152"/><stop offset="1" stop-color="#0f3520"/></linearGradient>
+ <linearGradient id="lyleaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#66d493"/><stop offset="1" stop-color="#22704a"/></linearGradient>
+ <linearGradient id="lylea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a0703f"/><stop offset="1" stop-color="#5a3a1e"/></linearGradient>
+ <linearGradient id="lygold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2c0"/><stop offset=".5" stop-color="#e8b84a"/><stop offset="1" stop-color="#8f5f17"/></linearGradient>
+ <linearGradient id="lywood" x1="0" x2="1"><stop offset="0" stop-color="#5a3518"/><stop offset=".5" stop-color="#b47c44"/><stop offset="1" stop-color="#5a3518"/></linearGradient>
+ <radialGradient id="lyskin" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#fdebdc"/><stop offset="1" stop-color="#ecc3a6"/></radialGradient>
+ <radialGradient id="lyiris" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#d9ffe9"/><stop offset=".5" stop-color="#2fbf78"/><stop offset="1" stop-color="#0d4a2c"/></radialGradient>
+ <radialGradient id="lyglow"><stop offset="0" stop-color="#d8ffe8"/><stop offset=".4" stop-color="#6dffb0" stop-opacity=".7"/><stop offset="1" stop-color="#46d39a" stop-opacity="0"/></radialGradient>
+</defs>
+<style>
+ #lysvg .ln{stroke:#1b1209;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+ #lysvg .lyb{animation:lyBreath 3.6s ease-in-out infinite}
+ @keyframes lyBreath{50%{transform:translateY(-3px)}}
+ #lysvg .lyhairb{transform-origin:160px 80px;animation:lyHair 4s ease-in-out infinite}
+ @keyframes lyHair{50%{transform:rotate(-1.6deg) skewX(2deg)}}
+ #lysvg .lycloak{transform-origin:160px 180px;animation:lyCl 4.6s ease-in-out infinite}
+ @keyframes lyCl{50%{transform:rotate(-1.5deg) skewX(2.5deg)}}
+ #lysvg .lyeye{transform-box:fill-box;transform-origin:center;animation:lyBl 4.8s infinite}
+ @keyframes lyBl{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+ #lysvg .lyrune{animation:lyRune 2.2s ease-in-out infinite}
+ @keyframes lyRune{50%{opacity:.35}}
+ #lysvg .lylockl{transform-origin:132px 100px;animation:lyLk 3.8s ease-in-out infinite}
+ #lysvg .lylockr{transform-origin:188px 100px;animation:lyLk 3.8s ease-in-out infinite reverse}
+ @keyframes lyLk{50%{transform:rotate(2.5deg)}}
+</style>
+<ellipse cx="160" cy="462" rx="96" ry="12" fill="#000" opacity=".35"/>
+<g class="lyb">
+ <path class="lyhairb ln" d="M116 96 C106 40 214 40 204 96 C214 160 224 240 214 322 Q198 338 180 324 Q172 300 174 262 L146 262 Q148 300 140 324 Q122 338 106 322 C96 240 106 160 116 96Z" fill="url(#lyhair)"/>
+ <path class="lycloak ln" d="M118 176 C96 260 88 350 78 430 L96 418 L110 436 L126 420 L142 438 L160 422 L178 438 L194 420 L210 436 L226 418 L242 432 C232 350 224 260 202 176Z" fill="url(#lycloak)"/>
+ <g transform="rotate(24 214 200)">
+  <path d="M206 140 L204 100 M214 140 L214 96 M222 140 L224 102" stroke="#6b4a2a" stroke-width="2.5"/>
+  <path class="ln" d="M204 100 L198 112 L204 116Z M214 96 L208 108 L214 112Z M224 102 L218 114 L224 118Z" fill="#e9f7ee" stroke-width="1.6"/>
+  <path class="ln" d="M204 100 L210 112 L204 116Z M214 96 L220 108 L214 112Z M224 102 L230 114 L224 118Z" fill="#46d39a" stroke-width="1.6"/>
+  <rect class="ln" x="198" y="138" width="30" height="120" rx="8" fill="url(#lylea)"/>
+  <rect x="199.5" y="146" width="27" height="7" fill="url(#lygold)"/>
+ </g>
+ <path class="ln" d="M136 330 L134 430 L154 430 L158 330Z" fill="#1f3d2d"/>
+ <path class="ln" d="M162 330 L166 430 L186 430 L184 330Z" fill="#1f3d2d"/>
+ <path class="ln" d="M131 380 L156 380 L156 440 Q160 452 150 455 L120 455 Q118 444 132 438Z" fill="url(#lylea)"/>
+ <path class="ln" d="M164 380 L189 380 L188 438 Q202 444 200 455 L170 455 Q160 452 164 440Z" fill="url(#lylea)"/>
+ <path class="ln" d="M129 378 L159 378 L157 392 L144 385 L131 392Z" fill="url(#lyleaf)" stroke-width="2"/>
+ <path class="ln" d="M161 378 L191 378 L189 392 L176 385 L163 392Z" fill="url(#lyleaf)" stroke-width="2"/>
+ <path class="ln" d="M128 290 L192 290 L204 344 L192 338 L184 354 L172 340 L160 358 L148 340 L136 354 L128 338 L116 344Z" fill="url(#lyleaf)"/>
+ <path d="M160 296 L160 350 M140 300 L136 340 M180 300 L184 340" stroke="#1d5c3a" stroke-width="1.6" fill="none"/>
+ <path class="ln" d="M122 182 Q160 172 198 182 L192 296 L128 296Z" fill="#2f7a4f"/>
+ <path class="ln" d="M133 224 Q160 216 187 224 L186 296 L134 296Z" fill="url(#lylea)"/>
+ <path d="M152 232 L168 242 M168 232 L152 242 M152 248 L168 258 M168 248 L152 258 M152 264 L168 274 M168 264 L152 274" stroke="#e9d9a6" stroke-width="1.6"/>
+ <rect class="ln" x="128" y="288" width="64" height="10" rx="3" fill="#4a2e16"/>
+ <path class="ln" d="M160 284 Q170 293 160 303 Q150 293 160 284Z" fill="url(#lygold)" stroke-width="2"/>
+ <path class="ln" d="M112 188 Q160 214 208 188 Q202 166 182 160 L138 160 Q118 166 112 188Z" fill="url(#lycloak)"/>
+ <path class="ln" d="M160 196 Q168 204 160 214 Q152 204 160 196Z" fill="url(#lygold)" stroke-width="2"/>
+ <circle class="lyrune" cx="160" cy="205" r="2.6" fill="#b8ffd8"/>
+ <!-- BRAÇO DO ARCO: desenhado apontando para a direita a partir do ombro e girado pelo script -->
+ <g id="lyArmB" transform="translate(120 194) rotate(117)">
+  <path d="M0 0 L96 0" stroke="#1b1209" stroke-width="22" stroke-linecap="round"/>
+  <path d="M0 0 L96 0" stroke="#2f7a4f" stroke-width="16" stroke-linecap="round"/>
+  <path d="M60 0 L92 0" stroke="#5a3a1e" stroke-width="15" stroke-linecap="round"/>
+ </g>
+ <!-- ARCO (origem = empunhadura; +x = para onde a flecha vai) -->
+ <g id="lyBow" transform="translate(73 284) rotate(180)">
+  <circle class="lyrune" r="22" fill="url(#lyglow)"/>
+  <path id="lyStr" d="M-13 -152 L-13 0 L-13 150" stroke="#f4eedd" stroke-width="1.6" fill="none"/>
+  <g id="lyArw" opacity="0">
+   <path d="M-110 0 H-2" stroke="#8fffc4" stroke-width="7" opacity=".45" stroke-linecap="round"/>
+   <path d="M-110 0 H-2" stroke="#1b1209" stroke-width="4" stroke-linecap="round"/>
+   <path d="M-110 0 H-2" stroke="#f4fff8" stroke-width="2"/>
+   <path class="ln" d="M7 0 L-7 -6 L-4 0 L-7 6Z" fill="#ffffff" stroke-width="1.6"/>
+   <path class="ln" d="M-100 0 L-114 -8 L-108 0 L-114 8Z" fill="#8fffc4" stroke-width="1.6"/>
+  </g>
+  <path class="lybowp" d="M-13 -152 Q1 -146 5 -124 Q19 -62 1 -14 L-1 14 Q19 64 5 124 Q1 144 -13 150" stroke="#1b1209" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path class="lybowp" d="M-13 -152 Q1 -146 5 -124 Q19 -62 1 -14 L-1 14 Q19 64 5 124 Q1 144 -13 150" stroke="url(#lywood)" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M11 -88 Q13 -70 9 -52 M11 52 Q13 70 9 88" stroke="url(#lygold)" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle id="lyTipA" cx="-13" cy="-152" r="4" fill="url(#lygold)" stroke="#1b1209" stroke-width="1.5"/>
+  <circle id="lyTipB" cx="-13" cy="150" r="4" fill="url(#lygold)" stroke="#1b1209" stroke-width="1.5"/>
+  <circle class="ln" r="9" fill="url(#lyskin)"/>
+ </g>
+ <!-- BRAÇO QUE PUXA A CORDA (ombro, cotovelo e mão calculados pelo script) -->
+ <g id="lyArmD">
+  <path id="lyUpD1" d="M200 194 L216 262" stroke="#1b1209" stroke-width="22" fill="none" stroke-linecap="round"/>
+  <path id="lyUpD2" d="M200 194 L216 262" stroke="#2f7a4f" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <path id="lyLoD1" d="M216 262 L194 292" stroke="#1b1209" stroke-width="21" fill="none" stroke-linecap="round"/>
+  <path id="lyLoD2" d="M216 262 L194 292" stroke="#5a3a1e" stroke-width="15" fill="none" stroke-linecap="round"/>
+  <circle id="lyHandD" class="ln" cx="194" cy="292" r="8" fill="url(#lyskin)"/>
+ </g>
+ <!-- cabeça -->
+ <rect class="ln" x="151" y="146" width="18" height="24" rx="6" fill="url(#lyskin)"/>
+ <path class="ln" d="M130 104 Q108 98 90 72 Q104 106 126 122Z" fill="url(#lyskin)"/>
+ <path class="ln" d="M190 104 Q212 98 230 72 Q216 106 194 122Z" fill="url(#lyskin)"/>
+ <path d="M126 108 Q112 100 102 88 M194 108 Q208 100 218 88" stroke="#d99a86" stroke-width="2" fill="none"/>
+ <path class="ln" d="M126 98 C126 70 142 58 160 58 C178 58 194 70 194 98 C194 128 180 150 160 154 C140 150 126 128 126 98Z" fill="url(#lyskin)"/>
+ <ellipse cx="136" cy="124" rx="7" ry="3.5" fill="#f29a9a" opacity=".38"/><ellipse cx="184" cy="124" rx="7" ry="3.5" fill="#f29a9a" opacity=".38"/>
+ <g class="lyeye"><ellipse cx="145" cy="109" rx="8" ry="9.5" fill="#fff"/><ellipse cx="146" cy="110" rx="6.2" ry="7.8" fill="url(#lyiris)"/><circle cx="146" cy="111" r="2.8" fill="#0b2a1a"/><circle cx="143.5" cy="107" r="2.1" fill="#fff"/></g>
+ <g class="lyeye"><ellipse cx="175" cy="109" rx="8" ry="9.5" fill="#fff"/><ellipse cx="174" cy="110" rx="6.2" ry="7.8" fill="url(#lyiris)"/><circle cx="174" cy="111" r="2.8" fill="#0b2a1a"/><circle cx="171.5" cy="107" r="2.1" fill="#fff"/></g>
+ <path d="M135 103 Q145 96 156 102 M136 104 l-5 -3" stroke="#3a2a14" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+ <path d="M185 103 Q175 96 164 102 M184 104 l5 -3" stroke="#3a2a14" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+ <path d="M136 92 Q146 87 155 91 M184 92 Q174 87 165 91" stroke="#b9a066" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+ <path d="M160 114 Q158 122 162 124" stroke="#c98d72" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+ <path id="lyMouth" d="M152 134 Q160 139 168 134" stroke="#b0505a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+ <path class="ln" d="M124 104 C118 60 146 46 160 46 C176 46 204 60 196 104 C190 84 178 72 162 70 C158 80 150 88 136 92 C132 96 128 100 124 104Z" fill="url(#lyhair)"/>
+ <path class="lylockl ln" d="M128 94 C118 130 118 172 128 210 Q136 194 136 170 C136 140 134 116 138 98Z" fill="url(#lyhair)"/>
+ <path class="lylockr ln" d="M192 94 C202 130 202 172 192 210 Q184 194 184 170 C184 140 186 116 182 98Z" fill="url(#lyhair)"/>
+ <path d="M140 58 Q160 50 182 58" stroke="#fff" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round"/>
+ <path d="M128 84 Q160 70 192 84" stroke="#1b1209" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+ <path d="M128 84 Q160 70 192 84" stroke="url(#lygold)" stroke-width="3" fill="none" stroke-linecap="round"/>
+ <path class="ln" d="M160 62 Q170 71 160 82 Q150 71 160 62Z" fill="#46d39a" stroke-width="2"/>
+ <circle class="lyrune" cx="160" cy="72" r="3" fill="#d8ffe8"/>
+</g>
+</svg></div>
 <div class="ly-name">LYRIA · ARQUEIRA DE SYLVAREN</div>
 
 <div class="fk-head"><h1 class="fk-title"><span data-rune>FLORESTA ÉLFICA</span></h1><small>CAPÍTULO II · O BOSQUE DE SYLVAREN</small></div>
@@ -314,10 +422,53 @@ function initLife(){if(!flies.length){for(let i=0;i<70;i++)flies.push({x:R()*W,y
 function newLeaf(init){return {x:R()*W,y:init?R()*H:-20,vy:.4+R()*.6,sw:R()*TAU,r:R()*TAU,s:(4+R()*4)*Math.max(S,.6),c:FK.rnd(['#c8d86a','#7ac87a','#e8c66a','#5fb88a'])}}
 function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;S=Math.max(.5,Math.min(W/1440,H/860));cv.width=W*dpr;cv.height=H*dpr;
   const r=rng(5);runes=[];lanterns=[];winds=[];mush=[];sky=drawSky();L=[drawFar(r),drawMid(r),drawGround(r),drawFront(r)];initLife()}
-function bowPos(){const b=$('#ly img').getBoundingClientRect();return [b.left+b.width*(78/320),b.top+b.height*(282/480)]}
-function shoot(tx,ty){const [x,y]=bowPos(),d=Math.hypot(tx-x,ty-y),T=Math.max(14,d/24),gv=.12;
-  arrows.push({x,y,vx:(tx-x)/T,vy:(ty-y)/T-.5*gv*T,g:gv,n:T|0,tr:[],tx,ty});const im=$('#ly img');im.classList.remove('shoot');void im.offsetWidth;im.classList.add('shoot');
-  FS.whoosh(.32,.06);FS.tone(1250,.3,.016,'sine',0,620,.3);FS.harp(14,0,.02)}
+/* ===== Lyria (SVG embutido): mira, encaixa a flecha, puxa a corda e solta =====
+   Coordenadas do desenho sem espelho: ombro do arco em (120,194) e "para frente" = 180°.
+   Na tela o SVG é espelhado (scaleX(-1)), então ela atira para a direita. */
+const LY={sb:[120,194],sd:[200,194],arm:96,restArm:117,restBow:180,pull:66,len:110,ua:58,la:54,restHand:[194,292]};
+const lyE={armB:$('#lyArmB'),bow:$('#lyBow'),str:$('#lyStr'),arw:$('#lyArw'),bp:[...document.querySelectorAll('#lysvg .lybowp')],ta:$('#lyTipA'),tb:$('#lyTipB'),u1:$('#lyUpD1'),u2:$('#lyUpD2'),l1:$('#lyLoD1'),l2:$('#lyLoD2'),hd:$('#lyHandD'),mouth:$('#lyMouth')};
+let lyAim=180,lyAimT=180,lyBlend=0,lyPull=0,lyVib=0,lyPhase='idle',lyT=0,lyTarget=null,lyLast=performance.now();
+const NOCK=.14,DRAW=.22,HOLD=.4,BACK=.5;
+const lyRot=(x,y,a)=>[x*Math.cos(a)-y*Math.sin(a),x*Math.sin(a)+y*Math.cos(a)];
+function lyMap(){const r=$('#ly').getBoundingClientRect(),s=r.height/480;return {s,page:(u,v)=>[r.left+(320-u)*s,r.top+v*s]}}
+function lyPose(){const b=lyBlend<.5?2*lyBlend*lyBlend:1-Math.pow(-2*lyBlend+2,2)/2,armA=LY.restArm+(lyAim-LY.restArm)*b,bowA=LY.restBow+(lyAim-LY.restBow)*b,ar=armA*Math.PI/180;
+  return {armA,bowA,br:bowA*Math.PI/180,hand:[LY.sb[0]+Math.cos(ar)*LY.arm,LY.sb[1]+Math.sin(ar)*LY.arm]}}
+function lyLocal(P,x,y){const [a,b]=lyRot(x,y,P.br);return [P.hand[0]+a,P.hand[1]+b]}
+function bowPos(){const P=lyPose();return lyMap().page(P.hand[0],P.hand[1])}
+/* clique: calcula a direção de lançamento (com gravidade) e começa a puxar a corda */
+function shoot(tx,ty){lyTarget=[tx,ty];
+  const M=lyMap(),[sx,sy]=M.page(LY.sb[0],LY.sb[1]),d0=Math.hypot(tx-sx,ty-sy)||1,gx=sx+(tx-sx)/d0*LY.arm*M.s,gy=sy+(ty-sy)/d0*LY.arm*M.s;
+  const d=Math.hypot(tx-gx,ty-gy),T=Math.max(14,d/24),vx=(tx-gx)/T,vy=(ty-gy)/T-.06*T;
+  const ap=Math.max(-.9,Math.min(.6,Math.atan2(vy,vx)));lyAimT=180-ap*180/Math.PI;
+  if(lyPhase==='nock'||lyPhase==='draw')return;
+  lyPhase='nock';lyT=0;lyPull=0;FS.tone(1900,.08,.012,'triangle',0,null,.2);FS.noise(.12,{v:.025,type:'highpass',f0:3000,f1:2000})}
+/* soltura: a flecha do desenho vira a flecha de luz do cenário, saindo da ponta */
+function lyRelease(){const P=lyPose(),M=lyMap(),tip=lyLocal(P,-13-lyPull+LY.len+6,0),[x,y]=M.page(tip[0],tip[1]),[tx,ty]=lyTarget;
+  const d=Math.hypot(tx-x,ty-y),T=Math.max(14,d/24),gv=.12;
+  arrows.push({x,y,vx:(tx-x)/T,vy:(ty-y)/T-.5*gv*T,g:gv,n:T|0,tr:[],tx,ty});
+  lyVib=1;lyPull=0;FS.whoosh(.32,.06);FS.tone(1250,.3,.016,'sine',0,620,.3);FS.tone(180,.18,.05,'triangle',0,90,.1);FS.harp(14,0,.02);FK.burst(x,y,8,.6,['#d8ffe8','#8fffc4','#ffffff'])}
+function lyIK(S,T,pref){const a=LY.ua,b=LY.la,dx=T[0]-S[0],dy=T[1]-S[1],d=Math.max(1,Math.min(Math.hypot(dx,dy),a+b-.5)),ang=Math.atan2(dy,dx),A=Math.acos(Math.max(-1,Math.min(1,(a*a+d*d-b*b)/(2*a*d))));
+  const e1=[S[0]+Math.cos(ang+A)*a,S[1]+Math.sin(ang+A)*a],e2=[S[0]+Math.cos(ang-A)*a,S[1]+Math.sin(ang-A)*a];return e1[0]*pref[0]+e1[1]*pref[1]>e2[0]*pref[0]+e2[1]*pref[1]?e1:e2}
+function updLyria(now){const dt=Math.min(.05,(now-lyLast)/1000);lyLast=now;lyT+=dt;
+  if(lyPhase==='nock'){lyBlend=Math.min(1,lyBlend+dt/NOCK);if(lyT>=NOCK){lyPhase='draw';lyT=0;FS.noise(DRAW,{v:.03,type:'bandpass',f0:900,f1:1700,q:3,attack:DRAW*.8,wet:.1})}}
+  else if(lyPhase==='draw'){lyBlend=1;const u=Math.min(1,lyT/DRAW);lyPull=LY.pull*(1-Math.pow(1-u,2));if(u>=1){lyRelease();lyPhase='hold';lyT=0}}
+  else if(lyPhase==='hold'){if(lyT>=HOLD){lyPhase='back';lyT=0}}
+  else if(lyPhase==='back'){lyBlend=Math.max(0,lyBlend-dt/BACK);if(lyBlend<=0)lyPhase='idle'}
+  lyAim+=(lyAimT-lyAim)*Math.min(1,dt*16);lyVib=Math.max(0,lyVib-dt*3.2);
+  const P=lyPose(),flex=lyPull/LY.pull,fx=8*flex,fy=10*flex,vib=Math.sin(now*.09)*lyVib*7;
+  lyE.armB.setAttribute('transform',`translate(${LY.sb[0]} ${LY.sb[1]}) rotate(${P.armA.toFixed(2)})`);
+  lyE.bow.setAttribute('transform',`translate(${P.hand[0].toFixed(2)} ${P.hand[1].toFixed(2)}) rotate(${P.bowA.toFixed(2)})`);
+  const tyA=-152+fy,tyB=150-fy,tx=-13+fx,bd=`M${tx} ${tyA} Q${1+fx*.6} ${-146+fy} ${5+fx*.3} ${-124+fy*.6} Q19 -62 1 -14 L-1 14 Q19 64 ${5+fx*.3} ${124-fy*.6} Q${1+fx*.6} ${146-fy} ${tx} ${tyB}`;
+  lyE.bp.forEach(e=>e.setAttribute('d',bd));lyE.ta.setAttribute('cx',tx);lyE.ta.setAttribute('cy',tyA);lyE.tb.setAttribute('cx',tx);lyE.tb.setAttribute('cy',tyB);
+  lyE.str.setAttribute('d',`M${tx} ${tyA} L${(-13-lyPull+vib).toFixed(2)} 0 L${tx} ${tyB}`);
+  const armed=lyPhase==='nock'||lyPhase==='draw';lyE.arw.setAttribute('opacity',armed?Math.min(1,lyPhase==='nock'?lyT/NOCK*1.6:1):0);lyE.arw.setAttribute('transform',`translate(${(-13-lyPull+LY.len).toFixed(2)} 0)`);
+  /* mão da corda: vai do quadril até o ponto de encaixe da flecha */
+  const nock=lyLocal(P,-13-lyPull-(lyPhase==='hold'?16:0),0),rb=lyBlend*lyBlend,T=[LY.restHand[0]+(nock[0]-LY.restHand[0])*rb,LY.restHand[1]+(nock[1]-LY.restHand[1])*rb];
+  const E=lyIK(LY.sd,T,[1-rb,rb]),A1=`M${LY.sd[0]} ${LY.sd[1]} L${E[0].toFixed(1)} ${E[1].toFixed(1)}`,A2=`M${E[0].toFixed(1)} ${E[1].toFixed(1)} L${T[0].toFixed(1)} ${T[1].toFixed(1)}`;
+  lyE.u1.setAttribute('d',A1);lyE.u2.setAttribute('d',A1);lyE.l1.setAttribute('d',A2);lyE.l2.setAttribute('d',A2);lyE.hd.setAttribute('cx',T[0].toFixed(1));lyE.hd.setAttribute('cy',T[1].toFixed(1));
+  lyE.mouth.setAttribute('d',lyPhase==='draw'?'M153 135 Q160 137 167 135':'M152 134 Q160 139 168 134');
+  requestAnimationFrame(updLyria)}
+requestAnimationFrame(updLyria);
 function impact(x,y){FK.burst(x,y,26,1.1);const ground=y>H*.74;FS.strum(FK.rnd([[11,14,16,18],[9,12,14,16],[7,11,14,18]]),.03);FS.shimmer(.012);
   blooms.push({x,y,t:0,n:5+(R()*3|0),rot:R()*TAU,rm:(16+R()*12)*Math.max(S,.6),col:FK.rnd([['#ffd1ec','#ff8fcf'],['#d8ffe8','#46d39a'],['#e8f6ff','#8fd8ff'],['#fff2c0','#ffcf6a']])});
   if(ground)for(let i=0;i<4+(R()*3|0);i++)sprouts.push({x:x+(R()-.5)*60*S,y:y+(R()-.5)*8*S,h:(22+R()*30)*Math.max(S,.6),t:0,lean:(R()-.5)*14,col:FK.rnd(['#ffb3dd','#fff2c0','#b8e8ff','#e3c8ff','#ffffff'])})}
@@ -356,7 +507,7 @@ function loop(t){const dt=Math.min(.05,(t-lastT)/1000);lastT=t;
   for(const f of flies){f.ph+=.05;f.vx+=(R()-.5)*.14;f.vy+=(R()-.5)*.14;const dx=mx-f.x,dy=my-f.y,d=Math.hypot(dx,dy);if(d<230&&d>20){f.vx+=dx/d*.05;f.vy+=dy/d*.05}
     f.vx*=.95;f.vy*=.95;f.x+=f.vx;f.y+=f.vy;if(f.x<-10)f.x=W+10;if(f.x>W+10)f.x=-10;if(f.y<H*.15)f.vy+=.05;if(f.y>H-10)f.vy-=.08;
     const a=.35+.65*Math.max(0,Math.sin(f.ph));c.globalAlpha=a;c.drawImage(GY,f.x-8,f.y-8,16,16);c.fillStyle='#f6ffd0';c.fillRect(f.x-1,f.y-1,2,2)}
-  const lr=$('#ly img').getBoundingClientRect(),lcx=lr.left+lr.width*.5,lcy=lr.top+lr.height*.45;
+  const lr=$('#lysvg').getBoundingClientRect(),lcx=lr.left+lr.width*.5,lcy=lr.top+lr.height*.45;
   wisps.forEach((w,i)=>{w.ph+=.02;let tx,ty,k=.004;
     if(songT>0){const a=t*.0016+i/wisps.length*TAU;tx=lcx+Math.cos(a)*lr.width*.75;ty=lcy+Math.sin(a)*lr.height*.4;k=.02}
     else if(down){const a=t*.003+i/wisps.length*TAU;tx=mx+Math.cos(a)*50;ty=my+Math.sin(a)*50;k=.018}
@@ -400,7 +551,7 @@ function toggleLit(){lit=lit?0:1;document.body.classList.toggle('moon',!lit);$('
 const SONG=[[7,1],[9,1],[11,2],[12,1],[11,1],[9,2],[7,1],[9,1],[11,1],[14,1],[12,2],[11,1],[9,1],[7,3]];
 function song(){if(songT>0)return;const beat=.34;let tt=0;$('#bSong').classList.add('on');for(const [n,d] of SONG){FS.harp(n,tt,.042);FS.harp(n-7,tt,.016);tt+=d*beat}songT=tt+1.2;
   const pd=FS.pad([146.83,220,293.66,349.23],.009,'sine',.7);setTimeout(()=>{pd&&pd.stop();FS.arp(11,.025,.06);$('#bSong').classList.remove('on')},(tt+.4)*1000);
-  let k=0;const iv=setInterval(()=>{const b=$('#ly img').getBoundingClientRect();notes.push({x:b.left+b.width*(.3+R()*.4),y:b.top+b.height*.25,ch:FK.rnd(['♪','♫','✦']),s:16+R()*10,life:1});if(++k>SONG.length)clearInterval(iv)},beat*1000);
+  let k=0;const iv=setInterval(()=>{const b=$('#lysvg').getBoundingClientRect();notes.push({x:b.left+b.width*(.3+R()*.4),y:b.top+b.height*.25,ch:FK.rnd(['♪','♫','✦']),s:16+R()*10,life:1});if(++k>SONG.length)clearInterval(iv)},beat*1000);
   const ln=$('.bless .ln');FK.morph(ln,FK.runify(ln.textContent),900).then(()=>setTimeout(()=>FK.morph(ln,'Que a luz das estrelas guie teus passos.',900),1800))}
 $('#bLit').onclick=e=>{e.stopPropagation();toggleLit()};$('#bSong').onclick=e=>{e.stopPropagation();song()};
 addEventListener('keydown',e=>{if(e.repeat)return;const k=e.key.toLowerCase();if(k==='l')toggleLit();else if(k==='s')song()});
