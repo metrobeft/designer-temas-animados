@@ -10,6 +10,10 @@ A **Hana** é uma personagem **original deste projeto**: uma idol virtual com co
 
 > Por que não usar uma personagem famosa? Personagens como as de Vocaloid pertencem às suas empresas e têm licenças próprias (normalmente só uso não comercial, com regras), o que não combina com este repositório público em licença MIT. A Hana pode ser usada livremente junto com o projeto.
 
+## Mascote personalizada
+
+Dá para trocar a Hana por uma imagem sua: salve o arquivo em [`mascote/`](mascote/) e preencha o bloco `MASCOTE PERSONALIZADA` no `index.html` (arquivo, nome e crédito). Instruções e cuidados com direitos em [`mascote/LEIA-ME.md`](mascote/LEIA-ME.md).
+
 ## Episódios
 
 | # | Página | O que tem | Controles |
