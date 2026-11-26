@@ -18,9 +18,9 @@ A **Hana** é uma personagem **original deste projeto**: uma idol virtual com co
 | 01 | [`01-sakura-storm.html`](01-sakura-storm.html) | Cerejeira procedural, tempestade de pétalas, haicais originais na vertical, lanternas à noite | mouse = vento · clique = rajada · `N` noite/dia |
 | 02 | [`02-speed-lines.html`](02-speed-lines.html) | Carregar a aura: linhas de concentração, rachaduras, pedras flutuando, quadro de impacto invertido | segurar clique ou `Espaço` · soltar = liberar |
 | 03 | [`03-manga-panels.html`](03-manga-panels.html) | Página de mangá que se desenha (leitura da direita para a esquerda), retícula, olhos, balões, virada de página | clique = próximo quadro · `A` auto · `Espaço` virar |
-| 04 | [`04-neon-tokyo.html`](04-neon-tokyo.html) | Cidade na chuva, letreiros neon em japonês, reflexo na rua molhada, trem, trovões, guarda-chuvas | clique no letreiro / no céu · `T` trem · `R` chuva |
-| 05 | [`05-magic-circle.html`](05-magic-circle.html) | Círculo mágico com runas, 6 elementos, encantamentos em japonês, pilar de luz e 変身 (transformação) | segurar = conjurar · `1`–`6` elementos · mouse ↕ inclina |
-| 06 | [`06-lofi-room.html`](06-lofi-room.html) | Quarto à noite com chuva no vidro, gato dormindo, chá, luminária e **rádio lofi gerado ao vivo** | clique no rádio / `P` · luminária / `L` · gato |
+| 04 | [`04-neon-tokyo.html`](04-neon-tokyo.html) | Cidade na chuva, letreiros neon em japonês, reflexo na rua molhada, trem, trovões, guarda-chuvas | controle de **intensidade da chuva** (0–100%) + mudo da chuva · clique no letreiro / no céu · `T` trem · `R` presets de chuva |
+| 05 | [`05-magic-circle.html`](05-magic-circle.html) | Círculo mágico com runas, 6 elementos, encantamentos em japonês, pilar de luz e 変身 (transformação) | painel de elementos (canto superior direito) · segurar = conjurar · `1`–`6` · mouse ↕ inclina |
+| 06 | [`06-lofi-room.html`](06-lofi-room.html) | Quarto à noite com chuva no vidro, relâmpagos, gato dormindo, chá, luminária e **rádio lofi gerado ao vivo** | **mixer**: chuva, raios e música com volume e mudo separados · rádio / `P` · luminária / `L` · `K` raio · gato |
 | 07 | [`07-starfall.html`](07-starfall.html) | Céu com via láctea, aurora, constelações que se desenham, torii, vaga-lumes e pedidos | clique no céu = pedido · `A` aurora |
 | 08 | [`08-koi-pond.html`](08-koi-pond.html) | Lago visto de cima: carpas que seguem o mouse, comida, ondulações, vitórias-régias e shishi-odoshi | clique = alimentar · `P` pétalas |
 

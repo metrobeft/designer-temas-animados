@@ -54,13 +54,17 @@ body{background:#05040f}
 .ttl small{display:block;margin-top:10px;font-weight:800;font-size:12px;letter-spacing:.4em;color:#7fe7ff;text-shadow:0 0 10px #7fe7ff}
 .hud{position:fixed;top:22px;right:22px;z-index:20;font-weight:800;font-size:12px;letter-spacing:.12em;line-height:1.8;text-align:right;background:rgba(10,8,30,.55);border:2px solid #7fe7ff;border-radius:14px;padding:8px 14px;box-shadow:0 0 18px rgba(127,231,255,.35),4px 4px 0 #ff4fa3;backdrop-filter:blur(4px)}
 .hud b{color:#ffe066}
+.rainctl{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin:2px 0 4px}
+.rainctl input{width:130px;accent-color:#7fe7ff;cursor:pointer}
+.rainctl button{border:2px solid #7fe7ff;border-radius:8px;padding:1px 7px;font-size:12px;color:#fff;background:rgba(127,231,255,.12)}
+.rainctl button.off{background:#ff4fa3;border-color:#ff4fa3}
 </style>
 </head>
 <body>
 <canvas id="cv"></canvas>
 <div class="ttl"><div class="neon"><span class="ak-jp" data-jp="東京ネオン">NEON TOKYO</span></div><small>第四話 · CHUVA, NEON E O ÚLTIMO TREM</small></div>
-<div class="hud">🌧 CHUVA <b id="rainV">FORTE</b><br>🚃 PRÓXIMO TREM <b id="trainV">--</b><br>🕛 <b id="clk">00:00</b> · 東京</div>
-<div class="ak-hint">MOUSE = PARALAXE · CLIQUE NUM LETREIRO = LIGA/DESLIGA · CLIQUE NO CÉU = TROVÃO · [T] TREM · [R] CHUVA · [M] SOM</div>
+<div class="hud">🌧 CHUVA <b id="rainV">75%</b><div class="rainctl"><input type="range" id="rainS" min="0" max="100" value="75" title="intensidade da chuva"><button id="rainM" title="mutar só o som da chuva">🔊</button></div>🚃 PRÓXIMO TREM <b id="trainV">--</b><br>🕛 <b id="clk">00:00</b> · 東京</div>
+<div class="ak-hint">MOUSE = PARALAXE · CLIQUE NUM LETREIRO = LIGA/DESLIGA · CLIQUE NO CÉU = TROVÃO · [T] TREM · [R] / CONTROLE = CHUVA · [M] SOM</div>
 
 <nav class="ak-nav"><a href="../index.html">⌂ INÍCIO</a><a href="index.html">◄ HUB</a><a href="03-manga-panels.html">‹ ANT</a><span>EP 04/08</span><a href="05-magic-circle.html">PRÓX ›</a><button class="ak-snd">🔇 SOM</button></nav>
 <div id="ak-eye"><div class="ey-card"><div class="ey-ep">第四話</div><div class="ey-title">NEON TOKYO</div><div class="ey-sub">東京ネオン</div></div><div class="ey-hint">CLIQUE PARA COMEÇAR</div></div>
@@ -138,7 +142,7 @@ const AK=(()=>{
 /*AK_JS_END*/
 
 const cv=document.getElementById('cv'),c=cv.getContext('2d'),R=Math.random,TAU=Math.PI*2;
-let W,H,dpr,SY,far,mid,winFlick=[],signs=[],rain=[],splash=[],people=[],train=null,nextTrain=0,heavy=true,mx=0,flash=0,bolt=null;
+let W,H,dpr,SY,far,mid,winFlick=[],signs=[],rain=[],splash=[],people=[],train=null,nextTrain=0,rainAmt=.75,rainMuted=false,mx=0,flash=0,bolt=null;
 const SIGNS=[['ラーメン','#ff4fa3'],['カラオケ','#4fe3ff'],['居酒屋','#ffae42'],['喫茶','#ffe066'],['本屋','#6dff9e'],['ホテル','#b98bff'],['24時間','#ffffff'],['ゲーム','#ff5ad9']];
 function skyline(hMin,hMax,col,win,seed){const o=document.createElement('canvas');o.width=(W+200)*dpr;o.height=H*dpr;const x=o.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);let s=seed;const rr=()=>(s=(s*16807)%2147483647)/2147483647;
   let px=0;const blds=[];while(px<W+200){const w=40+rr()*90,h=H*(hMin+rr()*(hMax-hMin));blds.push([px,w,h]);x.fillStyle=col;x.fillRect(px,SY-h,w-2,h);if(rr()<.3){x.fillRect(px+w*.4,SY-h-20,3,20)}
@@ -148,7 +152,9 @@ function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight
   far=skyline(.18,.42,'#1b1545',{gx:7,gy:9,w:2,h:3,p:.35},3);mid=skyline(.28,.55,'#110c2c',{gx:11,gy:13,w:4,h:5,p:.4},9);
   winFlick=Array.from({length:40},()=>({x:R()*W,y:SY-R()*H*.4,on:R()<.5}));
   const left=W*.17,right=W*.83;signs=SIGNS.map((s,i)=>{const L=i%2===0,col=Math.floor(i/2);const len=[...s[0]].length;const w=34,h=len*30+22;return {t:s[0],c:s[1],x:L?left-w-8-col*0:right+8,y:H*.12+col*H*.15+(L?0:H*.06),w,h,on:true,flick:i===5,f:1}}).filter(s=>s.y+s.h<SY-10);
-  rain=Array.from({length:heavy?420:160},()=>nr(true));people=Array.from({length:6},(_,i)=>({x:R()*W,d:R()<.5?-1:1,v:.3+R()*.5,ph:R()*TAU,c:['#ff4fa3','#4fe3ff','rgba(255,255,255,.55)','#ffe066','#b98bff','#ff7a3d'][i]}))}
+  rain=Array.from({length:Math.round(MAXR*rainAmt)},()=>nr(true));people=Array.from({length:6},(_,i)=>({x:R()*W,d:R()<.5?-1:1,v:.3+R()*.5,ph:R()*TAU,c:['#ff4fa3','#4fe3ff','rgba(255,255,255,.55)','#ffe066','#b98bff','#ff7a3d'][i]}))}
+const MAXR=640;
+function setRain(v){rainAmt=Math.max(0,Math.min(1,v));const n=Math.round(MAXR*rainAmt);while(rain.length<n)rain.push(nr(true));rain.length=n;document.getElementById('rainV').textContent=Math.round(rainAmt*100)+'%';document.getElementById('rainS').value=Math.round(rainAmt*100);rainLevel()}
 function nr(init){const z=.4+R()*1;return {x:R()*W*1.2,y:init?R()*H:-20,z,l:10+z*16,v:9+z*10}}
 function glowText(t,x,y,size,col,a){c.font=`${size}px 'Dela Gothic One'`;c.textAlign='center';c.textBaseline='middle';c.shadowColor=col;c.shadowBlur=16;c.fillStyle=`rgba(255,255,255,${a})`;c.fillText(t,x,y);c.shadowBlur=0}
 function draw(T){
@@ -190,14 +196,14 @@ function draw(T){
   for(let i=0;i<7;i++){const x=((i*W/6+T*.02)%(W+200))-100;c.fillStyle='rgba(255,255,255,.08)';c.fillRect(x,SY+rh*.55,90,3)}
   // chuva
   c.strokeStyle='rgba(170,200,255,.55)';c.lineWidth=1;c.beginPath();
-  for(const d of rain){d.x-=d.v*.25;d.y+=d.v;if(d.y>SY+(d.z*rh*.8)){if(R()<.35)splash.push({x:d.x,y:d.y,r:0,a:.7});Object.assign(d,nr(false))}c.moveTo(d.x,d.y);c.lineTo(d.x+d.l*.25,d.y-d.l)}c.stroke();
+  for(const d of rain){d.x-=d.v*.25;d.y+=d.v;if(d.y>SY+(d.z*rh*.8)){if(R()<.2+rainAmt*.25)splash.push({x:d.x,y:d.y,r:0,a:.7});Object.assign(d,nr(false))}c.moveTo(d.x,d.y);c.lineTo(d.x+d.l*.25,d.y-d.l)}c.stroke();
   for(let i=splash.length-1;i>=0;i--){const s=splash[i];s.r+=.6;s.a-=.05;if(s.a<=0){splash.splice(i,1);continue}c.strokeStyle=`rgba(200,220,255,${s.a})`;c.beginPath();c.ellipse(s.x,s.y,s.r*2,s.r*.6,0,0,TAU);c.stroke()}
 }
 function callTrain(){if(train)return;train={x:-W*1.4,v:Math.max(9,W/90)};nextTrain=0;AK.sfx('ガタンゴトン',W*.5,H*.42,{size:40,color:'#e9f3ff',shadow:'#2a3a8a',rot:-4});try{trainSound()}catch(e){console.warn(e)}}
 function thunder(x){flash=1;const p=[[x,0]];let y=0,xx=x;while(y<SY*.8){y+=20+R()*40;xx+=(R()-.5)*60;p.push([xx,y])}bolt={p,life:1};AK.sfx('ゴロゴロ',x,H*.25,{size:46,color:'#e9f3ff',shadow:'#6a2bd8'});try{thunderSound()}catch(e){console.warn(e)}}
 cv.addEventListener('click',e=>{const nx=-(mx/W-.5)*80;for(const s of signs){const x=s.x+nx;if(e.clientX>x-6&&e.clientX<x+s.w+6&&e.clientY>s.y-6&&e.clientY<s.y+s.h+6){s.on=!s.on;AS.tone(s.on?880:220,.08,.05,'square');AS.noise(.12,{v:.08,type:'highpass',f0:3000});return}}if(e.clientY<SY)thunder(e.clientX)});
 addEventListener('pointermove',e=>mx=e.clientX);
-addEventListener('keydown',e=>{if(e.key==='t'||e.key==='T')callTrain();if(e.key==='r'||e.key==='R'){heavy=!heavy;rain=Array.from({length:heavy?420:160},()=>nr(true));document.getElementById('rainV').textContent=heavy?'FORTE':'FRACA';rainLevel()}});
+addEventListener('keydown',e=>{if(e.key==='t'||e.key==='T')callTrain();if(e.key==='r'||e.key==='R'){const P=[0,.25,.5,.75,1];setRain(P[(P.findIndex(x=>Math.abs(x-rainAmt)<.13)+1)%P.length])}});
 setInterval(()=>{const d=new Date();document.getElementById('clk').textContent=`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;document.getElementById('trainV').textContent=train?'AGORA':nextTrain?Math.max(0,Math.round((nextTrain-performance.now())/1000))+'s':'--'},500);
 addEventListener('resize',resize);resize();mx=W/2;
 function loop(T){draw(T);requestAnimationFrame(loop)}requestAnimationFrame(loop);
@@ -207,10 +213,12 @@ AK.ready.then(()=>{nextTrain=performance.now()+3500});
 let rainN=null,buzz=null;
 function ambStart(){if(rainN||!AS.ok())return;rainN=AS.loopNoise('pink');rainN.filter.type='bandpass';rainN.filter.frequency.value=2500;rainN.filter.Q.value=.4;rainLevel();
   const a=AS.ctx(),o=a.createOscillator(),f=a.createBiquadFilter(),g=a.createGain();o.type='sawtooth';o.frequency.value=120;f.type='lowpass';f.frequency.value=600;g.gain.value=.008;o.connect(f).connect(g).connect(AS.out());o.start();buzz={o,g}}
-function rainLevel(){if(rainN)rainN.gain.gain.setTargetAtTime(heavy?.32:.12,AS.ctx().currentTime,.5)}
+function rainLevel(){if(rainN){rainN.gain.gain.setTargetAtTime(rainMuted?0:.42*rainAmt,AS.ctx().currentTime,.3);rainN.filter.frequency.setTargetAtTime(1800+rainAmt*1400,AS.ctx().currentTime,.3)}}
+document.getElementById('rainS').addEventListener('input',e=>setRain(e.target.value/100));
+document.getElementById('rainM').addEventListener('click',e=>{e.stopPropagation();rainMuted=!rainMuted;e.target.textContent=rainMuted?'🔇':'🔊';e.target.classList.toggle('off',rainMuted);rainLevel()});
 function ambStop(){if(rainN){rainN.stop();rainN=null}if(buzz){try{buzz.o.stop()}catch(e){}buzz=null}}
 document.addEventListener('ak-sound',e=>e.detail?ambStart():ambStop());
-setInterval(()=>{if(AS.ok()&&R()<.7)AS.tone(2000+R()*3000,.03,.01,'sine')},140);
+setInterval(()=>{if(AS.ok()&&!rainMuted&&R()<.85*rainAmt)AS.tone(2000+R()*3000,.03,.01,'sine')},140);
 function trainSound(){if(!AS.ok())return;const a=AS.ctx(),pan=a.createStereoPanner(),g=a.createGain();g.gain.value=1;pan.pan.setValueAtTime(-1,a.currentTime);pan.pan.linearRampToValueAtTime(1,a.currentTime+3.2);g.connect(pan).connect(AS.out());
   const n=AS.loopNoise('brown');if(n){n.gain.disconnect();n.gain.connect(g);n.filter.type='lowpass';n.filter.frequency.value=700;const t=a.currentTime;n.gain.gain.cancelScheduledValues(t);n.gain.gain.setValueAtTime(0,t);n.gain.gain.linearRampToValueAtTime(.5,t+1.2);n.gain.gain.linearRampToValueAtTime(.5,t+2.2);n.gain.gain.linearRampToValueAtTime(0,t+3.4);setTimeout(()=>n.stop(),3600)}
   for(let i=0;i<10;i++){const t=a.currentTime+.3+i*.3;for(const dt of [0,.09]){const o=a.createOscillator(),og=a.createGain();o.frequency.setValueAtTime(110,t+dt);o.frequency.exponentialRampToValueAtTime(45,t+dt+.08);og.gain.setValueAtTime(.0001,t+dt);og.gain.linearRampToValueAtTime(.18*Math.sin(Math.PI*(i+.5)/10),t+dt+.005);og.gain.exponentialRampToValueAtTime(.0001,t+dt+.1);o.connect(og).connect(g);o.start(t+dt);o.stop(t+dt+.12)}}}

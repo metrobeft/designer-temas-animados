@@ -51,10 +51,14 @@ body{background:#07041a;user-select:none}
 .ttl{position:fixed;top:20px;left:24px;z-index:20}
 .ttl h1{font-size:clamp(26px,3.6vw,50px);line-height:1}
 .ttl small{display:block;margin-top:10px;font-weight:800;font-size:12px;letter-spacing:.35em;opacity:.85}
-.elems{position:fixed;top:24px;right:22px;z-index:20;display:grid;grid-template-columns:repeat(3,auto);gap:8px}
-.elems button{width:52px;height:52px;border-radius:50%;border:3px solid #fff;font-family:'Dela Gothic One',sans-serif;font-size:22px;color:#fff;background:rgba(20,10,40,.6);box-shadow:3px 3px 0 var(--ec);transition:.2s;position:relative}
-.elems button small{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-family:'M PLUS Rounded 1c';font-size:9px;font-weight:800;letter-spacing:.1em;white-space:nowrap;opacity:.8}
-.elems button.on{background:var(--ec);color:var(--ink);transform:scale(1.12);box-shadow:0 0 22px var(--ec)}
+.elems{position:fixed;top:20px;right:20px;z-index:20;display:grid;grid-template-columns:repeat(3,84px);gap:16px 10px;padding:14px 12px 12px;background:rgba(12,6,32,.72);border:2px solid rgba(255,255,255,.35);border-radius:20px;box-shadow:5px 5px 0 rgba(169,139,255,.5);backdrop-filter:blur(6px)}
+.elems h4{grid-column:1/-1;text-align:center;font-size:11px;font-weight:800;letter-spacing:.3em;color:#fff;opacity:.85;margin-bottom:-4px}
+.elems button{display:flex;flex-direction:column;align-items:center;gap:7px;padding:0}
+.elems .ic{width:50px;height:50px;border-radius:50%;border:3px solid #fff;display:grid;place-items:center;font-family:'Dela Gothic One',sans-serif;font-size:22px;color:#fff;background:rgba(20,10,40,.7);box-shadow:3px 3px 0 var(--ec);transition:.2s}
+.elems small{display:block;font-family:'M PLUS Rounded 1c',sans-serif;font-size:11px;font-weight:800;letter-spacing:.06em;line-height:1.2;color:#fff;background:rgba(255,255,255,.08);border:1px solid var(--ec);border-radius:99px;padding:3px 8px;white-space:nowrap}
+.elems button:hover .ic{transform:translateY(-2px);box-shadow:4px 5px 0 var(--ec)}
+.elems button.on .ic{background:var(--ec);color:var(--ink);transform:scale(1.1);box-shadow:0 0 22px var(--ec)}
+.elems button.on small{background:var(--ec);color:var(--ink)}
 .chant{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);z-index:20;text-align:center;pointer-events:none;width:92vw}
 .chant .jp{font-family:'Shippori Mincho',serif;font-weight:800;font-size:clamp(22px,3vw,40px);letter-spacing:.25em;color:#fff;text-shadow:0 0 14px var(--ecol,#ffe066),0 0 34px var(--ecol,#ffe066)}
 .chant .pt{margin-top:6px;font-weight:800;font-size:13px;letter-spacing:.3em;color:var(--ecol,#ffe066)}
@@ -65,7 +69,7 @@ body{background:#07041a;user-select:none}
 #flashM{position:fixed;inset:0;z-index:150;background:#fff;opacity:0;pointer-events:none}
 #flashM.go{animation:fM .9s ease-out}
 @keyframes fM{0%{opacity:.95}100%{opacity:0}}
-@media (max-width:760px){.elems{top:auto;bottom:120px;right:10px}}
+@media (max-width:900px){.elems{top:auto;bottom:110px;right:10px;grid-template-columns:repeat(3,74px);gap:12px 6px}.elems small{font-size:10px;padding:2px 6px}}
 </style>
 </head>
 <body>
@@ -166,7 +170,7 @@ const RUNES2='ほしよつきよひかりのみちをてらせ・';
 let W,H,dpr,CX,CY,R0,tilt=.6,tiltT=.6,el=4,rot=0,cast=0,holding=false,pillar=0,stars=[],motes=[],helix=[],rings=[],lastInput=performance.now();
 function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;c.setTransform(dpr,0,0,dpr,0,0);CX=W/2;CY=H*.58;R0=Math.min(W*.36,H*.36);
   stars=Array.from({length:200},()=>({x:R()*W,y:R()*H,s:R()*1.6+.3,t:R()*TAU}));motes=Array.from({length:70},()=>({x:R()*W,y:R()*H,v:.2+R()*.6,s:1+R()*2.4}))}
-document.getElementById('elems').innerHTML=EL.map((e,i)=>`<button style="--ec:${e.c}" data-i="${i}">${e.k}<small>${i+1} · ${e.n}</small></button>`).join('');
+document.getElementById('elems').innerHTML='<h4>ELEMENTOS · 属性</h4>'+EL.map((e,i)=>`<button style="--ec:${e.c}" data-i="${i}" title="tecla ${i+1}"><span class="ic">${e.k}</span><small>${i+1} · ${e.n}</small></button>`).join('');
 function setEl(i,silent){el=i;const E=EL[i];document.documentElement.style.setProperty('--ecol',E.c);document.querySelectorAll('#elems button').forEach((b,k)=>b.classList.toggle('on',k===i));
   AK.morph(document.getElementById('chJp'),E.jp,700);document.getElementById('chPt').textContent=E.pt;if(!silent){AS.chime(E.f+3,0,.05);AS.chime(E.f+5,.08,.04);rings.push({r:.2,a:1})}}
 document.querySelectorAll('#elems button').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();setEl(+b.dataset.i)}));

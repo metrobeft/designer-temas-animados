@@ -60,14 +60,25 @@ body{background:#140b1f}
 .player button{margin-left:auto;width:44px;height:44px;border-radius:50%;background:#ffb38a;color:var(--ink);font-size:18px;border:2px solid #fff;box-shadow:3px 3px 0 var(--v);flex-shrink:0}
 .player .viz{display:flex;gap:3px;align-items:flex-end;height:30px;margin-top:12px}
 .player .viz i{flex:1;background:linear-gradient(to top,#ffb38a,#ff7eb6);border-radius:2px;height:10%}
+.mix{display:grid;gap:9px;margin-top:12px;padding-top:12px;border-top:2px dashed rgba(255,255,255,.2)}
+.mix .ch{display:grid;grid-template-columns:86px 1fr 34px;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.06em}
+.mix input{width:100%;accent-color:#ffb38a;cursor:pointer}
+.mix .mute{width:34px;height:28px;border-radius:9px;border:2px solid #fff;background:rgba(255,255,255,.08);font-size:13px}
+.mix .mute.off{background:#ff7eb6;border-color:#ff7eb6}
+.mix .ch b{font-weight:800;opacity:.7;font-size:10px}
 .player .meta{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;font-weight:800;letter-spacing:.15em;opacity:.75}
 </style>
 </head>
 <body>
 <canvas id="cv"></canvas>
 <div class="ttl"><h1 class="ak-title"><span class="ak-jp" data-jp="ローファイ">LOFI ROOM</span></h1><small>第六話 · CHUVA LÁ FORA, CHÁ AQUI DENTRO</small></div>
-<div class="player" id="player"><div class="row"><div class="disc"></div><div><b>rádio lofi · 雨の夜</b><small>noite de chuva — gerado ao vivo</small></div><button id="play" title="tocar / pausar (P)">▶</button></div><div class="viz" id="viz"></div><div class="meta"><span>72 BPM · F maj7</span><span id="clockTxt">00:00</span></div></div>
-<div class="ak-hint">CLIQUE NO RÁDIO / [P] = MÚSICA · CLIQUE NA LUMINÁRIA / [L] = LUZ · CLIQUE NO GATO = 🐾 · [M] SOM</div>
+<div class="player" id="player"><div class="row"><div class="disc"></div><div><b>rádio lofi · 雨の夜</b><small>noite de chuva — gerado ao vivo</small></div><button id="play" title="tocar / pausar (P)">▶</button></div><div class="viz" id="viz"></div><div class="meta"><span>72 BPM · F maj7</span><span id="clockTxt">00:00</span></div>
+  <div class="mix">
+    <div class="ch"><span>🌧 CHUVA <b id="rainP">70%</b></span><input type="range" id="rainS" min="0" max="100" value="70"><button class="mute" id="rainM" title="mutar só o som da chuva">🔊</button></div>
+    <div class="ch"><span>⚡ RAIOS <b id="thP">35%</b></span><input type="range" id="thS" min="0" max="100" value="35"><button class="mute" id="thM" title="mutar só o som dos trovões">🔊</button></div>
+    <div class="ch"><span>🎵 MÚSICA <b id="musP">80%</b></span><input type="range" id="musS" min="0" max="100" value="80"><button class="mute" id="musM" title="mutar só a música">🔊</button></div>
+  </div></div>
+<div class="ak-hint">CLIQUE NO RÁDIO / [P] = MÚSICA · CLIQUE NA LUMINÁRIA / [L] = LUZ · CLIQUE NO GATO = 🐾 · [K] RAIO · PAINEL = CHUVA / RAIOS / MÚSICA · [M] SOM</div>
 
 <nav class="ak-nav"><a href="../index.html">⌂ INÍCIO</a><a href="index.html">◄ HUB</a><a href="05-magic-circle.html">‹ ANT</a><span>EP 06/08</span><a href="07-starfall.html">PRÓX ›</a><button class="ak-snd">🔇 SOM</button></nav>
 <div id="ak-eye"><div class="ey-card"><div class="ey-ep">第六話</div><div class="ey-title">LOFI ROOM</div><div class="ey-sub">ローファイ</div></div><div class="ey-hint">CLIQUE PARA COMEÇAR</div></div>
@@ -190,7 +201,12 @@ function drawFront(x){
 function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;S=Math.max(W/LW,H/LH);OX=(W-LW*S)/2;OY=(H-LH*S)/2;
   back=off(drawBack);front=off(drawFront);
   city=[];let x=WIN.x-10;while(x<WIN.x+WIN.w+10){const w=24+R()*50,h=60+R()*170;const wins=[];for(let wy=WIN.y+WIN.h-h+8;wy<WIN.y+WIN.h-6;wy+=12)for(let wx=x+5;wx<x+w-8;wx+=10)if(R()<.35)wins.push([wx,wy,R()<.1]);city.push({x,w,h,wins});x+=w+3}
-  drops=Array.from({length:46},()=>nd(true));streaks=Array.from({length:90},()=>({x:WIN.x+R()*WIN.w,y:WIN.y+R()*WIN.h,v:7+R()*7}))}
+  drops=[];streaks=[];setRain(rainAmt)}
+let rainAmt=.7,thAmt=.35,musVol=.8,rainMuted=false,thMuted=false,musMuted=false,flashL=0,boltL=null;
+const ns=()=>({x:WIN.x+R()*WIN.w,y:WIN.y+R()*WIN.h,v:7+R()*7});
+function setRain(v){rainAmt=Math.max(0,Math.min(1,v));const nS=Math.round(170*rainAmt),nD=Math.round(70*rainAmt);while(streaks.length<nS)streaks.push(ns());streaks.length=nS;const keep=drops.filter(d=>!d.tmp);while(keep.length<nD)keep.push(nd(true));keep.length=nD;drops=keep.concat(drops.filter(d=>d.tmp));document.getElementById('rainP').textContent=Math.round(rainAmt*100)+'%';if(typeof rainLevel==='function')rainLevel()}
+function strike(){flashL=1;let x=WIN.x+60+R()*(WIN.w-120),y=WIN.y;const p=[[x,y]];while(y<WIN.y+WIN.h*.75){y+=18+R()*30;x+=(R()-.5)*44;p.push([x,y])}boltL={p,life:1};setTimeout(()=>{flashL=Math.max(flashL,.7)},130);
+  const dist=.3+R()*.9;setTimeout(()=>{if(thMuted||!AS.ok())return;const v=.2+thAmt*.3;AS.noise(.25,{v:v*.7,type:'highpass',f0:1600});AS.noise(3.2,{v,type:'lowpass',f0:800,f1:55,attack:.12});AS.tone(48,2.6,v*.6,'sine',.05,30)},dist*1000)}
 function nd(init){return {x:WIN.x+R()*WIN.w,y:WIN.y+(init?R()*WIN.h:R()*WIN.h*.3),r:2+R()*5,v:0,stick:R()*200,trail:[]}}
 function draw(T){
   c.setTransform(dpr,0,0,dpr,0,0);c.fillStyle='#140b1f';c.fillRect(0,0,W,H);
@@ -205,11 +221,13 @@ function draw(T){
   const sg=c.createLinearGradient(0,WIN.y,0,WIN.y+WIN.h);sg.addColorStop(0,'#0b0d2c');sg.addColorStop(1,'#3d2a62');c.fillStyle=sg;c.fillRect(WIN.x,WIN.y,WIN.w,WIN.h);
   const mg=c.createRadialGradient(930,220,10,930,220,110);mg.addColorStop(0,'rgba(255,240,250,.9)');mg.addColorStop(.25,'rgba(255,220,240,.25)');mg.addColorStop(1,'rgba(255,220,240,0)');c.fillStyle=mg;c.fillRect(WIN.x,WIN.y,WIN.w,WIN.h);c.fillStyle='#fff6fb';c.beginPath();c.arc(930,220,26,0,TAU);c.fill();
   for(const b of city){c.fillStyle='#120b26';c.fillRect(b.x,WIN.y+WIN.h-b.h,b.w,b.h);for(const w of b.wins){if(w[2]&&R()<.01)w[2]=false;c.fillStyle=w[2]?'rgba(255,120,180,.8)':'rgba(255,214,140,.6)';c.fillRect(w[0],w[1],4,5)}}
+  if(flashL>.02){c.fillStyle=`rgba(225,232,255,${flashL*.75})`;c.fillRect(WIN.x,WIN.y,WIN.w,WIN.h)}
+  if(boltL&&boltL.life>0){c.strokeStyle=`rgba(240,245,255,${boltL.life})`;c.lineWidth=3;c.shadowColor='#c9d8ff';c.shadowBlur=18;c.beginPath();boltL.p.forEach((q,i)=>i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]));c.stroke();c.shadowBlur=0;boltL.life-=.07}
   c.strokeStyle='rgba(180,200,255,.35)';c.lineWidth=1;c.beginPath();for(const s of streaks){s.y+=s.v;s.x-=s.v*.15;if(s.y>WIN.y+WIN.h){s.y=WIN.y-10;s.x=WIN.x+R()*WIN.w}c.moveTo(s.x,s.y);c.lineTo(s.x+2,s.y-12)}c.stroke();
   const fog=c.createLinearGradient(0,WIN.y+WIN.h-120,0,WIN.y+WIN.h);fog.addColorStop(0,'rgba(200,180,255,0)');fog.addColorStop(1,'rgba(200,180,255,.2)');c.fillStyle=fog;c.fillRect(WIN.x,WIN.y,WIN.w,WIN.h);
   // gotas no vidro
-  for(const dr of drops){if(dr.stick>0)dr.stick-=1;else{dr.v=Math.min(4,dr.v+.08+dr.r*.01);dr.y+=dr.v;dr.trail.push([dr.x,dr.y]);if(dr.trail.length>24)dr.trail.shift();if(R()<.03){dr.stick=20+R()*80;dr.v=0}if(R()<.05)dr.x+=(R()-.5)*2}
-    if(dr.y>WIN.y+WIN.h+10)Object.assign(dr,nd(false));
+  for(let di=drops.length-1;di>=0;di--){const dr=drops[di];if(dr.stick>0)dr.stick-=1;else{dr.v=Math.min(4,dr.v+.08+dr.r*.01);dr.y+=dr.v;dr.trail.push([dr.x,dr.y]);if(dr.trail.length>24)dr.trail.shift();if(R()<.03){dr.stick=20+R()*80;dr.v=0}if(R()<.05)dr.x+=(R()-.5)*2}
+    if(dr.y>WIN.y+WIN.h+10){if(dr.tmp){drops.splice(di,1);continue}Object.assign(dr,nd(false))}
     if(dr.trail.length>1){c.strokeStyle='rgba(220,230,255,.18)';c.lineWidth=dr.r*.6;c.beginPath();dr.trail.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke()}
     c.fillStyle='rgba(210,225,255,.28)';c.beginPath();c.ellipse(dr.x,dr.y,dr.r*.8,dr.r,0,0,TAU);c.fill();c.fillStyle='rgba(255,255,255,.75)';c.beginPath();c.arc(dr.x-dr.r*.3,dr.y-dr.r*.35,dr.r*.28,0,TAU);c.fill()}
   c.restore();
@@ -230,6 +248,8 @@ function draw(T){
   if(lampA>.01){c.globalCompositeOperation='lighter';const lg=c.createRadialGradient(1160,620,10,1160,620,460);lg.addColorStop(0,`rgba(255,190,120,${.38*lampA})`);lg.addColorStop(1,'rgba(255,150,80,0)');c.fillStyle=lg;c.fillRect(600,200,1000,700);
     c.fillStyle=`rgba(255,220,160,${.12*lampA})`;c.beginPath();c.moveTo(1180,440);c.lineTo(900,620);c.lineTo(1300,620);c.closePath();c.fill();c.fillStyle=`rgba(255,240,200,${.9*lampA})`;c.beginPath();c.arc(1176,444,9,0,TAU);c.fill();c.globalCompositeOperation='source-over'}
   c.fillStyle=`rgba(10,5,25,${.32-.2*lampA})`;c.fillRect(0,0,LW,LH);
+  if(flashL>.02){c.fillStyle=`rgba(200,212,255,${flashL*.2})`;c.fillRect(0,0,LW,LH);flashL*=.86}
+  if(thAmt>0&&R()<thAmt*thAmt*.006)strike();
   // zZz
   if(catWake<=0&&R()<.012)zz.push({x:700,y:520,a:1,s:14+R()*10});
   for(let i=zz.length-1;i>=0;i--){const z=zz[i];z.y-=.5;z.x+=.25;z.a-=.006;if(z.a<=0){zz.splice(i,1);continue}c.fillStyle=`rgba(255,255,255,${z.a})`;c.font=`800 ${z.s}px 'M PLUS Rounded 1c'`;c.fillText('z',z.x,z.y)}
@@ -253,9 +273,18 @@ cv.addEventListener('click',e=>{const {x,y}=hit(e);
   if(x>200&&x<420&&y>460&&y<620){toggleMusic();return}
   if(x>1120&&x<1300&&y>380&&y<620){toggleLamp();return}
   if(x>650&&x<900&&y>500&&y<640){catWake=200;AK.sfx('ニャー',e.clientX,e.clientY-40,{size:44,shadow:'#ff9cc6'});AK.burst(e.clientX,e.clientY,16,1);meow();return}
-  if(x>WIN.x&&x<WIN.x+WIN.w&&y>WIN.y&&y<WIN.y+WIN.h){for(let k=0;k<6;k++)drops.push({x:x+(R()-.5)*40,y:y+(R()-.5)*40,r:3+R()*4,v:0,stick:30,trail:[]});AS.tone(1800+R()*900,.08,.03,'sine',0,900)}});
+  if(x>WIN.x&&x<WIN.x+WIN.w&&y>WIN.y&&y<WIN.y+WIN.h){for(let k=0;k<6;k++)drops.push({x:x+(R()-.5)*40,y:y+(R()-.5)*40,r:3+R()*4,v:0,stick:30,trail:[],tmp:true});AS.tone(1800+R()*900,.08,.03,'sine',0,900)}});
 function toggleLamp(){lamp=!lamp;AS.tone(lamp?1200:700,.05,.08,'square');AS.noise(.05,{v:.1,type:'highpass',f0:2500})}
-addEventListener('keydown',e=>{if(e.key==='l'||e.key==='L')toggleLamp();if(e.key==='p'||e.key==='P')toggleMusic()});
+addEventListener('keydown',e=>{if(e.key==='l'||e.key==='L')toggleLamp();if(e.key==='p'||e.key==='P')toggleMusic();if(e.key==='k'||e.key==='K')strike()});
+/* mixer: chuva, raios e música */
+const $m=id=>document.getElementById(id);
+$m('rainS').addEventListener('input',e=>setRain(e.target.value/100));
+$m('thS').addEventListener('input',e=>{thAmt=e.target.value/100;$m('thP').textContent=e.target.value+'%'});
+$m('musS').addEventListener('input',e=>{musVol=e.target.value/100;$m('musP').textContent=e.target.value+'%';musicLevel()});
+function muteBtn(id,get,set,after){$m(id).addEventListener('click',e=>{e.stopPropagation();set(!get());e.currentTarget.textContent=get()?'🔇':'🔊';e.currentTarget.classList.toggle('off',get());after&&after()})}
+muteBtn('rainM',()=>rainMuted,v=>rainMuted=v,()=>rainLevel());
+muteBtn('thM',()=>thMuted,v=>thMuted=v);
+muteBtn('musM',()=>musMuted,v=>musMuted=v,()=>musicLevel());
 document.getElementById('play').onclick=e=>{e.stopPropagation();toggleMusic()};
 document.getElementById('viz').innerHTML='<i></i>'.repeat(18);const vizEls=[...document.querySelectorAll('#viz i')];
 setInterval(()=>{const d=new Date();document.getElementById('clockTxt').textContent=`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;vizEls.forEach((v,i)=>v.style.height=(music?Math.max(6,vizData[i+1]/2.55):8+6*Math.sin(performance.now()*.003+i))+'%')},90);
@@ -268,7 +297,7 @@ const BASS=[87.31,82.41,73.42,65.41],MEL=[523.25,587.33,659.25,783.99,880,1046.5
 let music=null,wantMusic=true;
 function nt(m,f,t,d,v,type='triangle'){const a=m.a,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v,t+.03);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(m.out);o.start(t);o.stop(t+d+.05)}
 function nz(m,t,d,v,type,f,q=1){const a=m.a,s=a.createBufferSource(),fl=a.createBiquadFilter(),g=a.createGain();s.buffer=m.nb;fl.type=type;fl.frequency.value=f;fl.Q.value=q;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(fl).connect(g).connect(m.out);s.start(t,R()*1.5);s.stop(t+d+.02)}
-function musicStart(){if(music||!AS.ok())return;const a=AS.ctx(),out=a.createGain(),lp=a.createBiquadFilter(),an=a.createAnalyser();out.gain.value=.85;lp.type='lowpass';lp.frequency.value=2400;an.fftSize=64;out.connect(lp).connect(an);an.connect(AS.out());
+function musicStart(){if(music||!AS.ok())return;const a=AS.ctx(),out=a.createGain(),lp=a.createBiquadFilter(),an=a.createAnalyser();out.gain.value=.85*musVol*(musMuted?0:1);lp.type='lowpass';lp.frequency.value=2400;an.fftSize=64;out.connect(lp).connect(an);an.connect(AS.out());
   const nb=a.createBuffer(1,a.sampleRate*2,a.sampleRate),d=nb.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=R()*2-1;
   music={a,out,an,nb,step:0,next:a.currentTime+.15};music.timer=setInterval(sched,40);document.getElementById('player').classList.add('playing');document.getElementById('play').textContent='❚❚'}
 function musicStop(){if(!music)return;clearInterval(music.timer);const m=music;m.out.gain.setTargetAtTime(0,m.a.currentTime,.2);setTimeout(()=>{try{m.out.disconnect()}catch(e){}},900);music=null;document.getElementById('player').classList.remove('playing');document.getElementById('play').textContent='▶'}
@@ -284,8 +313,10 @@ function play(m,s,t,e8){const bar=Math.floor(s/8)%4,e=s%8,ch=CH[bar];
   for(let k=0;k<3;k++)if(R()<.35)nz(m,t+R()*e8,.006,.02+R()*.05,'highpass',3000);
 }
 /* chuva + miado */
-let rainN=null;
-function rainStart(){if(rainN||!AS.ok())return;rainN=AS.loopNoise('pink');rainN.filter.type='bandpass';rainN.filter.frequency.value=3200;rainN.filter.Q.value=.5;rainN.gain.gain.setTargetAtTime(.09,AS.ctx().currentTime,.8)}
+var rainN=null;
+function rainStart(){if(rainN||!AS.ok())return;rainN=AS.loopNoise('pink');rainN.filter.type='bandpass';rainN.filter.frequency.value=3200;rainN.filter.Q.value=.5;rainLevel()}
+function rainLevel(){if(rainN)rainN.gain.gain.setTargetAtTime(rainMuted?0:.16*rainAmt,AS.ctx().currentTime,.3)}
+function musicLevel(){if(music)music.out.gain.setTargetAtTime(musMuted?0:.85*musVol,music.a.currentTime,.1)}
 function meow(){if(!AS.ok())return;const a=AS.ctx(),t=a.currentTime,o=a.createOscillator(),bp=a.createBiquadFilter(),g=a.createGain();o.type='sawtooth';o.frequency.setValueAtTime(420,t);o.frequency.linearRampToValueAtTime(760,t+.18);o.frequency.linearRampToValueAtTime(520,t+.55);bp.type='bandpass';bp.Q.value=4;bp.frequency.setValueAtTime(900,t);bp.frequency.linearRampToValueAtTime(1800,t+.2);bp.frequency.linearRampToValueAtTime(1100,t+.55);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.12,t+.06);g.gain.setValueAtTime(.12,t+.4);g.gain.exponentialRampToValueAtTime(.0001,t+.6);o.connect(bp).connect(g).connect(AS.out());o.start(t);o.stop(t+.62)}
 document.addEventListener('ak-sound',e=>{if(e.detail){rainStart();if(wantMusic)musicStart()}else{musicStop();wantMusic=true;if(rainN){rainN.stop();rainN=null}}});
 </script>
