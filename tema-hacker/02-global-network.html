@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MOD_02 — GLOBAL DATA GRID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--a:#00e5ff;--c:#00e5ff;--g:#00ff9c;--r:#ff2a55;--m:#ff2bd6;--y:#ffd23f;--bg:#01040c}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--a);font-family:'Share Tech Mono',Consolas,monospace;overflow:hidden}
+/* ===== GLITCH KIT ===== */
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;white-space:inherit}
+.glitch::before{color:var(--m);animation:gA 3.2s infinite steps(1)}
+.glitch::after{color:var(--g);animation:gB 2.7s infinite steps(1)}
+.glitch.is-glitching{animation:shake .12s infinite}
+.glitch.is-glitching::before,.glitch.is-glitching::after{animation-duration:.28s}
+@keyframes gA{0%,100%{clip-path:inset(0 0 100% 0);transform:none}5%{clip-path:inset(12% 0 70% 0);transform:translate(-4px,-1px)}9%{clip-path:inset(55% 0 25% 0);transform:translate(3px,1px)}13%{clip-path:inset(0 0 100% 0)}47%{clip-path:inset(80% 0 4% 0);transform:translate(-3px,0)}50%{clip-path:inset(0 0 100% 0)}}
+@keyframes gB{0%,100%{clip-path:inset(100% 0 0 0);transform:none}7%{clip-path:inset(40% 0 45% 0);transform:translate(4px,1px)}11%{clip-path:inset(5% 0 85% 0);transform:translate(-3px,-1px)}15%{clip-path:inset(100% 0 0 0)}71%{clip-path:inset(62% 0 20% 0);transform:translate(2px,0)}74%{clip-path:inset(100% 0 0 0)}}
+@keyframes shake{0%{transform:translate(0)}25%{transform:translate(-2px,1px) skewX(-6deg)}50%{transform:translate(2px,-1px)}75%{transform:translate(-1px,-1px) skewX(4deg)}100%{transform:translate(1px,1px)}}
+@keyframes blink{50%{opacity:0}}
+.scan{position:fixed;inset:0;pointer-events:none;z-index:150;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.25) 0 1px,transparent 1px 3px)}
+.vig{position:fixed;inset:0;pointer-events:none;z-index:149;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.85) 100%)}
+.gk-nav{position:fixed;bottom:40px;left:14px;z-index:160;display:flex;gap:6px;font-size:11px;letter-spacing:.14em}
+.gk-nav a,.gk-nav span{color:var(--a);text-decoration:none;border:1px solid color-mix(in srgb,var(--a) 40%,transparent);padding:6px 10px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+.gk-nav a:hover{background:var(--a);color:#000}
+#gk-boot{position:fixed;inset:0;z-index:300;background:#000;display:grid;place-items:center;cursor:pointer}
+#gk-boot .bt{width:min(560px,86vw);font-size:13px;color:var(--a)}
+#gk-boot .bt-code{opacity:.6;letter-spacing:.3em;margin-bottom:10px;font-size:11px}
+#gk-boot .bt-title{font-family:Orbitron,sans-serif;font-weight:900;font-size:clamp(22px,4vw,40px);letter-spacing:.08em;min-height:1.2em;color:#fff;text-shadow:0 0 14px var(--a)}
+#gk-boot .bt-bar{height:3px;background:rgba(255,255,255,.08);margin:16px 0 10px;overflow:hidden}
+#gk-boot .bt-bar i{display:block;height:100%;width:0;background:var(--a);box-shadow:0 0 10px var(--a);transition:width .2s}
+#gk-boot .bt-log{height:118px;overflow:hidden;opacity:.75;line-height:1.55}
+#gk-boot .bt-hint{margin-top:14px;font-size:10px;opacity:.4;letter-spacing:.3em}
+#gk-boot.out{animation:btOut .65s steps(7) forwards;pointer-events:none}
+@keyframes btOut{0%{clip-path:inset(0)}20%{clip-path:inset(10% 0 30% 0);transform:translateX(-30px)}40%{clip-path:inset(40% 0 10% 0);transform:translateX(40px);filter:hue-rotate(90deg)}60%{clip-path:inset(0 0 70% 0);transform:translateX(-10px)}80%{clip-path:inset(48% 0 48% 0);transform:scaleY(.02)}100%{clip-path:inset(50% 0 50% 0);opacity:0}}
+
+/* ===== PAGE ===== */
+#bg{position:fixed;inset:0;width:100%;height:100%;display:block}
+.app{position:fixed;inset:0;display:grid;grid-template-columns:minmax(240px,300px) 1fr minmax(240px,300px);grid-template-rows:auto 1fr 30px;gap:12px;padding:12px 12px 0;z-index:5}
+header{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:8px 14px;border:1px solid rgba(0,229,255,.25);background:linear-gradient(90deg,rgba(0,40,70,.55),rgba(0,10,25,.4));flex-wrap:wrap}
+header h1{font-family:Orbitron,sans-serif;font-weight:900;font-size:clamp(16px,2vw,26px);letter-spacing:.14em;color:#fff;text-shadow:0 0 12px var(--a)}
+header small{display:block;font-size:11px;letter-spacing:.3em;opacity:.7}
+.chips{display:flex;gap:8px;font-size:11px;letter-spacing:.14em;flex-wrap:wrap}
+.chip{border:1px solid rgba(0,229,255,.35);padding:5px 9px;background:rgba(0,0,0,.35)}
+.chip b{color:#fff;font-weight:400}
+.chip.r{border-color:rgba(255,42,85,.6);color:var(--r)}
+.chip .d{display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:6px;animation:blink 1s steps(1) infinite}
+.col{display:flex;flex-direction:column;gap:12px;min-height:0}
+.pn{position:relative;border:1px solid rgba(0,229,255,.22);background:linear-gradient(180deg,rgba(0,30,55,.55),rgba(0,8,20,.6));padding:10px 12px;min-height:0;overflow:hidden;backdrop-filter:blur(2px)}
+.pn::before,.pn::after{content:'';position:absolute;width:12px;height:12px;border:2px solid var(--a)}
+.pn::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.pn::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.pn h3{font-size:11px;letter-spacing:.28em;font-weight:400;color:#bff6ff;display:flex;justify-content:space-between;margin-bottom:8px}
+.pn h3 em{font-style:normal;color:var(--g)}
+.pn canvas{display:block;width:100%}
+#line{height:110px}#cpu{height:90px}
+.grow{flex:1}
+.log{font-size:11px;line-height:1.5;white-space:pre;overflow:hidden;height:100%;color:rgba(0,229,255,.8)}
+.log .g{color:var(--g)}.log .r{color:var(--r)}.log .w{color:#fff}
+.bars div{display:grid;grid-template-columns:86px 1fr 44px;align-items:center;gap:8px;font-size:11px;margin:6px 0}
+.bars .t{height:8px;background:rgba(0,229,255,.1);position:relative;overflow:hidden}
+.bars .t i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(0,229,255,.3),var(--a));box-shadow:0 0 8px var(--a);transition:width 1.2s cubic-bezier(.3,.8,.2,1)}
+.bars span:last-child{text-align:right;color:#fff}
+.conn{font-size:11px;line-height:1.65;height:100%;overflow:hidden}
+.conn div{display:flex;justify-content:space-between;gap:6px;animation:in .4s}
+.conn .p{color:var(--g)}.conn .x{color:var(--r)}
+@keyframes in{from{opacity:0;transform:translateX(10px);background:rgba(0,229,255,.25)}to{opacity:1}}
+.hex{font-size:10.5px;line-height:1.5;color:rgba(0,229,255,.6);white-space:pre;overflow:hidden}
+.hex b{color:#fff;font-weight:400;background:rgba(0,229,255,.3)}
+.mid{position:relative;display:flex;flex-direction:column;min-height:0}
+#globe{flex:1;width:100%;min-height:0;display:block;cursor:grab}
+#globe:active{cursor:grabbing}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat{border:1px solid rgba(0,229,255,.22);background:rgba(0,15,30,.6);padding:8px 10px}
+.stat small{font-size:10px;letter-spacing:.24em;opacity:.7}
+.stat div{font-family:Orbitron,sans-serif;font-size:clamp(16px,1.8vw,26px);color:#fff;text-shadow:0 0 10px var(--a);margin-top:2px}
+.stat.r div{color:#ffd6de;text-shadow:0 0 10px var(--r)}
+.globe-hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;pointer-events:none}
+.globe-hud b{color:#fff;font-weight:400}
+.big-title{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);font-family:Orbitron,sans-serif;font-weight:900;font-size:clamp(14px,1.6vw,22px);letter-spacing:.4em;color:#fff;text-shadow:0 0 14px var(--a);white-space:nowrap;pointer-events:none}
+footer{grid-column:1/-1;border-top:1px solid rgba(0,229,255,.25);overflow:hidden;font-size:12px;line-height:30px;letter-spacing:.12em;background:rgba(0,0,0,.6);margin:0 -12px}
+footer div{white-space:nowrap;display:inline-block;padding-left:100%;animation:tick 70s linear infinite}
+footer .r{color:var(--r)}footer .g{color:var(--g)}
+@keyframes tick{to{transform:translateX(-100%)}}
+@media (max-width:1000px){.app{grid-template-columns:1fr}.col{display:none}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="app">
+  <header>
+    <div><h1><span class="glitch" data-glitch data-alt="GL0B4L D4T4 GR1D|MAPA GLOBAL DE AMEAÇAS|6£Ø84£ Ð47Λ 6Я!Ð">GLOBAL DATA GRID</span></h1><small>big data · análise cyber · rede mundial</small></div>
+    <div class="chips">
+      <span class="chip"><span class="d" style="color:var(--g)"></span>UPLINK <b>ESTÁVEL</b></span>
+      <span class="chip">NÓS <b id="cNodes">4096</b></span>
+      <span class="chip">TB/S <b id="cTb">1.21</b></span>
+      <span class="chip r"><span class="d"></span><span class="glitch" data-glitch data-alt="4M34Ç4 4T1V4|AMEAÇA ATIVA">AMEAÇA ATIVA</span></span>
+      <span class="chip"><b id="clock">00:00:00</b> UTC</span>
+    </div>
+  </header>
+
+  <div class="col">
+    <div class="pn"><h3>TRÁFEGO GLOBAL <em id="trV">0 Gb/s</em></h3><canvas id="line" height="110"></canvas></div>
+    <div class="pn"><h3>REGIÕES <em>LIVE</em></h3><div class="bars" id="bars"></div></div>
+    <div class="pn grow"><h3>LOG DE PROCESSAMENTO <em>●</em></h3><div class="log" id="log"></div></div>
+  </div>
+
+  <div class="mid">
+    <canvas id="globe"></canvas>
+    <div class="globe-hud"><span>ROT <b id="rot">0.00°</b> · LAT <b id="lat">0</b> · LON <b id="lon">0</b></span><span>ARRASTE PARA GIRAR</span><span>ARCOS <b id="arcs">0</b></span></div>
+    <div class="big-title"><span class="glitch" data-glitch data-alt="R3D3 MUND14L|W0RLDW1D3 C0MMUN1C4710N">REDE MUNDIAL</span></div>
+    <div class="stats">
+      <div class="stat"><small>PACOTES/S</small><div id="sPk">0</div></div>
+      <div class="stat"><small>CONEXÕES</small><div id="sCn">0</div></div>
+      <div class="stat r"><small>AMEAÇAS</small><div id="sTh">0</div></div>
+      <div class="stat"><small>LATÊNCIA</small><div id="sLt">0ms</div></div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="pn"><h3>CARGA DO CLUSTER <em id="cpuV">0%</em></h3><canvas id="cpu" height="90"></canvas></div>
+    <div class="pn grow"><h3>CONEXÕES ATIVAS <em>TLS 1.3</em></h3><div class="conn" id="conn"></div></div>
+    <div class="pn"><h3>HEX DUMP <em>0x7F</em></h3><div class="hex" id="hex"></div></div>
+  </div>
+  <footer><div id="tick"></div></footer>
+</div>
+
+<nav class="gk-nav"><a href="../index.html" title="Voltar ao portal de temas">⌂ INÍCIO</a><a href="index.html">◄ HUB</a><a href="01-matrix-rain.html">‹ ANT</a><span>MOD 02/08</span><a href="03-breach.html">PRÓX ›</a></nav>
+<div class="vig"></div><div class="scan"></div>
+<div id="gk-boot"><div class="bt"><div class="bt-code">// MOD_02 :: GLOBAL_DATA_GRID</div><div class="bt-title glitch" data-text=""></div><div class="bt-bar"><i></i></div><div class="bt-log"></div><div class="bt-hint">[ CLIQUE PARA PULAR ]</div></div></div>
+
+<script>
+/* ================= GLITCH KIT ================= */
+const GK=(()=>{
+  const MAP={a:'4@Λ',b:'8ß',c:'(¢',d:'Ð',e:'3€Σ',f:'ƒ',g:'96',h:'#',i:'1!|',j:'¿',k:'К',l:'1|£',m:'м',n:'И',o:'0Ø',p:'Þ',q:'9',r:'Я',s:'5$§',t:'7+†',u:'µ',v:'√',w:'Ш',x:'×',y:'¥',z:'2'};
+  const SYM='!@#$%&*<>/\\|{}[]?=+~01░▒▓';
+  const rnd=a=>a[Math.random()*a.length|0];
+  const pick=s=>Math.random()<.72?s[0]:rnd(s);
+  const leet=(s,p=.5,n=0)=>[...s].map(ch=>{const m=MAP[ch.toLowerCase()];if(m&&Math.random()<p)return pick(m);if(ch!==' '&&Math.random()<n)return rnd(SYM);return ch}).join('');
+  const set=(el,t)=>{el.textContent=t;el.dataset.text=t};
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const scramble=(el,final,dur=900)=>new Promise(res=>{const t0=performance.now();const f=now=>{const k=Math.min(1,(now-t0)/dur),n=final.length*k|0;let o='';for(let i=0;i<final.length;i++)o+=(i<n||final[i]===' ')?final[i]:rnd(SYM);set(el,o);if(k<1)requestAnimationFrame(f);else{set(el,final);res()}};requestAnimationFrame(f)});
+  function auto(el){
+    if(el._gk)return;el._gk=1;
+    const orig=el.dataset.orig||el.textContent.trim();el.dataset.orig=orig;set(el,orig);
+    const alts=(el.dataset.alt||'').split('|').filter(Boolean);let base=orig;
+    const burst=()=>{
+      if(!el.isConnected)return;
+      el.classList.add('is-glitching');let n=0;const fr=4+(Math.random()*8|0);
+      const iv=setInterval(()=>{set(el,leet(base,.55,.07));if(++n>=fr){clearInterval(iv);const r=Math.random();
+        base=r<.28?leet(orig,.75):(r<.45&&alts.length?rnd(alts):orig);set(el,base);el.classList.remove('is-glitching');setTimeout(burst,1400+Math.random()*3600)}},55)};
+    setTimeout(burst,600+Math.random()*2400);
+  }
+  function boot(title,lines){
+    const ov=document.getElementById('gk-boot');if(!ov)return;
+    const t=ov.querySelector('.bt-title'),bar=ov.querySelector('.bt-bar i'),log=ov.querySelector('.bt-log');
+    let done=false;const fin=()=>{if(done)return;done=true;ov.classList.add('out');setTimeout(()=>ov.remove(),700)};
+    ov.addEventListener('click',fin);addEventListener('keydown',fin,{once:true});
+    scramble(t,title,800);
+    (async()=>{for(let i=0;i<lines.length&&!done;i++){await sleep(160+Math.random()*140);const d=document.createElement('div');d.textContent='> '+lines[i];log.appendChild(d);bar.style.width=((i+1)/lines.length*100)+'%'}await sleep(380);fin()})();
+  }
+  document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('[data-glitch]').forEach(auto));
+  return {MAP,SYM,rnd,leet,set,sleep,scramble,auto,boot};
+})();
+const $=s=>document.querySelector(s),R=Math.random,pad=n=>String(n).padStart(2,'0');
+const DPR=Math.min(devicePixelRatio||1,2);
+function fit(cv){const r=cv.getBoundingClientRect();cv.width=Math.max(1,r.width*DPR);cv.height=Math.max(1,r.height*DPR);const c=cv.getContext('2d');c.setTransform(DPR,0,0,DPR,0,0);return {c,w:r.width,h:r.height}}
+
+/* ================= FUNDO: rede azul com linhas de dados ================= */
+const bg=$('#bg');let B;
+const streaks=[],nodes=[];
+function initBg(){B=fit(bg);streaks.length=0;nodes.length=0;
+  for(let i=0;i<55;i++)streaks.push({y:R()*B.h,x:R()*B.w,len:60+R()*260,sp:.4+R()*2.2,a:.1+R()*.5,v:R()<.2});
+  for(let i=0;i<70;i++)nodes.push({x:R()*B.w,y:R()*B.h,vx:(R()-.5)*.15,vy:(R()-.5)*.15});}
+function drawBg(t){
+  const {c,w,h}=B;const g=c.createLinearGradient(0,0,0,h);g.addColorStop(0,'#010614');g.addColorStop(1,'#020a1c');c.fillStyle=g;c.fillRect(0,0,w,h);
+  c.strokeStyle='rgba(0,140,255,.06)';c.lineWidth=1;c.beginPath();for(let x=0;x<w;x+=40){c.moveTo(x,0);c.lineTo(x,h)}for(let y=(t*.01)%40;y<h;y+=40){c.moveTo(0,y);c.lineTo(w,y)}c.stroke();
+  for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>w)n.vx*=-1;if(n.y<0||n.y>h)n.vy*=-1}
+  c.lineWidth=.6;
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<150){c.strokeStyle=`rgba(0,170,255,${(1-d/150)*.18})`;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.stroke()}}
+  c.fillStyle='rgba(0,200,255,.5)';for(const n of nodes)c.fillRect(n.x-1,n.y-1,2,2);
+  for(const s of streaks){
+    if(s.v){s.y+=s.sp;if(s.y-s.len>h){s.y=-10;s.x=R()*w}const gr=c.createLinearGradient(0,s.y-s.len,0,s.y);gr.addColorStop(0,'rgba(0,229,255,0)');gr.addColorStop(1,`rgba(120,240,255,${s.a})`);c.strokeStyle=gr;c.lineWidth=1.2;c.beginPath();c.moveTo(s.x,s.y-s.len);c.lineTo(s.x,s.y);c.stroke()}
+    else{s.x+=s.sp;if(s.x-s.len>w){s.x=-10;s.y=R()*h}const gr=c.createLinearGradient(s.x-s.len,0,s.x,0);gr.addColorStop(0,'rgba(0,229,255,0)');gr.addColorStop(1,`rgba(120,240,255,${s.a})`);c.strokeStyle=gr;c.lineWidth=1.2;c.beginPath();c.moveTo(s.x-s.len,s.y);c.lineTo(s.x,s.y);c.stroke()}
+  }
+}
+
+/* ================= GLOBO DE PONTOS ================= */
+const POLY=[
+ [[-168,65],[-140,70],[-95,72],[-80,63],[-62,58],[-55,50],[-66,44],[-75,35],[-81,25],[-97,26],[-97,18],[-87,15],[-78,8],[-84,9],[-105,20],[-117,32],[-124,40],[-124,48],[-135,58],[-150,60],[-165,60]],
+ [[-50,60],[-42,60],[-20,70],[-20,82],[-60,82],[-72,77],[-55,68]],
+ [[-78,8],[-60,10],[-50,0],[-35,-6],[-40,-22],[-48,-28],[-58,-38],[-65,-42],[-68,-55],[-74,-50],[-72,-30],[-70,-18],[-80,-5],[-80,2]],
+ [[-10,36],[-9,43],[-1,46],[-5,48],[2,51],[8,54],[8,57],[5,62],[15,69],[28,71],[45,68],[70,73],[100,78],[140,72],[180,68],[178,62],[160,60],[140,55],[135,45],[128,38],[122,30],[120,22],[108,20],[105,10],[100,3],[98,10],[92,21],[80,15],[77,8],[72,20],[66,25],[57,25],[56,26],[59,22],[52,16],[43,12],[35,28],[34,32],[36,36],[28,37],[26,40],[22,36],[20,40],[13,45],[15,38],[8,44],[3,43]],
+ [[-17,21],[-16,12],[-8,4],[5,4],[9,4],[10,-2],[13,-12],[12,-18],[18,-34],[26,-34],[33,-26],[40,-15],[40,-10],[51,12],[43,12],[32,30],[20,32],[10,37],[-6,36],[-10,30]],
+ [[114,-22],[122,-18],[130,-12],[137,-12],[142,-10],[146,-18],[153,-26],[150,-37],[140,-38],[132,-32],[115,-34]],
+ [[130,31],[135,34],[140,36],[142,40],[141,45],[145,44],[141,38],[136,33]],
+ [[-5,50],[1,51],[0,53],[-3,58],[-6,57],[-3,54]],
+ [[44,-25],[47,-25],[50,-15],[49,-12]],
+ [[95,5],[105,-6],[115,-8],[120,-5],[118,2],[110,2],[100,-1]],
+ [[131,-2],[141,-3],[150,-10],[141,-9]],
+ [[166,-46],[174,-41],[178,-38],[172,-34],[170,-44]]
+];
+function inPoly(x,y,p){let ins=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const xi=p[i][0],yi=p[i][1],xj=p[j][0],yj=p[j][1];if(((yi>y)!=(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))ins=!ins}return ins}
+const toV=(lon,lat)=>{const a=lon*Math.PI/180,b=lat*Math.PI/180;return [Math.cos(b)*Math.sin(a),Math.sin(b),Math.cos(b)*Math.cos(a)]};
+const LAND=[];
+for(let lat=-58;lat<=82;lat+=2.1){const step=2.1/Math.max(.2,Math.cos(lat*Math.PI/180));for(let lon=-180;lon<180;lon+=step){if(POLY.some(p=>inPoly(lon,lat,p)))LAND.push(toV(lon,lat))}}
+const GRID=[];
+for(let lon=-180;lon<180;lon+=30)for(let lat=-80;lat<=80;lat+=4)GRID.push(toV(lon,lat));
+for(let lat=-60;lat<=60;lat+=30)for(let lon=-180;lon<180;lon+=3)GRID.push(toV(lon,lat));
+const CITIES=[['SAO PAULO',-46.6,-23.5],['NEW YORK',-74,40.7],['LONDON',-.1,51.5],['TOKYO',139.7,35.7],['MOSCOW',37.6,55.7],['SYDNEY',151.2,-33.9],['LAGOS',3.4,6.5],['MUMBAI',72.9,19],['BEIJING',116.4,39.9],['LOS ANGELES',-118.2,34],['CAIRO',31.2,30],['SINGAPORE',103.8,1.35],['REYKJAVIK',-21.9,64.1],['CAPE TOWN',18.4,-33.9],['MEXICO CITY',-99.1,19.4],['BERLIN',13.4,52.5],['BUENOS AIRES',-58.4,-34.6],['DUBAI',55.3,25.2],['LISBOA',-9.1,38.7],['SEOUL',127,37.5]].map(([n,lo,la])=>({n,v:toV(lo,la),pulse:0}));
+const gl=$('#globe');let G,rotY=0.8,tilt=-.32,dragging=false,lastX=0,lastY=0,vel=.0022;
+const arcs=[];
+function slerp(a,b,t){const d=Math.max(-1,Math.min(1,a[0]*b[0]+a[1]*b[1]+a[2]*b[2])),w=Math.acos(d),s=Math.sin(w)||1e-6;const k1=Math.sin((1-t)*w)/s,k2=Math.sin(t*w)/s;return [a[0]*k1+b[0]*k2,a[1]*k1+b[1]*k2,a[2]*k1+b[2]*k2]}
+function spawnArc(now){const a=GK.rnd(CITIES);let b=GK.rnd(CITIES);if(a===b)return;const th=R()<.18;
+  const ang=Math.acos(Math.max(-1,Math.min(1,a.v[0]*b.v[0]+a.v[1]*b.v[1]+a.v[2]*b.v[2])));
+  const pts=[];for(let i=0;i<=48;i++){const t=i/48,p=slerp(a.v,b.v,t),h=1+(.08+ang*.16)*Math.sin(Math.PI*t);pts.push([p[0]*h,p[1]*h,p[2]*h])}
+  arcs.push({a,b,pts,t0:now,dur:1600+ang*900,th,hit:false});}
+function proj(v,cx,cy,r){const ca=Math.cos(rotY),sa=Math.sin(rotY),ct=Math.cos(tilt),st=Math.sin(tilt);
+  const x1=v[0]*ca+v[2]*sa,z1=-v[0]*sa+v[2]*ca,y2=v[1]*ct-z1*st,z2=v[1]*st+z1*ct;return [cx+x1*r,cy-y2*r,z2]}
+function drawGlobe(now){
+  const {c,w,h}=G;c.clearRect(0,0,w,h);const cx=w/2,cy=h/2-6,r=Math.min(w,h)*.38;
+  if(!dragging)rotY+=vel;
+  // atmosfera
+  let g=c.createRadialGradient(cx,cy,r*.85,cx,cy,r*1.35);g.addColorStop(0,'rgba(0,229,255,.18)');g.addColorStop(1,'rgba(0,229,255,0)');c.fillStyle=g;c.beginPath();c.arc(cx,cy,r*1.35,0,7);c.fill();
+  g=c.createRadialGradient(cx-r*.3,cy-r*.3,r*.1,cx,cy,r);g.addColorStop(0,'rgba(0,60,110,.55)');g.addColorStop(1,'rgba(0,10,30,.85)');c.fillStyle=g;c.beginPath();c.arc(cx,cy,r,0,7);c.fill();
+  c.strokeStyle='rgba(0,229,255,.5)';c.lineWidth=1;c.beginPath();c.arc(cx,cy,r,0,7);c.stroke();
+  // grade
+  for(const v of GRID){const [x,y,z]=proj(v,cx,cy,r);if(z>0){c.fillStyle=`rgba(0,170,255,${.08+z*.12})`;c.fillRect(x,y,1,1)}}
+  // terra
+  for(const v of LAND){const [x,y,z]=proj(v,cx,cy,r);if(z>-.05){const a=z>0?.25+z*.75:.05;c.fillStyle=`rgba(0,229,255,${a})`;const s=z>0?1.3+z*.9:1;c.fillRect(x-s/2,y-s/2,s,s)}else{c.fillStyle='rgba(0,120,200,.05)';c.fillRect(x,y,1,1)}}
+  // anéis externos
+  c.save();c.translate(cx,cy);
+  c.strokeStyle='rgba(0,229,255,.35)';c.setLineDash([2,8]);c.beginPath();c.arc(0,0,r*1.12,0,7);c.stroke();
+  c.setLineDash([60,20,6,20]);c.rotate(now*.0003);c.lineWidth=2;c.beginPath();c.arc(0,0,r*1.2,0,7);c.stroke();
+  c.rotate(-now*.0009);c.setLineDash([]);c.strokeStyle='rgba(0,255,156,.6)';c.lineWidth=2;c.beginPath();c.arc(0,0,r*1.27,0,.9);c.stroke();c.beginPath();c.arc(0,0,r*1.27,Math.PI,Math.PI+.4);c.stroke();
+  for(let i=0;i<72;i++){const a=i/72*Math.PI*2;c.strokeStyle=i%6?'rgba(0,229,255,.25)':'rgba(0,229,255,.7)';c.lineWidth=1;c.beginPath();c.moveTo(Math.cos(a)*r*1.31,Math.sin(a)*r*1.31);c.lineTo(Math.cos(a)*r*(i%6?1.33:1.36),Math.sin(a)*r*(i%6?1.33:1.36));c.stroke()}
+  c.restore();
+  // arcos
+  for(const A of arcs){const k=(now-A.t0)/A.dur;const head=Math.min(1,k),tail=Math.max(0,k-.55);const col=A.th?'255,42,85':'0,255,156';
+    const n=A.pts.length-1;let prev=null;c.lineWidth=1.6;
+    for(let i=Math.floor(tail*n);i<=Math.floor(head*n);i++){const p=proj(A.pts[i],cx,cy,r);if(prev&&p[2]>-.15&&prev[2]>-.15){const f=(i/n-tail)/Math.max(.01,head-tail);c.strokeStyle=`rgba(${col},${.15+f*.85})`;c.beginPath();c.moveTo(prev[0],prev[1]);c.lineTo(p[0],p[1]);c.stroke()}prev=p}
+    if(k<1){const p=proj(A.pts[Math.floor(head*n)],cx,cy,r);if(p[2]>-.15){c.fillStyle='#fff';c.shadowColor=`rgb(${col})`;c.shadowBlur=14;c.beginPath();c.arc(p[0],p[1],2.6,0,7);c.fill();c.shadowBlur=0}}
+    else if(!A.hit){A.hit=true;A.b.pulse=1;A.b.th=A.th;if(A.th)threats++}}
+  for(let i=arcs.length-1;i>=0;i--)if((now-arcs[i].t0)/arcs[i].dur>1.6)arcs.splice(i,1);
+  // cidades
+  c.font="10px 'Share Tech Mono',monospace";
+  for(const C of CITIES){const [x,y,z]=proj(C.v,cx,cy,r);if(z<=0)continue;const col=C.th&&C.pulse>0?'255,42,85':'0,255,156';
+    c.fillStyle=`rgba(${col},${.5+z*.5})`;c.fillRect(x-2,y-2,4,4);
+    if(C.pulse>0){c.strokeStyle=`rgba(${col},${C.pulse})`;c.lineWidth=1.5;c.beginPath();c.arc(x,y,(1-C.pulse)*26+3,0,7);c.stroke();C.pulse-=.012}
+    if(z>.45){c.fillStyle=`rgba(200,250,255,${(z-.45)*1.4})`;c.fillText(C.n,x+6,y-5)}}
+  $('#rot').textContent=((rotY*180/Math.PI)%360).toFixed(2)+'°';$('#arcs').textContent=arcs.length;
+}
+gl.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;gl.setPointerCapture(e.pointerId)});
+gl.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX,dy=e.clientY-lastY;rotY+=dx*.006;tilt=Math.max(-1.2,Math.min(1.2,tilt+dy*.004));vel=dx*.0008||vel;lastX=e.clientX;lastY=e.clientY});
+gl.addEventListener('pointerup',()=>{dragging=false;if(Math.abs(vel)<.001)vel=.0022*Math.sign(vel||1)});
+
+/* ================= PAINÉIS ================= */
+let threats=0;
+const lc=$('#line'),cc=$('#cpu');let L,C;
+const s1=Array.from({length:70},(_,i)=>50+Math.sin(i*.3)*20),s2=Array.from({length:70},(_,i)=>30+Math.cos(i*.2)*12),cpu=Array.from({length:40},()=>40+R()*40);
+function drawLine(){const {c,w,h}=L;c.clearRect(0,0,w,h);c.strokeStyle='rgba(0,229,255,.1)';c.lineWidth=1;for(let y=0;y<h;y+=h/5){c.beginPath();c.moveTo(0,y);c.lineTo(w,y);c.stroke()}for(let x=0;x<w;x+=w/10){c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke()}
+  const plot=(s,col,fill)=>{c.beginPath();s.forEach((v,i)=>{const x=i/(s.length-1)*w,y=h-v/100*h;i?c.lineTo(x,y):c.moveTo(x,y)});c.strokeStyle=col;c.lineWidth=1.5;c.stroke();if(fill){c.lineTo(w,h);c.lineTo(0,h);c.closePath();const g=c.createLinearGradient(0,0,0,h);g.addColorStop(0,fill);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fill()}};
+  plot(s1,'#00e5ff','rgba(0,229,255,.35)');plot(s2,'#00ff9c');
+  const lx=w-1,ly=h-s1[s1.length-1]/100*h;c.fillStyle='#fff';c.beginPath();c.arc(lx-2,ly,3,0,7);c.fill();}
+function drawCpu(){const {c,w,h}=C;c.clearRect(0,0,w,h);const bw=w/cpu.length;cpu.forEach((v,i)=>{const bh=v/100*h;const col=v>85?'255,42,85':v>70?'255,210,63':'0,229,255';c.fillStyle=`rgba(${col},.75)`;c.fillRect(i*bw+1,h-bh,bw-2,bh);c.fillStyle=`rgba(${col},1)`;c.fillRect(i*bw+1,h-bh,bw-2,2)})}
+const REG=['AMÉRICAS','EUROPA','ÁSIA','ÁFRICA','OCEANIA','ORIENTE M.'];
+$('#bars').innerHTML=REG.map(r=>`<div><span>${r}</span><span class="t"><i style="width:0"></i></span><span>0%</span></div>`).join('');
+function updBars(){document.querySelectorAll('#bars>div').forEach(d=>{const v=10+R()*88|0;d.querySelector('i').style.width=v+'%';d.lastElementChild.textContent=v+'%'})}
+const logEl=$('#log'),LOGL=[];
+const LOGT=[()=>`<span class="g">GET</span> /api/v2/geo?node=0x${(R()*4095|0).toString(16)} <span class="w">200</span> ${R()*40|0}ms`,()=>`sync shard#${R()*64|0} → ${GK.rnd(CITIES).n}-0${R()*9|0} ... <span class="g">ok</span>`,()=>`SELECT * FROM packets WHERE ttl&lt;${R()*64|0};`,()=>`<span class="r">DROP</span> 185.${R()*255|0}.${R()*255|0}.${R()*255|0} :: assinatura maliciosa`,()=>`hash ${Array.from({length:4},()=>(R()*65535|0).toString(16).padStart(4,'0')).join('')}... verificado`,()=>`map/reduce job ${R()*999|0} → ${(R()*100).toFixed(1)}%`,()=>`<span class="w">[AI]</span> anomalia score ${(R()).toFixed(3)}`,()=>`stream kafka://telemetry p${R()*12|0} offset ${R()*1e6|0}`];
+function addLog(){const t=GK.rnd(LOGT)();LOGL.push(t);if(LOGL.length>40)LOGL.shift();logEl.innerHTML=LOGL.slice(-30).join('\n');logEl.scrollTop=1e9}
+const connEl=$('#conn');
+const ip=()=>`${R()*223+1|0}.${R()*255|0}.${R()*255|0}.${R()*255|0}`;
+function addConn(){const d=document.createElement('div');const bad=R()<.15;d.innerHTML=`<span>${ip()}</span><span class="${bad?'x':'p'}">${bad?'✖':'→'}</span><span>${ip()}:${GK.rnd([443,22,80,8080,3389,53])}</span>`;connEl.prepend(d);while(connEl.children.length>18)connEl.lastChild.remove()}
+const hexEl=$('#hex');
+function hexDump(){let o='';for(let r=0;r<6;r++){o+=(0x7f00+r*16+(Date.now()/100|0)%256).toString(16).toUpperCase().padStart(6,'0')+'  ';for(let b=0;b<8;b++){const v=(R()*256|0).toString(16).toUpperCase().padStart(2,'0');o+=R()<.08?`<b>${v}</b> `:v+' '}o+='\n'}hexEl.innerHTML=o}
+let pk=0,cn=0;
+function counters(){pk+=((480000+R()*90000)-pk)*.3;cn+=((12800+R()*900)-cn)*.3;$('#sPk').textContent=(pk|0).toLocaleString('pt-BR');$('#sCn').textContent=(cn|0).toLocaleString('pt-BR');$('#sTh').textContent=threats;$('#sLt').textContent=(18+R()*30|0)+'ms';
+  $('#cNodes').textContent=4096+(R()*30|0);$('#cTb').textContent=(1.1+R()*.3).toFixed(2);const d=new Date();$('#clock').textContent=`${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
+  $('#trV').textContent=(s1[s1.length-1]*12).toFixed(0)+' Gb/s';$('#cpuV').textContent=(cpu[cpu.length-1]|0)+'%'}
+const TICK=['<span class="g">[GRID]</span> 4.096 nós sincronizados','<span class="r">[THREAT]</span> botnet detectada no setor ÁSIA-7','[DATA] 1.2 PB indexados nas últimas 24h','<span class="g">[NET]</span> latência média global 31ms','<span class="r">[ALERTA]</span> 1NTRU540 8L0QU34D4 3M L15B04','[AI] previsão de tráfego: +12% em 1h','<span class="g">[SAT]</span> uplink K-7 restabelecido','[GEO] 20 metrópoles monitoradas'];
+$('#tick').innerHTML=TICK.concat(TICK).join('&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;');
+
+/* ================= LOOP ================= */
+function resizeAll(){initBg();G=fit(gl);L=fit(lc);C=fit(cc)}
+addEventListener('resize',resizeAll);resizeAll();
+let lastArc=0,lastSlow=0;
+function loop(now){
+  drawBg(now);drawGlobe(now);
+  if(now-lastArc>260){lastArc=now;if(arcs.length<26)spawnArc(now)}
+  if(now-lastSlow>220){lastSlow=now;s1.push(Math.max(5,Math.min(95,s1[s1.length-1]+(R()-.5)*18)));s1.shift();s2.push(Math.max(5,Math.min(95,s2[s2.length-1]+(R()-.5)*12)));s2.shift();cpu.push(Math.max(10,Math.min(99,cpu[cpu.length-1]+(R()-.5)*30)));cpu.shift();drawLine();drawCpu();addLog();if(R()<.6)addConn();hexDump();counters()}
+  requestAnimationFrame(loop);
+}
+setInterval(updBars,1800);setTimeout(updBars,600);
+requestAnimationFrame(loop);
+GK.boot('GLOBAL DATA GRID',['conectando 20 metrópoles','gerando malha de pontos geográficos','abrindo streams de telemetria','calibrando análise de ameaças','painel ONLINE']);
+</script>
+</body>
+</html>
