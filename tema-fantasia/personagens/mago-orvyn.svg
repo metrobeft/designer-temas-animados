@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="320" height="480">
+<title>Mestre Orvyn — mago da Torre Arcana (personagem original do Tema Fantasia)</title>
+<defs>
+ <linearGradient id="robe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3aa8"/><stop offset="1" stop-color="#1c1450"/></linearGradient>
+ <linearGradient id="hat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a48c0"/><stop offset="1" stop-color="#1e165a"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2c0"/><stop offset=".5" stop-color="#e8b84a"/><stop offset="1" stop-color="#8f5f17"/></linearGradient>
+ <linearGradient id="beard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9c4dc"/></linearGradient>
+ <linearGradient id="wood" x1="0" x2="1"><stop offset="0" stop-color="#4a2a12"/><stop offset=".5" stop-color="#8a5a2e"/><stop offset="1" stop-color="#4a2a12"/></linearGradient>
+ <linearGradient id="crys" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8fbff"/><stop offset=".45" stop-color="#8fd8ff"/><stop offset="1" stop-color="#7a4cff"/></linearGradient>
+ <radialGradient id="skin" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#f6d2b4"/><stop offset="1" stop-color="#dba584"/></radialGradient>
+ <radialGradient id="halo"><stop offset="0" stop-color="#e8fbff" stop-opacity=".95"/><stop offset=".35" stop-color="#8fd8ff" stop-opacity=".55"/><stop offset="1" stop-color="#7a4cff" stop-opacity="0"/></radialGradient>
+ <radialGradient id="orb"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#d9b8ff"/><stop offset=".7" stop-color="#9a7bff" stop-opacity=".6"/><stop offset="1" stop-color="#6a3cff" stop-opacity="0"/></radialGradient>
+ <path id="st4" d="M0 -6 Q0 0 6 0 Q0 0 0 6 Q0 0 -6 0 Q0 0 0 -6Z"/>
+</defs>
+<style>
+ .ln{stroke:#1b1209;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+ .body{animation:breath 3.8s ease-in-out infinite}
+ @keyframes breath{50%{transform:translateY(-3px)}}
+ .beard{transform-origin:160px 172px;animation:bd 4s ease-in-out infinite}
+ @keyframes bd{50%{transform:rotate(-1.8deg) skewX(1.5deg)}}
+ .tip{transform-origin:160px 112px;animation:tip 3.6s ease-in-out infinite}
+ @keyframes tip{50%{transform:rotate(2.2deg)}}
+ .eye{transform-box:fill-box;transform-origin:center;animation:bl 5.6s infinite}
+ @keyframes bl{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+ .pulse{transform-box:fill-box;transform-origin:center;animation:pl 2s ease-in-out infinite}
+ @keyframes pl{50%{transform:scale(1.18);opacity:.7}}
+ .orbit{transform-origin:252px 196px;animation:orb 3s linear infinite}
+ @keyframes orb{to{transform:rotate(360deg)}}
+ .orbF{animation:of 2.6s ease-in-out infinite}
+ @keyframes of{50%{transform:translateY(-7px)}}
+ .tw{transform-box:fill-box;transform-origin:center;animation:tw 2.4s ease-in-out infinite}
+ @keyframes tw{0%,100%{transform:scale(.4);opacity:.3}50%{transform:scale(1.2);opacity:1}}
+</style>
+<ellipse cx="160" cy="463" rx="104" ry="12" fill="#000" opacity=".35"/>
+<g class="body">
+ <!-- cajado -->
+ <path d="M70 456 Q62 380 68 300 Q74 220 64 150 Q60 122 72 104" stroke="#1b1209" stroke-width="13" fill="none" stroke-linecap="round"/>
+ <path d="M70 456 Q62 380 68 300 Q74 220 64 150 Q60 122 72 104" stroke="url(#wood)" stroke-width="8" fill="none" stroke-linecap="round"/>
+ <circle class="pulse" cx="72" cy="76" r="36" fill="url(#halo)"/>
+ <path class="ln" d="M72 46 L90 78 L72 110 L54 78Z" fill="url(#crys)"/>
+ <path d="M72 46 L72 110 M54 78 L90 78" stroke="#fff" stroke-width="1.4" opacity=".6"/>
+ <path class="ln" d="M60 106 Q56 92 62 84 M84 106 Q88 92 82 84 M72 112 L72 98" stroke-width="4" fill="none" stroke="#5a3518"/>
+ <!-- manto -->
+ <path class="ln" d="M122 210 Q160 198 198 210 L234 448 Q160 464 86 448Z" fill="url(#robe)"/>
+ <path d="M160 214 L160 452" stroke="#1b1209" stroke-width="8"/>
+ <path d="M160 214 L160 452" stroke="url(#gold)" stroke-width="4.5"/>
+ <path d="M88 446 Q160 461 232 446" stroke="url(#gold)" stroke-width="5" fill="none"/>
+ <g fill="url(#gold)"><use href="#st4" x="118" y="330"/><use href="#st4" x="196" y="360"/><use href="#st4" x="132" y="402"/><use href="#st4" x="206" y="420"/><use href="#st4" x="112" y="260" transform="scale(1)"/><use href="#st4" x="200" y="290"/></g>
+ <path class="ln" d="M114 452 Q126 442 146 446 L148 460 L108 460Z" fill="#2a1d6a"/>
+ <path class="ln" d="M206 452 Q194 442 174 446 L172 460 L212 460Z" fill="#2a1d6a"/>
+ <!-- faixa e bolsa -->
+ <path class="ln" d="M126 284 Q160 296 194 284 L196 300 Q160 312 124 300Z" fill="#8e2a5a"/>
+ <path class="ln" d="M180 300 L200 300 Q204 322 190 328 Q176 322 180 300Z" fill="#7a4a24" stroke-width="2.4"/>
+ <circle cx="190" cy="306" r="2.6" fill="url(#gold)"/>
+ <!-- braço esquerdo segurando o cajado -->
+ <path class="ln" d="M126 214 Q96 230 84 262 L66 286 Q84 300 102 284 L122 252Z" fill="url(#robe)"/>
+ <path d="M66 286 Q84 300 102 284" stroke="url(#gold)" stroke-width="3.5" fill="none"/>
+ <circle class="ln" cx="70" cy="266" r="10" fill="url(#skin)"/>
+ <!-- braço direito erguido com magia -->
+ <path class="ln" d="M194 214 Q226 226 240 248 L264 252 Q264 272 244 276 Q222 264 200 252Z" fill="url(#robe)"/>
+ <path d="M264 252 Q264 272 244 276" stroke="url(#gold)" stroke-width="3.5" fill="none"/>
+ <path class="ln" d="M240 240 Q252 230 264 238 Q260 252 246 252Z" fill="url(#skin)"/>
+ <g class="orbF">
+  <circle class="pulse" cx="252" cy="196" r="30" fill="url(#orb)"/>
+  <circle cx="252" cy="196" r="8" fill="#fff"/>
+  <g class="orbit"><circle cx="252" cy="170" r="3" fill="#d9b8ff"/><circle cx="276" cy="200" r="2.4" fill="#8fd8ff"/><circle cx="234" cy="214" r="2" fill="#fff"/></g>
+ </g>
+ <!-- cabeça -->
+ <path d="M112 150 C106 194 116 222 130 238 L190 238 C204 222 214 194 208 150Z" fill="url(#beard)" stroke="#1b1209" stroke-width="3" stroke-linejoin="round"/>
+ <path class="ln" d="M126 140 C126 116 142 108 160 108 C178 108 194 116 194 140 C194 170 180 190 160 192 C140 190 126 170 126 140Z" fill="url(#skin)"/>
+ <ellipse class="ln" cx="125" cy="148" rx="6" ry="9" fill="url(#skin)"/>
+ <ellipse class="ln" cx="195" cy="148" rx="6" ry="9" fill="url(#skin)"/>
+ <path d="M132 156 Q136 160 140 158 M188 156 Q184 160 180 158" stroke="#b07a5a" stroke-width="1.6" fill="none"/>
+ <g class="beard">
+  <path class="ln" d="M126 158 C118 200 126 262 146 314 L160 350 L174 314 C194 262 202 200 194 158 C188 176 176 186 160 188 C144 186 132 176 126 158Z" fill="url(#beard)"/>
+  <path d="M142 200 Q146 250 156 300 M178 200 Q174 250 164 300 M160 196 L160 330" stroke="#b6b0cc" stroke-width="1.8" fill="none"/>
+ </g>
+ <path class="ln" d="M160 166 C150 162 134 166 124 182 C138 176 150 178 160 174 C170 178 182 176 196 182 C186 166 170 162 160 166Z" fill="#fff" stroke-width="2.4"/>
+ <path class="ln" d="M160 140 Q153 158 158 166 Q164 168 168 163" fill="url(#skin)" stroke-width="2.4"/>
+ <g class="eye"><ellipse cx="144" cy="146" rx="6" ry="6.5" fill="#fff"/><circle cx="145" cy="147" r="4" fill="#5a7ab8"/><circle cx="145" cy="147" r="2" fill="#10131c"/><circle cx="143.5" cy="145" r="1.4" fill="#fff"/></g>
+ <g class="eye"><ellipse cx="176" cy="146" rx="6" ry="6.5" fill="#fff"/><circle cx="175" cy="147" r="4" fill="#5a7ab8"/><circle cx="175" cy="147" r="2" fill="#10131c"/><circle cx="173.5" cy="145" r="1.4" fill="#fff"/></g>
+ <path class="ln" d="M130 140 Q142 126 158 134 Q144 132 132 146Z" fill="#fff" stroke-width="2"/>
+ <path class="ln" d="M190 140 Q178 126 162 134 Q176 132 188 146Z" fill="#fff" stroke-width="2"/>
+ <!-- chapéu -->
+ <g class="tip"><path class="ln" d="M118 118 Q130 72 150 46 Q170 18 210 8 Q188 30 182 54 Q176 86 202 116Z" fill="url(#hat)"/>
+  <path d="M168 40 a8 8 0 1 0 8 -10 a6 6 0 1 1 -8 10Z" fill="url(#gold)"/>
+  <use href="#st4" x="150" y="80" fill="url(#gold)"/><use href="#st4" x="178" y="96" fill="url(#gold)" transform="scale(1)"/>
+ </g>
+ <path class="ln" d="M80 126 Q160 92 240 126 Q160 144 80 126Z" fill="url(#hat)"/>
+ <path class="ln" d="M118 112 Q160 100 202 110 L203 121 Q160 112 117 123Z" fill="url(#gold)" stroke-width="2.4"/>
+ <circle cx="160" cy="112" r="4" fill="#7a4cff" stroke="#1b1209" stroke-width="1.6"/>
+</g>
+<!-- estrelinhas -->
+<use class="tw" href="#st4" x="40" y="200" fill="#ffe6a6"/>
+<use class="tw" href="#st4" x="286" y="140" fill="#d9b8ff" style="animation-delay:-.8s"/>
+<use class="tw" href="#st4" x="270" y="330" fill="#8fd8ff" style="animation-delay:-1.5s"/>
+<use class="tw" href="#st4" x="30" y="360" fill="#ffe6a6" style="animation-delay:-2s"/>
+</svg>

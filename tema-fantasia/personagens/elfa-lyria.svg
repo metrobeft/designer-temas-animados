@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="320" height="480">
+<title>Lyria — arqueira élfica do Bosque de Sylvaren (personagem original do Tema Fantasia)</title>
+<defs>
+ <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff7df"/><stop offset=".55" stop-color="#ecdcaa"/><stop offset="1" stop-color="#bba56a"/></linearGradient>
+ <linearGradient id="cloak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f8152"/><stop offset="1" stop-color="#0f3520"/></linearGradient>
+ <linearGradient id="leaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#66d493"/><stop offset="1" stop-color="#22704a"/></linearGradient>
+ <linearGradient id="lea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a0703f"/><stop offset="1" stop-color="#5a3a1e"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2c0"/><stop offset=".5" stop-color="#e8b84a"/><stop offset="1" stop-color="#8f5f17"/></linearGradient>
+ <linearGradient id="wood" x1="0" x2="1"><stop offset="0" stop-color="#5a3518"/><stop offset=".5" stop-color="#b47c44"/><stop offset="1" stop-color="#5a3518"/></linearGradient>
+ <radialGradient id="skin" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#fdebdc"/><stop offset="1" stop-color="#ecc3a6"/></radialGradient>
+ <radialGradient id="iris" cx=".5" cy=".35" r=".7"><stop offset="0" stop-color="#d9ffe9"/><stop offset=".5" stop-color="#2fbf78"/><stop offset="1" stop-color="#0d4a2c"/></radialGradient>
+ <radialGradient id="glow"><stop offset="0" stop-color="#d8ffe8"/><stop offset=".4" stop-color="#6dffb0" stop-opacity=".7"/><stop offset="1" stop-color="#46d39a" stop-opacity="0"/></radialGradient>
+</defs>
+<style>
+ .ln{stroke:#1b1209;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+ .body{animation:breath 3.6s ease-in-out infinite}
+ @keyframes breath{50%{transform:translateY(-3px)}}
+ .hairb{transform-origin:160px 80px;animation:hair 4s ease-in-out infinite}
+ @keyframes hair{50%{transform:rotate(-1.6deg) skewX(2deg)}}
+ .cloak{transform-origin:160px 180px;animation:cl 4.6s ease-in-out infinite}
+ @keyframes cl{50%{transform:rotate(-1.5deg) skewX(2.5deg)}}
+ .eye{transform-box:fill-box;transform-origin:center;animation:bl 4.8s infinite}
+ @keyframes bl{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+ .rune{animation:rune 2.2s ease-in-out infinite}
+ @keyframes rune{50%{opacity:.35}}
+ .mote{animation:mote 5s linear infinite}
+ @keyframes mote{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(18px,-130px);opacity:0}}
+ .lockl{transform-origin:132px 100px;animation:lk 3.8s ease-in-out infinite}
+ .lockr{transform-origin:188px 100px;animation:lk 3.8s ease-in-out infinite reverse}
+ @keyframes lk{50%{transform:rotate(2.5deg)}}
+</style>
+<ellipse cx="160" cy="462" rx="96" ry="12" fill="#000" opacity=".35"/>
+<g class="body">
+ <!-- cabelo longo atrás -->
+ <path class="hairb ln" d="M116 96 C106 40 214 40 204 96 C214 160 224 240 214 322 Q198 338 180 324 Q172 300 174 262 L146 262 Q148 300 140 324 Q122 338 106 322 C96 240 106 160 116 96Z" fill="url(#hair)"/>
+ <!-- capa -->
+ <path class="cloak ln" d="M118 176 C96 260 88 350 78 430 L96 418 L110 436 L126 420 L142 438 L160 422 L178 438 L194 420 L210 436 L226 418 L242 432 C232 350 224 260 202 176Z" fill="url(#cloak)"/>
+ <!-- aljava nas costas -->
+ <g transform="rotate(24 214 200)">
+  <path d="M206 140 L204 100 M214 140 L214 96 M222 140 L224 102" stroke="#6b4a2a" stroke-width="2.5"/>
+  <path class="ln" d="M204 100 L198 112 L204 116Z M214 96 L208 108 L214 112Z M224 102 L218 114 L224 118Z" fill="#e9f7ee" stroke-width="1.6"/>
+  <path class="ln" d="M204 100 L210 112 L204 116Z M214 96 L220 108 L214 112Z M224 102 L230 114 L224 118Z" fill="#46d39a" stroke-width="1.6"/>
+  <rect class="ln" x="198" y="138" width="30" height="120" rx="8" fill="url(#lea)"/>
+  <rect x="199.5" y="146" width="27" height="7" fill="url(#gold)"/>
+ </g>
+ <!-- pernas e botas -->
+ <path class="ln" d="M136 330 L134 430 L154 430 L158 330Z" fill="#1f3d2d"/>
+ <path class="ln" d="M162 330 L166 430 L186 430 L184 330Z" fill="#1f3d2d"/>
+ <path class="ln" d="M131 380 L156 380 L156 440 Q160 452 150 455 L120 455 Q118 444 132 438Z" fill="url(#lea)"/>
+ <path class="ln" d="M164 380 L189 380 L188 438 Q202 444 200 455 L170 455 Q160 452 164 440Z" fill="url(#lea)"/>
+ <path class="ln" d="M129 378 L159 378 L157 392 L144 385 L131 392Z" fill="url(#leaf)" stroke-width="2"/>
+ <path class="ln" d="M161 378 L191 378 L189 392 L176 385 L163 392Z" fill="url(#leaf)" stroke-width="2"/>
+ <!-- túnica de folhas -->
+ <path class="ln" d="M128 290 L192 290 L204 344 L192 338 L184 354 L172 340 L160 358 L148 340 L136 354 L128 338 L116 344Z" fill="url(#leaf)"/>
+ <path d="M160 296 L160 350 M140 300 L136 340 M180 300 L184 340" stroke="#1d5c3a" stroke-width="1.6" fill="none"/>
+ <!-- tronco -->
+ <path class="ln" d="M122 182 Q160 172 198 182 L192 296 L128 296Z" fill="#2f7a4f"/>
+ <path class="ln" d="M133 224 Q160 216 187 224 L186 296 L134 296Z" fill="url(#lea)"/>
+ <path d="M152 232 L168 242 M168 232 L152 242 M152 248 L168 258 M168 248 L152 258 M152 264 L168 274 M168 264 L152 274" stroke="#e9d9a6" stroke-width="1.6"/>
+ <rect class="ln" x="128" y="288" width="64" height="10" rx="3" fill="#4a2e16"/>
+ <path class="ln" d="M160 284 Q170 293 160 303 Q150 293 160 284Z" fill="url(#gold)" stroke-width="2"/>
+ <!-- gola / capuz abaixado -->
+ <path class="ln" d="M112 188 Q160 214 208 188 Q202 166 182 160 L138 160 Q118 166 112 188Z" fill="url(#cloak)"/>
+ <path class="ln" d="M160 196 Q168 204 160 214 Q152 204 160 196Z" fill="url(#gold)" stroke-width="2"/>
+ <circle class="rune" cx="160" cy="205" r="2.6" fill="#b8ffd8"/>
+ <!-- braço direito (mão na cintura) -->
+ <path d="M200 192 Q224 230 216 262 Q208 284 194 292" stroke="#1b1209" stroke-width="22" fill="none" stroke-linecap="round"/>
+ <path d="M200 192 Q224 230 216 262 Q208 284 194 292" stroke="#2f7a4f" stroke-width="16" fill="none" stroke-linecap="round"/>
+ <path d="M219 246 Q214 272 202 286" stroke="#5a3a1e" stroke-width="15" fill="none" stroke-linecap="round"/>
+ <circle class="ln" cx="194" cy="292" r="8" fill="url(#skin)"/>
+ <!-- braço esquerdo segurando o arco -->
+ <path d="M120 192 Q98 226 88 258 Q82 274 78 282" stroke="#1b1209" stroke-width="22" fill="none" stroke-linecap="round"/>
+ <path d="M120 192 Q98 226 88 258 Q82 274 78 282" stroke="#2f7a4f" stroke-width="16" fill="none" stroke-linecap="round"/>
+ <path d="M92 250 Q86 266 80 278" stroke="#5a3a1e" stroke-width="15" fill="none" stroke-linecap="round"/>
+ <!-- arco -->
+ <line x1="84" y1="132" x2="84" y2="434" stroke="#f4eedd" stroke-width="1.6"/>
+ <path d="M84 132 Q70 138 66 160 Q52 222 70 270 L72 298 Q52 348 66 408 Q70 428 84 434" stroke="#1b1209" stroke-width="10" fill="none" stroke-linecap="round"/>
+ <path d="M84 132 Q70 138 66 160 Q52 222 70 270 L72 298 Q52 348 66 408 Q70 428 84 434" stroke="url(#wood)" stroke-width="6" fill="none" stroke-linecap="round"/>
+ <path d="M60 196 Q58 214 62 232 M60 336 Q58 354 62 372" stroke="url(#gold)" stroke-width="3" fill="none" stroke-linecap="round"/>
+ <circle cx="84" cy="132" r="4" fill="url(#gold)" stroke="#1b1209" stroke-width="1.5"/><circle cx="84" cy="434" r="4" fill="url(#gold)" stroke="#1b1209" stroke-width="1.5"/>
+ <circle cx="71" cy="284" r="20" fill="url(#glow)" class="rune"/>
+ <circle class="ln" cx="73" cy="284" r="9" fill="url(#skin)"/>
+ <!-- cabeça -->
+ <rect class="ln" x="151" y="146" width="18" height="24" rx="6" fill="url(#skin)"/>
+ <path class="ln" d="M130 104 Q108 98 90 72 Q104 106 126 122Z" fill="url(#skin)"/>
+ <path class="ln" d="M190 104 Q212 98 230 72 Q216 106 194 122Z" fill="url(#skin)"/>
+ <path d="M126 108 Q112 100 102 88 M194 108 Q208 100 218 88" stroke="#d99a86" stroke-width="2" fill="none"/>
+ <path class="ln" d="M126 98 C126 70 142 58 160 58 C178 58 194 70 194 98 C194 128 180 150 160 154 C140 150 126 128 126 98Z" fill="url(#skin)"/>
+ <ellipse cx="136" cy="124" rx="7" ry="3.5" fill="#f29a9a" opacity=".38"/><ellipse cx="184" cy="124" rx="7" ry="3.5" fill="#f29a9a" opacity=".38"/>
+ <g class="eye"><ellipse cx="145" cy="109" rx="8" ry="9.5" fill="#fff"/><ellipse cx="146" cy="110" rx="6.2" ry="7.8" fill="url(#iris)"/><circle cx="146" cy="111" r="2.8" fill="#0b2a1a"/><circle cx="143.5" cy="107" r="2.1" fill="#fff"/></g>
+ <g class="eye"><ellipse cx="175" cy="109" rx="8" ry="9.5" fill="#fff"/><ellipse cx="174" cy="110" rx="6.2" ry="7.8" fill="url(#iris)"/><circle cx="174" cy="111" r="2.8" fill="#0b2a1a"/><circle cx="171.5" cy="107" r="2.1" fill="#fff"/></g>
+ <path d="M135 103 Q145 96 156 102 M136 104 l-5 -3" stroke="#3a2a14" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+ <path d="M185 103 Q175 96 164 102 M184 104 l5 -3" stroke="#3a2a14" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+ <path d="M136 92 Q146 87 155 91 M184 92 Q174 87 165 91" stroke="#b9a066" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+ <path d="M160 114 Q158 122 162 124" stroke="#c98d72" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+ <path d="M152 134 Q160 139 168 134" stroke="#b0505a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+ <!-- franja e mechas -->
+ <path class="ln" d="M124 104 C118 60 146 46 160 46 C176 46 204 60 196 104 C190 84 178 72 162 70 C158 80 150 88 136 92 C132 96 128 100 124 104Z" fill="url(#hair)"/>
+ <path class="lockl ln" d="M128 94 C118 130 118 172 128 210 Q136 194 136 170 C136 140 134 116 138 98Z" fill="url(#hair)"/>
+ <path class="lockr ln" d="M192 94 C202 130 202 172 192 210 Q184 194 184 170 C184 140 186 116 182 98Z" fill="url(#hair)"/>
+ <path d="M140 58 Q160 50 182 58" stroke="#fff" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round"/>
+ <!-- diadema de folha -->
+ <path d="M128 84 Q160 70 192 84" stroke="#1b1209" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+ <path d="M128 84 Q160 70 192 84" stroke="url(#gold)" stroke-width="3" fill="none" stroke-linecap="round"/>
+ <path class="ln" d="M160 62 Q170 71 160 82 Q150 71 160 62Z" fill="#46d39a" stroke-width="2"/>
+ <circle class="rune" cx="160" cy="72" r="3" fill="#d8ffe8"/>
+</g>
+<!-- luzes da floresta -->
+<circle class="mote" cx="62" cy="300" r="3" fill="#b8ffd8"/>
+<circle class="mote" cx="240" cy="340" r="2.5" fill="#b8ffd8" style="animation-delay:-1.7s"/>
+<circle class="mote" cx="210" cy="250" r="2" fill="#ffe6a6" style="animation-delay:-3.1s"/>
+<circle class="mote" cx="100" cy="380" r="2.2" fill="#b8ffd8" style="animation-delay:-4.2s"/>
+</svg>

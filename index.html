@@ -6,17 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DESIGNER // TEMAS ANIMADOS — Portal</title>
   <meta name="description"
-    content="Coleção aberta de páginas web animadas, organizada por temas: hacker, anime e mais.">
+    content="Coleção aberta de páginas web animadas, organizada por temas: hacker, anime, fantasia e mais.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=M+PLUS+Rounded+1c:wght@500;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=M+PLUS+Rounded+1c:wght@500;800&family=Cinzel+Decorative:wght@900&family=Cinzel:wght@700&family=IM+Fell+English:ital@0;1&display=swap"
     rel="stylesheet">
   <style>
     :root {
       --hk: #00ff9c;
       --an: #ff7eb6;
       --an2: #a98bff;
+      --fa: #e8b84a;
       --c: #00e5ff;
       --m: #ff2bd6;
       --bg: #05040a;
@@ -198,8 +199,8 @@
 
     .themes {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 26px
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px
     }
 
     .theme {
@@ -299,6 +300,33 @@
       color: var(--an);
       text-shadow: none;
       margin-top: 4px
+    }
+
+    .fantasy {
+      --t: var(--fa)
+    }
+
+    .fantasy h2 {
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      font-weight: 900;
+      background: linear-gradient(180deg, #fff8dc 8%, #f5d27a 42%, #b37a24 56%, #f8dc8e 78%, #fff2c4 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 2px 0 #2a1806) drop-shadow(0 0 16px rgba(232, 184, 74, .45))
+    }
+
+    .fantasy h2 small {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: .38em;
+      letter-spacing: .4em;
+      margin-top: 6px
+    }
+
+    .fantasy p {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 15px
     }
 
     .theme p {
@@ -438,6 +466,35 @@
       color: #1a0b2e
     }
 
+    .direct.fa {
+      border-color: rgba(232, 184, 74, .25);
+      background: linear-gradient(180deg, rgba(40, 26, 10, .4), rgba(0, 0, 0, .4));
+      margin-top: 18px
+    }
+
+    .direct.fa h3 {
+      color: var(--fa)
+    }
+
+    .direct.fa .chip {
+      border-color: rgba(232, 184, 74, .3);
+      color: #f6e7c4
+    }
+
+    .direct.fa .chip em {
+      color: var(--fa)
+    }
+
+    .direct.fa .chip:hover {
+      background: var(--fa);
+      color: #1b1209;
+      border-color: var(--fa)
+    }
+
+    .direct.fa .chip:hover em {
+      color: #1b1209
+    }
+
     footer {
       margin-top: 44px;
       display: flex;
@@ -453,6 +510,12 @@
 
     footer a {
       color: #cfc9e6
+    }
+
+    @media (max-width:1100px) {
+      .themes {
+        grid-template-columns: 1fr 1fr
+      }
     }
 
     @media (max-width:860px) {
@@ -498,10 +561,20 @@
         <div class="info">
           <span class="tag"><i></i>TEMA 02 · ONLINE</span>
           <h2>TEMA ANIME<small>アニメ · テーマ</small></h2>
-          <p>Abertura de anime com a mascote Hana, tempestade de sakura, power-up, página de mangá, Tóquio neon, círculo
-            mágico, quarto lofi, estrelas cadentes e lago de carpas.</p>
           <p>Abertura de anime com mascote animada, tempestade de sakura, power-up, página de mangá, Tóquio neon,
             círculo mágico, quarto lofi, estrelas cadentes e lago de carpas.</p>
+          <span class="go">ENTRAR NO TEMA</span>
+        </div>
+      </a>
+      <a class="theme fantasy" href="tema-fantasia/index.html">
+        <canvas id="pvFantasy"></canvas>
+        <div class="shade"></div>
+        <div class="count"><b>09</b>PÁGINAS</div>
+        <div class="info">
+          <span class="tag"><i></i>TEMA 03 · ONLINE</span>
+          <h2>TEMA FANTASIA<small>CRÔNICAS DOS REINOS</small></h2>
+          <p>Prólogo com mapa que se desenha e dragão sob a lua, cidade dos humanos, floresta élfica, forja dos anões,
+            planaltos, masmorra, torre do mago, covil do dragão e salão dos heróis.</p>
           <span class="go">ENTRAR NO TEMA</span>
         </div>
       </a>
@@ -515,6 +588,10 @@
       <h3>ACESSO DIRETO · TEMA ANIME <span>tema-anime/</span></h3>
       <div class="chips" id="chipsA"></div>
     </section>
+    <section class="direct fa">
+      <h3>ACESSO DIRETO · TEMA FANTASIA <span>tema-fantasia/</span></h3>
+      <div class="chips" id="chipsF"></div>
+    </section>
 
     <footer><span>HTML · CSS · JS — sem frameworks, sem build</span><span>🔊 sons sintetizados ao vivo · tecla M deixa
         mudo</span><span>código aberto · licença MIT</span></footer>
@@ -526,6 +603,9 @@
     document.getElementById('chips').innerHTML = PAGES.map(([n, t, f]) => `<a class="chip" href="tema-hacker/${f}"><em>${n}</em>${t}</a>`).join('');
     const PAGES_A = [['00', 'ABERTURA + HUB', 'index.html'], ['01', 'SAKURA STORM · 桜吹雪', '01-sakura-storm.html'], ['02', 'POWER UP · 覚醒', '02-speed-lines.html'], ['03', 'MANGA PANELS · 漫画', '03-manga-panels.html'], ['04', 'NEON TOKYO · 東京', '04-neon-tokyo.html'], ['05', 'MAGIC CIRCLE · 魔法陣', '05-magic-circle.html'], ['06', 'LOFI ROOM · ローファイ', '06-lofi-room.html'], ['07', 'STARFALL · 流れ星', '07-starfall.html'], ['08', 'KOI POND · 鯉の池', '08-koi-pond.html']];
     document.getElementById('chipsA').innerHTML = PAGES_A.map(([n, t, f]) => `<a class="chip" href="tema-anime/${f}"><em>${n}</em>${t}</a>`).join('');
+
+    const PAGES_F = [['00', 'PRÓLOGO + MAPA', 'index.html'], ['I', 'REINO DOS HUMANOS', '01-reino-humano.html'], ['II', 'FLORESTA ÉLFICA', '02-floresta-elfica.html'], ['III', 'MONTANHAS DOS ANÕES', '03-montanhas-anas.html'], ['IV', 'PLANALTOS DO VENTO', '04-planaltos.html'], ['V', 'MASMORRA PROFUNDA', '05-masmorra.html'], ['VI', 'TORRE DO MAGO', '06-torre-do-mago.html'], ['VII', 'COVIL DO DRAGÃO', '07-covil-do-dragao.html'], ['VIII', 'SALÃO DOS HERÓIS', '08-salao-dos-herois.html']];
+    document.getElementById('chipsF').innerHTML = PAGES_F.map(([n, t, f]) => `<a class="chip" href="tema-fantasia/${f}"><em>${n}</em>${t}</a>`).join('');
 
     function fit(cv) { const r = cv.getBoundingClientRect(); cv.width = Math.max(1, r.width * DPR); cv.height = Math.max(1, r.height * DPR); const c = cv.getContext('2d'); c.setTransform(DPR, 0, 0, DPR, 0, 0); return { c, w: r.width, h: r.height } }
 
@@ -557,6 +637,21 @@
       }
     }
 
+    /* prévia fantasia: lua, montanhas, castelo e brasas subindo */
+    const fa = document.getElementById('pvFantasy'); let F, embers = [], faFast = false, ridge = [];
+    function faInit() { F = fit(fa); embers = Array.from({ length: 60 }, () => newEmber(true)); ridge = []; for (let x = -10; x <= F.w + 20; x += 14) ridge.push([x, F.h * .72 - Math.abs(Math.sin(x * .011)) * F.h * .2 - Math.sin(x * .031) * F.h * .03]) }
+    function newEmber(init) { return { x: R() * F.w, y: init ? R() * F.h : F.h + 6, v: .3 + R() * .8, s: .8 + R() * 1.8, w: R() * 6.28 } }
+    function faDraw(t) {
+      const { c, w, h } = F; const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#07060f'); g.addColorStop(.55, '#1d1638'); g.addColorStop(1, '#6a2a1a'); c.fillStyle = g; c.fillRect(0, 0, w, h);
+      const mx = w * .56, my = h * .27, mr = h * .065; const mg = c.createRadialGradient(mx, my, mr * .5, mx, my, mr * 4); mg.addColorStop(0, 'rgba(255,236,200,.35)'); mg.addColorStop(1, 'rgba(255,236,200,0)'); c.fillStyle = mg; c.beginPath(); c.arc(mx, my, mr * 4, 0, 6.29); c.fill(); c.fillStyle = '#fbefd2'; c.beginPath(); c.arc(mx, my, mr, 0, 6.29); c.fill();
+      c.fillStyle = '#140e26'; c.beginPath(); c.moveTo(0, h); ridge.forEach(([x, y]) => c.lineTo(x, y)); c.lineTo(w, h); c.closePath(); c.fill();
+      const cx = w * .3, cy = h * .66; c.fillStyle = '#0c0818'; [[-40, 0, 80, 40], [-48, -30, 14, 70], [34, -30, 14, 70], [-10, -52, 20, 92]].forEach(([x, y, ww, hh]) => c.fillRect(cx + x, cy + y, ww, hh)); c.beginPath(); c.moveTo(cx - 14, cy - 52); c.lineTo(cx, cy - 76); c.lineTo(cx + 14, cy - 52); c.fill();
+      c.fillStyle = 'rgba(255,200,110,.85)'; [[-4, -40], [-42, -14], [38, -10], [2, -20]].forEach(([x, y], i) => { if (Math.sin(t * .002 + i * 2) > -.5) c.fillRect(cx + x, cy + y, 3, 5) });
+      c.globalCompositeOperation = 'lighter';
+      for (const e of embers) { e.y -= e.v * (faFast ? 2.6 : 1); e.w += .03; e.x += Math.sin(e.w) * .5; if (e.y < -6) Object.assign(e, newEmber(false)); c.fillStyle = 'rgba(255,170,80,.18)'; c.beginPath(); c.arc(e.x, e.y, e.s * 3, 0, 6.29); c.fill(); c.fillStyle = 'rgba(255,224,160,.9)'; c.beginPath(); c.arc(e.x, e.y, e.s * .7, 0, 6.29); c.fill() }
+      c.globalCompositeOperation = 'source-over';
+    }
+
     /* fundo: poeira de partículas verde/rosa */
     const bg = document.getElementById('bg'); let B, dust = [];
     function bgInit() { B = fit(bg); dust = Array.from({ length: 60 }, () => ({ x: R() * B.w, y: R() * B.h, v: .15 + R() * .4, c: R() < .5 ? '0,255,156' : '255,126,182', s: R() * 1.8 + .4 })) }
@@ -571,11 +666,13 @@
     document.querySelector('.hacker').addEventListener('mouseleave', () => hkFast = false);
     document.querySelector('.anime').addEventListener('mouseenter', () => anFast = true);
     document.querySelector('.anime').addEventListener('mouseleave', () => anFast = false);
+    document.querySelector('.fantasy').addEventListener('mouseenter', () => faFast = true);
+    document.querySelector('.fantasy').addEventListener('mouseleave', () => faFast = false);
 
-    function resize() { hkInit(); anInit(); bgInit() }
+    function resize() { hkInit(); anInit(); faInit(); bgInit() }
     addEventListener('resize', resize); resize();
     let lastH = 0;
-    function loop(t) { if (t - lastH > 40) { hkDraw(); lastH = t } anDraw(t); bgDraw(); requestAnimationFrame(loop) }
+    function loop(t) { if (t - lastH > 40) { hkDraw(); lastH = t } anDraw(t); faDraw(t); bgDraw(); requestAnimationFrame(loop) }
     requestAnimationFrame(loop);
   </script>
 </body>

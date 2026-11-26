@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="320" height="480">
+<title>Durgan Barba-de-Brasa — guerreiro anão de Durnhelm (personagem original do Tema Fantasia)</title>
+<defs>
+ <linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="#5d6478"/><stop offset=".42" stop-color="#e8ecf4"/><stop offset=".58" stop-color="#aeb6c8"/><stop offset="1" stop-color="#4f566a"/></linearGradient>
+ <linearGradient id="sv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2f4f9"/><stop offset="1" stop-color="#78809a"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2c0"/><stop offset=".5" stop-color="#e8b84a"/><stop offset="1" stop-color="#8f5f17"/></linearGradient>
+ <linearGradient id="lea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5a32"/><stop offset="1" stop-color="#4a2c16"/></linearGradient>
+ <linearGradient id="beard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f08a3a"/><stop offset=".6" stop-color="#c9551f"/><stop offset="1" stop-color="#8e3412"/></linearGradient>
+ <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></linearGradient>
+ <radialGradient id="skin" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#f6c9a4"/><stop offset="1" stop-color="#d9946f"/></radialGradient>
+ <radialGradient id="ember"><stop offset="0" stop-color="#fff0b0"/><stop offset=".4" stop-color="#ff9a3d" stop-opacity=".8"/><stop offset="1" stop-color="#ff5a1a" stop-opacity="0"/></radialGradient>
+ <pattern id="mail" width="8" height="6" patternUnits="userSpaceOnUse"><rect width="8" height="6" fill="#868da0"/><path d="M0 6 Q4 0 8 6" stroke="#454b5c" stroke-width="1.4" fill="none"/><path d="M-4 3 Q0 -3 4 3 M4 3 Q8 -3 12 3" stroke="#c9cfdb" stroke-width=".8" fill="none"/></pattern>
+</defs>
+<style>
+ .ln{stroke:#1b1209;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+ .body{animation:breath 3s ease-in-out infinite}
+ @keyframes breath{50%{transform:translateY(-3px) scaleX(1.004)}}
+ .beard{transform-origin:160px 228px;animation:bd 3.4s ease-in-out infinite}
+ @keyframes bd{50%{transform:rotate(1.6deg)}}
+ .eye{transform-box:fill-box;transform-origin:center;animation:bl 4.4s infinite}
+ @keyframes bl{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+ .rune{animation:rune 1.8s ease-in-out infinite}
+ @keyframes rune{50%{opacity:.4}}
+ .emb{animation:emb 3.6s linear infinite}
+ @keyframes emb{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(-14px,-110px);opacity:0}}
+</style>
+<ellipse cx="160" cy="463" rx="112" ry="13" fill="#000" opacity=".38"/>
+<g class="body">
+ <!-- pernas e botas -->
+ <path class="ln" d="M118 366 L114 436 L154 436 L156 366Z" fill="#5a3a22"/>
+ <path class="ln" d="M164 366 L166 436 L206 436 L202 366Z" fill="#5a3a22"/>
+ <path class="ln" d="M102 462 Q100 432 124 426 L156 426 L158 462Z" fill="#3a2414"/>
+ <path class="ln" d="M162 462 L164 426 L196 426 Q220 432 218 462Z" fill="#3a2414"/>
+ <path class="ln" d="M102 462 Q102 444 116 440 L128 440 L128 462Z" fill="url(#sv)" stroke-width="2.4"/>
+ <path class="ln" d="M218 462 Q218 444 204 440 L192 440 L192 462Z" fill="url(#sv)" stroke-width="2.4"/>
+ <path d="M112 426 H158 M162 426 H208" stroke="#8f5f17" stroke-width="4"/>
+ <!-- cota de malha -->
+ <path class="ln" d="M88 262 Q160 236 232 262 L240 378 Q160 396 80 378Z" fill="url(#mail)"/>
+ <path d="M88 262 Q160 236 232 262 L240 378 Q160 396 80 378Z" fill="url(#shade)"/>
+ <path class="ln" d="M80 372 Q160 392 240 372 L242 386 Q160 404 78 386Z" fill="url(#lea)"/>
+ <!-- peitoral -->
+ <path class="ln" d="M110 262 Q160 246 210 262 L206 330 Q160 344 114 330Z" fill="url(#st)"/>
+ <!-- cinto com fivela rúnica -->
+ <path class="ln" d="M82 342 Q160 358 238 342 L238 368 Q160 384 82 368Z" fill="url(#lea)"/>
+ <rect class="ln" x="138" y="346" width="44" height="32" rx="4" fill="url(#gold)"/>
+ <path class="rune" d="M160 351 V373 M160 356 L169 362 L160 368" stroke="#ff7a1a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+ <!-- braço esquerdo, punho no cinto -->
+ <path d="M98 270 Q64 300 72 330 Q78 350 104 352" stroke="#1b1209" stroke-width="36" fill="none" stroke-linecap="round"/>
+ <path d="M98 270 Q64 300 72 330 Q78 350 104 352" stroke="url(#mail)" stroke-width="30" fill="none" stroke-linecap="round"/>
+ <path d="M72 322 Q78 344 98 350" stroke="#1b1209" stroke-width="30" fill="none" stroke-linecap="round"/>
+ <path d="M72 322 Q78 344 98 350" stroke="url(#lea)" stroke-width="24" fill="none" stroke-linecap="round"/>
+ <circle class="ln" cx="108" cy="352" r="13" fill="url(#skin)"/>
+ <!-- martelo de guerra apoiado no ombro -->
+ <path d="M214 396 L268 150" stroke="#1b1209" stroke-width="14" stroke-linecap="round"/>
+ <path d="M214 396 L268 150" stroke="#6b4220" stroke-width="8" stroke-linecap="round"/>
+ <path d="M226 342 L234 306" stroke="#2a1a0c" stroke-width="10"/>
+ <g transform="rotate(12.6 268 140)">
+  <rect class="ln" x="228" y="116" width="80" height="46" rx="6" fill="url(#st)"/>
+  <rect x="229.5" y="124" width="77" height="7" fill="url(#gold)"/>
+  <rect x="229.5" y="147" width="77" height="7" fill="url(#gold)"/>
+  <rect class="ln" x="222" y="120" width="10" height="38" rx="3" fill="url(#sv)" stroke-width="2.4"/>
+  <rect class="ln" x="304" y="120" width="10" height="38" rx="3" fill="url(#sv)" stroke-width="2.4"/>
+  <circle cx="268" cy="139" r="16" fill="url(#ember)" class="rune"/>
+  <path d="M263 130 V148 M263 134 L271 139 L263 144" stroke="#ff8a2a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+ </g>
+ <!-- braço direito segurando o cabo -->
+ <path d="M222 270 Q250 290 238 318" stroke="#1b1209" stroke-width="36" fill="none" stroke-linecap="round"/>
+ <path d="M222 270 Q250 290 238 318" stroke="url(#mail)" stroke-width="30" fill="none" stroke-linecap="round"/>
+ <circle class="ln" cx="231" cy="322" r="13" fill="url(#skin)"/>
+ <path d="M222 318 H240 M221 325 H241" stroke="#a8603e" stroke-width="1.6"/>
+ <!-- ombreiras -->
+ <path class="ln" d="M60 286 Q56 244 98 240 Q128 242 132 268 Q100 292 60 286Z" fill="url(#sv)"/>
+ <path d="M64 276 Q96 274 122 258" stroke="url(#gold)" stroke-width="4" fill="none"/>
+ <path class="ln" d="M260 286 Q264 244 222 240 Q192 242 188 268 Q220 292 260 286Z" fill="url(#sv)"/>
+ <path d="M256 276 Q224 274 198 258" stroke="url(#gold)" stroke-width="4" fill="none"/>
+ <!-- cabeça -->
+ <ellipse class="ln" cx="113" cy="206" rx="7" ry="10" fill="url(#skin)"/>
+ <ellipse class="ln" cx="207" cy="206" rx="7" ry="10" fill="url(#skin)"/>
+ <path class="ln" d="M116 190 C116 172 136 166 160 166 C184 166 204 172 204 190 L204 226 C204 240 184 248 160 248 C136 248 116 240 116 226Z" fill="url(#skin)"/>
+ <ellipse cx="128" cy="222" rx="9" ry="5" fill="#e8705a" opacity=".45"/><ellipse cx="192" cy="222" rx="9" ry="5" fill="#e8705a" opacity=".45"/>
+ <!-- barba -->
+ <g class="beard">
+  <path class="ln" d="M112 210 C104 262 118 304 138 334 L148 362 L160 396 L172 362 L182 334 C202 304 216 262 208 210 C198 234 184 246 160 248 C136 246 122 234 112 210Z" fill="url(#beard)"/>
+  <path d="M130 258 Q136 296 150 330 M190 258 Q184 296 170 330 M160 262 L160 360 M118 236 Q122 270 136 300 M202 236 Q198 270 184 300" stroke="#8e3412" stroke-width="2" fill="none" opacity=".7"/>
+  <path class="ln" d="M134 326 Q128 356 136 384" stroke="#b44a1a" stroke-width="12" fill="none"/>
+  <path class="ln" d="M186 326 Q192 356 184 384" stroke="#b44a1a" stroke-width="12" fill="none"/>
+  <rect class="ln" x="127" y="358" width="16" height="10" rx="3" fill="url(#gold)" stroke-width="2"/>
+  <rect class="ln" x="179" y="358" width="16" height="10" rx="3" fill="url(#gold)" stroke-width="2"/>
+  <rect class="ln" x="152" y="370" width="16" height="10" rx="3" fill="url(#gold)" stroke-width="2"/>
+ </g>
+ <path class="ln" d="M160 226 C150 220 130 224 118 246 C134 238 148 240 160 236 C172 240 186 238 202 246 C190 224 170 220 160 226Z" fill="#b8481a"/>
+ <path d="M153 243 Q160 247 167 243" stroke="#5a1a0a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+ <path class="ln" d="M151 198 Q146 220 152 229 Q160 236 168 229 Q174 220 169 198Z" fill="#eba381"/>
+ <ellipse cx="156" cy="220" rx="3" ry="2.2" fill="#fff" opacity=".45"/>
+ <g class="eye"><ellipse cx="139" cy="203" rx="5.5" ry="6.5" fill="#fff"/><circle cx="140" cy="204" r="3.8" fill="#5a3416"/><circle cx="139" cy="202.5" r="1.3" fill="#fff"/></g>
+ <g class="eye"><ellipse cx="181" cy="203" rx="5.5" ry="6.5" fill="#fff"/><circle cx="180" cy="204" r="3.8" fill="#5a3416"/><circle cx="179" cy="202.5" r="1.3" fill="#fff"/></g>
+ <path class="ln" d="M122 196 Q138 182 156 192 Q140 190 124 202Z" fill="url(#beard)" stroke-width="2.2"/>
+ <path class="ln" d="M198 196 Q182 182 164 192 Q180 190 196 202Z" fill="url(#beard)" stroke-width="2.2"/>
+ <!-- elmo -->
+ <path class="ln" d="M110 182 C110 124 210 124 210 182Z" fill="url(#st)"/>
+ <path d="M160 128 L160 176" stroke="#1b1209" stroke-width="7" stroke-linecap="round"/>
+ <path d="M160 128 L160 176" stroke="url(#gold)" stroke-width="3.5" stroke-linecap="round"/>
+ <path d="M126 150 Q136 138 152 134" stroke="#fff" stroke-width="4" fill="none" opacity=".55" stroke-linecap="round"/>
+ <path class="ln" d="M104 172 Q160 158 216 172 L216 188 Q160 174 104 188Z" fill="url(#gold)"/>
+ <circle cx="120" cy="178" r="2.4" fill="#5a3a10"/><circle cx="200" cy="178" r="2.4" fill="#5a3a10"/><circle cx="140" cy="173" r="2.4" fill="#5a3a10"/><circle cx="180" cy="173" r="2.4" fill="#5a3a10"/>
+ <path class="ln" d="M154 178 L166 178 L164 206 L156 206Z" fill="url(#sv)" stroke-width="2.4"/>
+</g>
+<!-- brasas -->
+<circle class="emb" cx="270" cy="200" r="2.6" fill="#ffb35a"/>
+<circle class="emb" cx="290" cy="240" r="2" fill="#ff8a3d" style="animation-delay:-1.2s"/>
+<circle class="emb" cx="60" cy="380" r="2.2" fill="#ffb35a" style="animation-delay:-2.3s"/>
+<circle class="emb" cx="250" cy="420" r="1.8" fill="#ffd27a" style="animation-delay:-2.9s"/>
+</svg>

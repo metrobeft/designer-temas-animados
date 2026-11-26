@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="320" height="480">
+<title>Sir Aldric — cavaleiro humano de Valmor (personagem original do Tema Fantasia)</title>
+<defs>
+ <linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="#5d6478"/><stop offset=".42" stop-color="#e8ecf4"/><stop offset=".58" stop-color="#aeb6c8"/><stop offset="1" stop-color="#4f566a"/></linearGradient>
+ <linearGradient id="sv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2f4f9"/><stop offset="1" stop-color="#78809a"/></linearGradient>
+ <linearGradient id="cape" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c62c38"/><stop offset="1" stop-color="#560b15"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2c0"/><stop offset=".5" stop-color="#e8b84a"/><stop offset="1" stop-color="#8f5f17"/></linearGradient>
+ <linearGradient id="blade" x1="0" x2="1"><stop offset="0" stop-color="#8d96ab"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#7d869b"/></linearGradient>
+ <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93623a"/><stop offset="1" stop-color="#4a2c16"/></linearGradient>
+ <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3553a8"/><stop offset="1" stop-color="#15224d"/></linearGradient>
+ <radialGradient id="skin" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#f8d8ba"/><stop offset="1" stop-color="#e2ab87"/></radialGradient>
+ <clipPath id="bladeC"><path d="M222 312 L235 312 L233 438 L228.5 452 L224 438Z"/></clipPath>
+ <path id="sun" d="M0 -22 L5 -9 L19 -13 L11 -2 L22 6 L8 8 L9 22 L0 12 L-9 22 L-8 8 L-22 6 L-11 -2 L-19 -13 L-5 -9Z"/>
+</defs>
+<style>
+ .ln{stroke:#1b1209;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+ .body{animation:breath 3.4s ease-in-out infinite}
+ @keyframes breath{50%{transform:translateY(-3px)}}
+ .cape{transform-origin:160px 176px;animation:cape 4.2s ease-in-out infinite}
+ @keyframes cape{50%{transform:rotate(1.8deg) skewX(-2.5deg)}}
+ .eye{transform-box:fill-box;transform-origin:center;animation:bl 5.2s infinite}
+ @keyframes bl{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+ .glint{animation:gl 3.6s ease-in-out infinite}
+ @keyframes gl{0%,55%{transform:translateY(0);opacity:0}62%{opacity:1}100%{transform:translateY(140px);opacity:0}}
+ .gem{animation:gem 2.4s ease-in-out infinite}
+ @keyframes gem{50%{opacity:.5}}
+ .lock{transform-origin:156px 62px;animation:lock 3.4s ease-in-out infinite}
+ @keyframes lock{50%{transform:rotate(-6deg)}}
+</style>
+<ellipse cx="160" cy="462" rx="104" ry="13" fill="#000" opacity=".35"/>
+<g class="body">
+ <!-- capa -->
+ <g class="cape">
+  <path class="ln" d="M114 178 C98 250 86 340 72 448 Q116 434 160 446 Q204 434 250 450 C238 340 226 250 206 178Z" fill="url(#cape)"/>
+  <path d="M122 222 C114 300 106 370 98 438 M198 222 C206 300 214 370 224 440" stroke="#470914" stroke-width="2.5" fill="none" opacity=".6"/>
+  <path d="M76 440 Q116 428 160 440 Q204 428 246 442" stroke="url(#gold)" stroke-width="3" fill="none"/>
+ </g>
+ <!-- pernas e botas -->
+ <path class="ln" d="M128 332 L125 438 L153 438 L156 332Z" fill="url(#st)"/>
+ <path class="ln" d="M164 332 L167 438 L195 438 L192 332Z" fill="url(#st)"/>
+ <path class="ln" d="M125 386 Q140 372 156 386 Q140 401 125 386Z" fill="url(#sv)"/>
+ <path class="ln" d="M164 386 Q180 372 195 386 Q180 401 164 386Z" fill="url(#sv)"/>
+ <path class="ln" d="M112 454 Q112 436 132 432 L154 432 L156 454Z" fill="url(#sv)"/>
+ <path class="ln" d="M164 454 L166 432 L188 432 Q208 436 208 454Z" fill="url(#sv)"/>
+ <!-- saiote de placas -->
+ <path class="ln" d="M118 296 L202 296 L210 342 Q160 356 110 342Z" fill="url(#st)"/>
+ <path d="M114 320 Q160 332 206 320" stroke="#1b1209" stroke-width="2" fill="none" opacity=".6"/>
+ <!-- peitoral -->
+ <path class="ln" d="M112 184 Q160 170 208 184 L202 252 Q198 290 186 300 L134 300 Q122 290 118 252Z" fill="url(#st)"/>
+ <!-- tabardo com o sol de Valmor -->
+ <path class="ln" d="M138 196 L182 196 L188 356 L160 372 L132 356Z" fill="#a51e2a"/>
+ <path d="M144 203 L176 203 L181 350 L160 362 L139 350Z" fill="none" stroke="url(#gold)" stroke-width="2.5"/>
+ <g transform="translate(160 248)"><use href="#sun" fill="url(#gold)" stroke="#1b1209" stroke-width="1.6" stroke-linejoin="round"/><circle r="7" fill="#fff0b8" stroke="#1b1209" stroke-width="1.6"/></g>
+ <rect class="ln" x="120" y="290" width="80" height="13" rx="3" fill="#5a3416"/>
+ <rect class="ln" x="151" y="287" width="18" height="19" rx="3" fill="url(#gold)"/>
+ <!-- braço esquerdo + escudo -->
+ <path d="M106 200 Q92 236 96 272" stroke="#1b1209" stroke-width="28" fill="none" stroke-linecap="round"/>
+ <path d="M106 200 Q92 236 96 272" stroke="url(#st)" stroke-width="22" fill="none" stroke-linecap="round"/>
+ <g transform="rotate(-7 86 300)">
+  <path class="ln" d="M46 236 Q86 220 126 236 Q130 314 86 378 Q42 314 46 236Z" fill="url(#shield)"/>
+  <path d="M55 243 Q86 231 117 243 Q120 309 86 364 Q52 309 55 243Z" fill="none" stroke="url(#gold)" stroke-width="3"/>
+  <g transform="translate(86 292) scale(1.15)"><use href="#sun" fill="url(#gold)" stroke="#1b1209" stroke-width="1.4" stroke-linejoin="round"/><circle r="7" fill="#fff0b8" stroke="#1b1209" stroke-width="1.4"/></g>
+  <path d="M60 252 Q72 242 86 241" stroke="#fff" stroke-width="3" opacity=".35" fill="none" stroke-linecap="round"/>
+ </g>
+ <!-- braço direito -->
+ <path d="M212 200 Q236 220 236 254 Q236 276 230 290" stroke="#1b1209" stroke-width="28" fill="none" stroke-linecap="round"/>
+ <path d="M212 200 Q236 220 236 254 Q236 276 230 290" stroke="url(#st)" stroke-width="22" fill="none" stroke-linecap="round"/>
+ <circle class="ln" cx="236" cy="252" r="10" fill="url(#sv)"/>
+ <!-- espada fincada -->
+ <path class="ln" d="M222 312 L235 312 L233 438 L228.5 452 L224 438Z" fill="url(#blade)"/>
+ <line x1="228.5" y1="320" x2="228.5" y2="430" stroke="#8a93a8" stroke-width="1.6"/>
+ <g clip-path="url(#bladeC)"><rect class="glint" x="218" y="300" width="22" height="16" fill="#fff" opacity=".9"/></g>
+ <path class="ln" d="M202 306 Q228 314 255 306 L255 315 Q228 322 202 315Z" fill="url(#gold)"/>
+ <rect class="ln" x="224" y="268" width="9" height="40" rx="2" fill="#4a2a12"/>
+ <circle class="ln" cx="228.5" cy="265" r="7.5" fill="url(#gold)"/>
+ <circle class="gem" cx="228.5" cy="265" r="3" fill="#e0303e"/>
+ <path class="ln" d="M217 281 Q229 275 241 283 L241 300 Q229 306 217 300Z" fill="url(#sv)"/>
+ <path d="M219 289 H239 M219 295 H239" stroke="#1b1209" stroke-width="1.5"/>
+ <!-- ombreiras e gorjal -->
+ <path class="ln" d="M82 210 Q82 172 120 168 Q142 170 144 196 Q122 216 82 210Z" fill="url(#sv)"/>
+ <path d="M90 197 Q112 195 131 184" stroke="#1b1209" stroke-width="2" fill="none" opacity=".55"/>
+ <path class="ln" d="M238 210 Q238 172 200 168 Q178 170 176 196 Q198 216 238 210Z" fill="url(#sv)"/>
+ <path d="M230 197 Q208 195 189 184" stroke="#1b1209" stroke-width="2" fill="none" opacity=".55"/>
+ <circle cx="98" cy="203" r="2.5" fill="url(#gold)"/><circle cx="222" cy="203" r="2.5" fill="url(#gold)"/>
+ <path class="ln" d="M136 160 L184 160 L192 186 Q160 194 128 186Z" fill="url(#sv)"/>
+ <!-- cabeça -->
+ <path class="ln" d="M112 112 C106 64 134 42 162 42 C194 42 216 66 208 112 L204 130 L116 130Z" fill="url(#hair)"/>
+ <ellipse class="ln" cx="117" cy="114" rx="7" ry="11" fill="#e6b08c"/>
+ <ellipse class="ln" cx="203" cy="114" rx="7" ry="11" fill="#e6b08c"/>
+ <path class="ln" d="M118 100 C118 70 138 58 160 58 C184 58 202 70 202 100 C202 136 186 160 160 162 C134 160 118 136 118 100Z" fill="url(#skin)"/>
+ <path d="M124 130 C132 150 146 160 160 160 C176 160 190 150 196 130 C186 146 174 152 160 152 C146 152 134 146 124 130Z" fill="#6b4a33" opacity=".22"/>
+ <ellipse cx="130" cy="128" rx="7" ry="3.5" fill="#e88f7a" opacity=".35"/><ellipse cx="190" cy="128" rx="7" ry="3.5" fill="#e88f7a" opacity=".35"/>
+ <g class="eye"><ellipse cx="141" cy="110" rx="7.5" ry="8.5" fill="#fff"/><circle cx="142" cy="111" r="5.2" fill="#3c6db0"/><circle cx="142" cy="111" r="2.5" fill="#10131c"/><circle cx="140" cy="108.5" r="1.7" fill="#fff"/></g>
+ <g class="eye"><ellipse cx="179" cy="110" rx="7.5" ry="8.5" fill="#fff"/><circle cx="178" cy="111" r="5.2" fill="#3c6db0"/><circle cx="178" cy="111" r="2.5" fill="#10131c"/><circle cx="176" cy="108.5" r="1.7" fill="#fff"/></g>
+ <path d="M127 97 Q140 90 153 97" stroke="#4a2d17" stroke-width="5" fill="none" stroke-linecap="round"/>
+ <path d="M167 97 Q180 90 193 97" stroke="#4a2d17" stroke-width="5" fill="none" stroke-linecap="round"/>
+ <path d="M160 112 Q155 126 159 130 Q163 132 167 128" stroke="#a8724e" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+ <path d="M148 141 Q160 148 173 140" stroke="#7a3b2b" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+ <path d="M191 116 L185 128" stroke="#c4806a" stroke-width="2" stroke-linecap="round"/>
+ <path class="ln" d="M114 106 C108 62 140 44 166 46 C198 48 214 76 206 106 C200 88 188 78 172 76 C176 84 175 92 170 96 C162 82 146 78 132 84 C128 92 122 99 114 106Z" fill="url(#hair)"/>
+ <path class="lock ln" d="M152 60 C140 72 138 86 146 98 C150 86 154 76 163 68Z" fill="url(#hair)"/>
+ <path d="M130 66 Q150 54 178 58" stroke="#c08a5a" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/>
+</g>
+</svg>

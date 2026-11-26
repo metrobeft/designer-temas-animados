@@ -4,9 +4,9 @@ Coleção aberta de páginas web animadas, feitas só com **HTML + CSS + JavaScr
 
 ### 🌐 [Ver online → metrobeft.github.io/designer-temas-animados](https://metrobeft.github.io/designer-temas-animados/)
 
-| Portal | Tema hacker | Tema anime |
-|---|---|---|
-| [abrir](https://metrobeft.github.io/designer-temas-animados/) | [abrir](https://metrobeft.github.io/designer-temas-animados/tema-hacker/) | [abrir](https://metrobeft.github.io/designer-temas-animados/tema-anime/) |
+| Portal | Tema hacker | Tema anime | Tema fantasia |
+|---|---|---|---|
+| [abrir](https://metrobeft.github.io/designer-temas-animados/) | [abrir](https://metrobeft.github.io/designer-temas-animados/tema-hacker/) | [abrir](https://metrobeft.github.io/designer-temas-animados/tema-anime/) | [abrir](https://metrobeft.github.io/designer-temas-animados/tema-fantasia/) |
 
 **Cada pasta deste repositório é um tema personalizado.** Um tema reúne várias páginas com a mesma identidade visual (cores, tipografia, efeitos e animações), uma página inicial própria (hub) e navegação entre todas elas.
 
@@ -16,6 +16,7 @@ Coleção aberta de páginas web animadas, feitas só com **HTML + CSS + JavaScr
 |---|---|---|---|
 | [`tema-hacker/`](tema-hacker/) | Hacker · glitch · matrix · HUD | ✅ pronto | Intro estilo vídeo + 8 módulos animados |
 | [`tema-anime/`](tema-anime/) | Anime · sakura · mangá · neon | ✅ pronto | Abertura de anime + 8 episódios + mascote personalizada |
+| [`tema-fantasia/`](tema-fantasia/) | Fantasia medieval · elfos · anões · dragões | ✅ pronto | Prólogo cinematográfico + mapa dos reinos + 8 capítulos + 4 personagens ilustrados |
 
 ## Como abrir
 
@@ -47,18 +48,25 @@ python -m http.server 8000
 │   ├── ...
 │   ├── 08-digital-twin.html
 │   └── README.md
-└── tema-anime/
-    ├── index.html      ← abertura de anime + hub
-    ├── mascote/        ← imagem da mascote personalizada
-    ├── 01-sakura-storm.html
+├── tema-anime/
+│   ├── index.html      ← abertura de anime + hub
+│   ├── mascote/        ← imagem da mascote personalizada
+│   ├── 01-sakura-storm.html
+│   ├── ...
+│   ├── 08-koi-pond.html
+│   └── README.md
+└── tema-fantasia/
+    ├── index.html      ← prólogo cinematográfico + mapa dos reinos (hub)
+    ├── personagens/    ← cavaleiro, elfa, anão e mago (SVG animado)
+    ├── 01-reino-humano.html
     ├── ...
-    ├── 08-koi-pond.html
+    ├── 08-salao-dos-herois.html
     └── README.md
 ```
 
 ## Som
 
-Os dois temas têm efeitos sonoros **100% sintetizados com Web Audio** — nenhum arquivo de áudio. No hacker: teclado mecânico, glitch com estática e TV de tubo desligando. No anime: sininhos, impactos, vento, chuva, trem, pad mágico e até uma rádio lofi gerada ao vivo.
+Todos os temas têm efeitos sonoros **100% sintetizados com Web Audio** — nenhum arquivo de áudio. No hacker: teclado mecânico, glitch com estática e TV de tubo desligando. No anime: sininhos, impactos, vento, chuva, trem, pad mágico e até uma rádio lofi gerada ao vivo. Na fantasia: harpa em modo dórico, trompas, sinos de igreja, bigorna, espadas, fogo, vento e o rugido do dragão, com reverberação de salão de pedra.
 
 O som vem **ligado por padrão** (desliga no botão **🔊 SOM** ou na tecla **M**). Como os navegadores bloqueiam áudio antes do primeiro clique, as aberturas mostram uma tela **▶ INICIAR** quando necessário, para o vídeo de entrada já começar com som.
 
