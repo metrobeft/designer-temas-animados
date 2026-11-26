@@ -2,6 +2,12 @@
 
 Coleção aberta de páginas web animadas, feitas só com **HTML + CSS + JavaScript puro** — sem frameworks, sem dependências e sem etapa de build.
 
+### 🌐 [Ver online → metrobeft.github.io/designer-temas-animados](https://metrobeft.github.io/designer-temas-animados/)
+
+| Portal | Tema hacker | Tema anime |
+|---|---|---|
+| [abrir](https://metrobeft.github.io/designer-temas-animados/) | [abrir](https://metrobeft.github.io/designer-temas-animados/tema-hacker/) | [abrir](https://metrobeft.github.io/designer-temas-animados/tema-anime/) |
+
 **Cada pasta deste repositório é um tema personalizado.** Um tema reúne várias páginas com a mesma identidade visual (cores, tipografia, efeitos e animações), uma página inicial própria (hub) e navegação entre todas elas.
 
 ## Temas
@@ -12,6 +18,8 @@ Coleção aberta de páginas web animadas, feitas só com **HTML + CSS + JavaScr
 | [`tema-anime/`](tema-anime/) | Anime · sakura · mangá | 🚧 em construção | Página de prévia; módulos em breve |
 
 ## Como abrir
+
+**Online:** acesse o [site no GitHub Pages](https://metrobeft.github.io/designer-temas-animados/).
 
 **Direto no navegador:** baixe ou clone o repositório e abra o `index.html` da raiz. Ele é o portal que leva a todos os temas, e todas as páginas têm um botão **⌂ INÍCIO** para voltar a ele.
 
